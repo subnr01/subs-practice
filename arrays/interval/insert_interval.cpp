@@ -13,22 +13,37 @@ This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
 */
 
 
-vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
-    vector<Interval> ret;
-    auto it = intervals.begin();
-    for(; it!=intervals.end(); ++it){
-		if(newInterval.end < (*it).start) //all intervals after will not overlap with the newInterval
-			break; 
-		else if(newInterval.start > (*it).end) //*it will not overlap with the newInterval
-			ret.push_back(*it); 
-        else{ //update newInterval bacause *it overlap with the newInterval
-            newInterval.start = min(newInterval.start, (*it).start);
-            newInterval.end = max(newInterval.end, (*it).end);
-        }	
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        vector<Interval> res;
+        int index = 0;
+	 
+	    
+	/*
+	Move till our start is greater than interval element end 
+	*/
+        while(index < intervals.size() && intervals[index].end < newInterval.start){
+            res.push_back(intervals[index++]);
+        }
+	    
+	/*
+	If interval start is lesser than our end
+	*/
+        while(index < intervals.size() && intervals[index].start <= newInterval.end){
+		
+	   //Update the start with the min of the two	
+            newInterval.start = min(newInterval.start, intervals[index].start);
+	   //Update the end with the max of the two
+            newInterval.end = max(newInterval.end, intervals[index].end);
+            index++;
+        }
+	//Push the new interval
+        res.push_back(newInterval);
+        while(index < intervals.size()){
+	   //Push the remaining intervals
+            res.push_back(intervals[index++]);
+        }
+        return res;
     }
-    // don't forget the rest of the intervals and the newInterval
-	ret.push_back(newInterval);
-	for(; it!=intervals.end(); ++it)
-		ret.push_back(*it);
-	return ret;
-}
+};
