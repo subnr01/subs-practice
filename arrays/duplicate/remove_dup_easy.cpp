@@ -15,16 +15,14 @@ class Solution {
 public:
     int removeDuplicates(vector<int>& A) {
         int n = A.size();
-        if(n < 2) return n;
-        int id = 1;
-        for(int i = 1; i < n; ++i) 
+        int i = 0;
+        for(int n:A) 
         {
-            if(A[i] != A[i-1]) 
+            if ( i < 1 || n > A[i-1]) 
             {
-                A[id++] = A[i];
+                A[i++] = n;
             } 
         }
-        return id;
-        
+        return i;
     }
 };
