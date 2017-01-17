@@ -9,3 +9,22 @@ Given input array nums = [1,1,2],
 Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn't matter what you leave beyond the new length.
 
 */
+
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& A) {
+        int n = A.size();
+        if(n < 2) return n;
+        int id = 1;
+        for(int i = 1; i < n; ++i) 
+        {
+            if(A[i] != A[i-1]) 
+            {
+                A[id++] = A[i];
+            } 
+        }
+        return id;
+        
+    }
+};
