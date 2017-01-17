@@ -10,3 +10,12 @@ Your function should return length = 5, with the first five elements of nums bei
 Subscribe to see which companies asked this question
 
 */
+
+
+int removeDuplicates(vector<int>& nums) {
+    int i = 0;
+    for (int n : nums)
+        if (i < 2 || n > nums[i-2])
+            nums[i++] = n;
+    return i;
+}
