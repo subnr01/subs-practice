@@ -66,6 +66,16 @@ private:
 
 
 //Subsets without duplicates
+/*
+This is a good example of backtracking.
+If the input is {1,2,3}, then the output looks like this:
+{ {}, {1}, {1,2}, {1,2,3}, {1,3}, {2}, {2,3}, {3} }
+
+if you see above, we back track after reaching (1,2,3),
+then go back to (1,2) and make it (1,3) and so on.
+*/
+
+
 class Solution {
 public:
     std::vector<std::vector<int> > subsets(std::vector<int> &nums) {
