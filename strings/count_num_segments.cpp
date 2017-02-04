@@ -18,3 +18,18 @@ public:
         return res;
     }
 };
+
+
+/*
+Another solution
+*/
+
+class Solution {
+public:
+    int countSegments(string s) {
+        int res = 0;
+        for (int i = 0; i < s.size(); i++) 
+            res += s[i] != ' ' && (i + 1 == s.size() || s[i + 1] == ' ');
+        return res;
+    }
+};
