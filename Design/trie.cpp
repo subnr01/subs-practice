@@ -28,6 +28,10 @@ public:
     {
         root = new TrieNode();
     }
+    
+    ~Trie(){
+        clear(root);
+    }
 
     // Inserts a word into the trie.
     void insert(string s)
@@ -68,4 +72,14 @@ private:
         }
         return p;
     }
+    
+      void clear(TrieNode *root)
+      {
+        for(int i = 0; i < 26; i++){
+            if(root->next[i] != nullptr){
+                clear(root->next[i]);
+            }
+        }
+        delete root;
+      }
 };
