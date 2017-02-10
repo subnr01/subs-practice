@@ -40,16 +40,22 @@ Explanation: You don't need to remove any of the intervals since they're already
 class Solution {
 public:
     int eraseOverlapIntervals(vector<Interval>& intervals) {
-        auto comp = [](const Interval& i1, const Interval& i2){ return i1.start < i2.start; };
-        sort(intervals.begin(), intervals.end(), comp);
-        int res = 0, pre = 0;
-        for (int i = 1; i < intervals.size(); i++) {
-            if (intervals[i].start < intervals[pre].end) {
-                res++;
-                if (intervals[i].end < intervals[pre].end) pre = i;
-            }
-            else pre = i;
-        }
-        return res;
+       int n =intervals.size();
+       if(n <= 1) return 0;
+       int count = 0;
+       sort(intervals.begin(),intervals.end(),[](Interval a,Interval b){return a.end < b.end;});
+ 
+       int q = intervals[0].end;
+       
+       for(int i=1;i<n;i++){
+           
+          if(intervals[i].start < q){
+             count++;
+          }else{
+             q = intervals[i].end;
+          }
+          
+       }
+       return count;
     }
 };
