@@ -37,7 +37,11 @@ public:
 };
 
 
-Update: as suggested by yswu1234 in the answer, general sort takes O(nlogn) time. In this problem, since the string only contains lower-case alphabets, we can write a sorting function using counting sort (O(n) time) to speed up the sorting process. I write a string sorting function strSort below and using it to sort the string achieves the overall running time 72ms for this problem.
+Update: as suggested by yswu1234 in the answer, general sort takes O(nlogn) time. 
+  In this problem, since the string only contains lower-case alphabets, we can write a sorting 
+  function using counting sort (O(n) time) to speed up the sorting process. I write a string sorting
+  function strSort below and using it to sort the string achieves the overall running time 72ms for
+    this problem.
 
 
 
