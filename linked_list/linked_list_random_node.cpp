@@ -20,6 +20,7 @@ solution.getRandom();
 
 
 https://discuss.leetcode.com/topic/53753/brief-explanation-for-reservoir-sampling/2
+http://blog.cloudera.com/blog/2013/04/hadoop-stratified-randosampling-algorithm/
 
 public class Solution {
     
