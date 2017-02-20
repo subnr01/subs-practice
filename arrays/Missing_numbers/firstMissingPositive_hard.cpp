@@ -15,12 +15,30 @@ public:
         int i;
         int target;
         int n = nums.size();
+        
+        /* Basically we try to sort here, 
+        only if the number is -1, 0 we leave it its postion,
+        as it becomes convinient for us when we compare.
+        Other numbers when we sort, we make sure the comparisons
+        happens with the next postive number and in turn
+        helps to find the first positive integer.
+        
+        The important thing is
+        
+        m = nums[i] - 1;
+        */
+        
         for (i=0; i<n; i++) 
         {
-           
-            while (nums[i] > 0 && nums[i] <= n && nums[nums[i]-1] != nums[i]) 
+            int m = nums[i] - 1;   
+            while (nums[i] > 0 && nums[i] <= n)
             {
-                swap(nums[i],nums[nums[i]-1]);
+                if( nums[nums[i]-1] != nums[i] ) {
+                    swap(nums[i],nums[nums[i]-1]);
+                }
+                else {
+                    break;
+                }
             }
         }
         /*
