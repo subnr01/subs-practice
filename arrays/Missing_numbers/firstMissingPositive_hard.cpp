@@ -23,7 +23,10 @@ public:
                 swap(nums[i],nums[nums[i]-1]);
             }
         }
-        
+        /*
+        At this stage
+        nums[] = {1, -1, 3, 4}
+        */
         for (i=0; i<n; i++)
         {
             if (nums[i] != i+1)
