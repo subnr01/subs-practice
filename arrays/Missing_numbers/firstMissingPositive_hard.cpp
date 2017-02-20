@@ -17,9 +17,10 @@ public:
         int n = nums.size();
         
         /* Basically we try to sort here, 
-        only if the number is -1, 0 we leave it its postion,
+        only if the number is -1 or more than n, then
+        we leave it in its position,
         as it becomes convinient for us when we compare.
-        Other numbers when we sort, we make sure the comparisons
+        Other numbers when we sort, we make sure the swap
         happens with the next postive number and in turn
         helps to find the first positive integer.
         
