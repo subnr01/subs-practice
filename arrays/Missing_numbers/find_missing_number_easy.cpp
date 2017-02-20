@@ -21,6 +21,16 @@ public:
         int len = nums.size();
         for(int i=0; i<len; i++) {
             int m = abs(nums[i])-1; // index start from 0
+            
+            /*
+            Note that we are not making any number positive,
+            if we find that a value already negative, we leave that
+            way.
+            The objective is to make sure that we make negative 
+            all elements that we find in the array.
+            Whichever number is not negative in the end, is the one
+            that is muissing.
+            */
             nums[m] = nums[m]>0 ? -nums[m] : nums[m];
         }
         vector<int> res;
