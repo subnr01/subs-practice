@@ -14,6 +14,11 @@ public:
        	vi[0] = 1;
         for (int i = 0; i <= rowIndex ; ++i)
         {
+		/*
+		See how j decrements from i to 0.
+		j[2] = 1 + 2;
+		j[1] = 2 + 1;
+		*/
         	for (int j = i; j > 0; --j)
         	{
 	        	vi[j] = vi[j] + vi[j-1];
