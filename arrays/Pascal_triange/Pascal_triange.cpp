@@ -20,7 +20,10 @@ public:
         for(auto i=0;i<numRows;++i)
         {
             res.push_back(vector<int>(i+1,1));
-            for(auto j=1; j<i; ++j) res[i][j] = res[i-1][j-1] + res[i-1][j];
+            for(auto j=1; j<i; ++j) 
+            {
+                 res[i][j] = res[i-1][j-1] + res[i-1][j];
+            }
         }
         return res;
     }
