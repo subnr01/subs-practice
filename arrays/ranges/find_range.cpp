@@ -37,9 +37,6 @@ public:
             return;
         }
         int mid = (high - low)/2 + low;
-        
-        
-        
         if (nums[mid] < target) {
             bs(nums, mid+1, high,target, ans);
         }
@@ -47,27 +44,23 @@ public:
             bs(nums, low, mid-1,target, ans);
         }  else {
             
-            ans[0] = mid;
-            ans[1] = mid;
-            
             int index = mid;
             
             while(index > low && nums[index] == nums[index-1]) {
                 index --;
-                ans[0] = index;
+                
                 
             }
+            ans[0] = index;
             
             index = mid;
             
             while(index < high && nums[index] == nums[index+1]) {
                 index++;
-                ans[1] = index;
+                
                 
             }
-            
-            
-            
+            ans[1] = index;
         }
         return;
         
