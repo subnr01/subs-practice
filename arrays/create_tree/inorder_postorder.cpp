@@ -18,10 +18,7 @@ TreeNode* create(vector<int> &inorder, vector<int> &postorder, int is, int ie, i
     }
     TreeNode* node = new TreeNode(postorder[*pe]);
     (*pe)--;
-    
-    if (is == ie) {
-        return node;
-    }
+
     
     int pos;
     for(int i = is; i <= ie; i++){
