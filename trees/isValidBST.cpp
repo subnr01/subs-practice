@@ -35,3 +35,27 @@ public:
         return validate(node->right, prev);
     }
 };
+
+
+//Another solution
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST_recur(root, LONG_MIN, LONG_MAX);
+    }
+    
+    bool isValidBST_recur(TreeNode *root, long min, long max) {
+        if (!root) {
+            return true;
+        }
+        
+        if (root->val <= min || root->val >= max) {
+            return false;
+        }
+        
+        return isValidBST_recur(root->left, min, root->val) &&
+                isValidBST_recur(root->right, root->val, max);
+        
+    }
+
+};
