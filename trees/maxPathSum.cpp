@@ -30,3 +30,27 @@ int dfsMaxPath(TreeNode *root, int &maxPath) {
     maxPath = max(maxPath, l + r + root->val);
     return root->val + max(l, r);
 }
+
+
+//Another solution
+class Solution {
+public:
+    int findmax(TreeNode* root, int &res){
+        if (root == NULL) {
+            return 0;
+        } else {
+            int max_l = findmax(root->left, res);
+            int max_r = findmax(root->right, res);
+            int max_s = max(max(max_l, max_r) + root->val, root->val);
+            int max_top = max(max_s, max_l+max_r+root->val);
+            res = max(res, max_top);
+            return max_s;
+        }
+    }
+     
+    int maxPathSum(TreeNode *root) {
+        int res = INT_MIN;
+        findmax(root, res);
+        return res;
+    }
+};
