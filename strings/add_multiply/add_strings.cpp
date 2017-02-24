@@ -24,9 +24,9 @@ string addStrings(string num1, string num2) {
         sum += carry; 
         carry = sum / 10;
         sum = sum % 10;
-        res =  res + to_string(sum);
+        res = to_string(sum) +res;
     }
-    reverse(res.begin(), res.end());
+    
     return res;
 }
 };
