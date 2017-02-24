@@ -30,43 +30,40 @@
  * };
  */
 
-class Solution {
-public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
-        return zigzagLevelOrder_1(root);
+vector<vector<int> > zigzagLevelOrder(TreeNode* root) {
+    if (root == NULL) {
+        return vector<vector<int> > ();
     }
-    
-    // solution 1: Queue + Reverse.
-    vector<vector<int>> zigzagLevelOrder_1(TreeNode *root) {
-        vector<vector<int>> res;
-        if (!root) return res;
-        queue<TreeNode *> q;
-        q.push(root);
-        q.push(NULL);   // end indicator of one level
-        bool left2right = true;
-        vector<int> level;
-        while (true)
-        {
-            TreeNode *node = q.front(); q.pop();
-            if (node)
-            {
-                level.push_back(node->val);
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
+    vector<vector<int> > result;
+
+    queue<TreeNode*> nodesQueue;
+    nodesQueue.push(root);
+    bool leftToRight = true;
+
+    while ( !nodesQueue.empty()) {
+        int size = nodesQueue.size();
+        vector<int> row(size);
+        for (int i = 0; i < size; i++) {
+            TreeNode* node = nodesQueue.front();
+            nodesQueue.pop();
+
+            // find position to fill node's value
+            int index = (leftToRight) ? i : (size - 1 - i);
+
+            row[index] = node->val;
+            if (node->left) {
+                nodesQueue.push(node->left);
             }
-            else
-            {
-                if (!left2right) 
-                    reverse(level.begin(), level.end());
-                res.push_back(level);
-                level.clear();
-                if (q.empty()) break;
-                q.push(NULL);
-                left2right = !left2right;
+            if (node->right) {
+                nodesQueue.push(node->right);
             }
         }
-        return res;
+        // after this level
+        leftToRight = !leftToRight;
+        result.push_back(row);
     }
+    return result;
+}
     
     // Solution 2: Two stacks.
     vector<vector<int>> zigzagLevelOrder_2(TreeNode *root) {
