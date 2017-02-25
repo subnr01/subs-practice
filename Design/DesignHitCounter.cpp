@@ -33,6 +33,7 @@ counter.getHits(300);
 counter.getHits(301);
 */
 https://discuss.leetcode.com/topic/48758/super-easy-design-o-1-hit-o-s-gethits-no-fancy-data-structure-is-needed
+http://stackoverflow.com/questions/17562089/how-to-count-number-of-requests-in-last-second-minute-and-hour
 
 
 
