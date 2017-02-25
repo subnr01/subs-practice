@@ -12,7 +12,7 @@ When a food does appear on the screen, it is guaranteed that it will not appear 
 
 
 */
-
+//https://discuss.leetcode.com/topic/48626/java-deque-and-hashset-design-with-detailed-comments
 //https://discuss.leetcode.com/topic/47385/c-straightforward-solution
 
 class SnakeGame {
