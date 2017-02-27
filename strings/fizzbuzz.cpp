@@ -7,6 +7,11 @@ For numbers which are multiples of both three and five output “FizzBuzz”.
 
 */
 
+Points to remember:
+
+-- multiple of 3, then string add fizz.
+-- mutiliple of 5, then string add buzz.
+-- non-multiple, so string is empty, so add stringversion of i.
 
 
 class Solution {
