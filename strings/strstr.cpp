@@ -13,6 +13,13 @@ especially by 1331r
 */
 
 
+Points to remember:
+-- the outerloop moves from 0 to m-n+1
+-- If we do not get two consecutive characters inside
+the inner loop, we exit.
+-- When we exit the inner loop, we check whether j reached n, we return true
+   as this means that we reached the end of the second string.
+
 class Solution {
 public: 
     int strStr(string haystack, string needle)
