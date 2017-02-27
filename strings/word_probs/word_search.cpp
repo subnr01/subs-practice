@@ -21,6 +21,16 @@ Tags: backtracking.
 */
 
 
+Points to remember:
+-- Calling search inside the loop
+-- modifying and restoring the cell value before a complete search
+-- searching by manipulating the row and column parameters.
+-- 2 exits
+  -- the end of the word, so true.
+  -- the first letter not matching the cell value, so false
+  -- boundary conditions.
+
+
 class Solution {
 public:
     bool exist(vector<vector<char>>& board, string word) {
