@@ -20,7 +20,6 @@ The substring with start index = 6 is "bac", which is an anagram of "abc".
 
 */
 
-
 https://discuss.leetcode.com/topic/68976/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
 
 
