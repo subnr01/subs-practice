@@ -9,7 +9,9 @@ s = "loveleetcode",
 return 2.
 */
 
-
+Points to remember:
+-- Use an unordered map to record the frequency
+-- The first frequency 1 is the character that is the first non repeating character.
 
 
 class Solution {
