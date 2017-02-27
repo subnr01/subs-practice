@@ -20,7 +20,7 @@ Tags: backtracking.
 
 */
 
-
+This employs backtracking.
 Points to remember:
 -- Calling search inside the loop
 -- modifying and restoring the cell value before a complete search
