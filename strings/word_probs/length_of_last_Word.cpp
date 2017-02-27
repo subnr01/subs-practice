@@ -14,6 +14,11 @@ return 5.
 
 */
 
+Points to note here:
+-- Traverse from the end and jump over all the spaces.
+-- Till the first space of the last word, gives the length.
+
+
 class Solution {
 public:
     int lengthOfLastWord(string s) { 
