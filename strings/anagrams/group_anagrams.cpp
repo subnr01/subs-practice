@@ -13,8 +13,10 @@ Return:
 
 */
 
-
-
+Points to remember:
+1. Use a hashmap with the sorted version of the string as the key.
+2. Traverse all the strings one by one and put them in the appropriate bucket with the sorted version as the key.
+3. Traverse the hashmap and push elements of each bucket into a vector of strings.
 https://discuss.leetcode.com/topic/21038/10-lines-76ms-easy-c-solution-updated-function-signature/2
 
 
