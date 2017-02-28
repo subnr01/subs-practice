@@ -23,6 +23,14 @@ FInd the length of the longest palindrome
 
 */
 
+Points to remember:
+1. Collect all the count of all the letters.
+2. For every character, if it is even then add to the result.
+3. if it is odd, subtract one and then add, set odd to false.
+4. If odd is set to false, then add one to result.
+
+*/
+
 int longestPalindrome(string s) {
         vector<int> v(256,0);
         for(int i = 0; i < s.size(); ++i)
