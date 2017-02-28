@@ -23,10 +23,7 @@ FInd the length of the longest palindrome
 
 */
 
-
-
-
- int longestPalindrome(string s) {
+int longestPalindrome(string s) {
         vector<int> v(256,0);
         for(int i = 0; i < s.size(); ++i)
            ++v[s[i]];
