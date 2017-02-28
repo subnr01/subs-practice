@@ -17,6 +17,7 @@ Output: "bb"
 
 */
 
+//http://articles.leetcode.com/longest-palindromic-substring-part-i/
 
 string longestPalindrome(string s) {
     if (s.empty()) return "";
