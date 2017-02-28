@@ -8,6 +8,14 @@ s = "rat", t = "car", return false.
 
 */
 
+Points to remember:
+
+two approaches:
+In the first approach, sort both the strings and compare.
+In the second approach, use a hash table and increment the character in the hash table and decrement
+the character of the second string in the hash table. Run a second loop and compare the elements of the hash
+table. If any of them is one, then both are not anagrams.
+
 class Solution {
 public:
     bool isAnagram_hash(string s, string t) {
