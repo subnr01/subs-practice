@@ -13,6 +13,9 @@ Here are few examples.
 end
 */
 
+Points to remember:
+1. This follows the regular binary search, however we have to return low instead of mid if we do not find 
+   the element.
 
 class Solution {
 public:
