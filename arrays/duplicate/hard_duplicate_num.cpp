@@ -10,6 +10,9 @@ There is only one duplicate number in the array, but it could be repeated more t
 */
 
 
+
+--How does this work? Need to think on this.
+
 int findDuplicate3(vector<int>& nums)
 {
 	if (nums.size() > 1)
