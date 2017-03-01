@@ -25,6 +25,7 @@ public:
         vector<int> res;
         int i = 0;
         while (i < nums.size()) {
+            /* what is the secret sauce in this algorithm */
             if (nums[i] != nums[nums[i]-1]) swap(nums[i], nums[nums[i]-1]);
             else i++;
         }
