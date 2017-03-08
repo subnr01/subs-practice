@@ -25,42 +25,32 @@ The minimum absolute difference is 1, which is the difference between 2 and 1 (o
 
 
 class Solution {
-    int min_dif = INT_MAX, val = -1;
 public:
-int getMinimumDifference(TreeNode* root) {
-    if (root->left != NULL) 
-    {
-        getMinimumDifference(root->left);
+    int getMinimumDifference(TreeNode* root) {
+        long mindiff = INT_MAX;
+        TreeNode* prev = nullptr;
+        find(root, prev, mindiff);
+        return mindiff;
     }
-    
-    if (val >= 0) {
-        min_dif = min(min_dif, root->val - val);
+private:
+    void find(TreeNode* node, TreeNode*& prev, long& mindiff) {
+        if (node->left) { 
+            find(node->left, prev, mindiff);
+        }
+
+        if (prev != nullptr) {
+            mindiff = std::min(mindiff, (long)abs(node->val - prev->val));
+        }
+        prev = node;
+
+        if (node->right) {
+            find(node->right, prev, mindiff);
+        }
     }
-    val = root->val;
-    
-    if (root->right != NULL) {
-        getMinimumDifference(root->right);
-    }
-    
-    return min_dif;
-}
 };
 
-
-void inorderTraverse(TreeNode* root, int& val, int& min_dif) {
-    if (root->left != NULL) inorderTraverse(root->left, val, min_dif);
-    if (val >= 0) min_dif = min(min_dif, root->val - val);
-    val = root->val;
-    if (root->right != NULL) inorderTraverse(root->right, val, min_dif);
-}
-int getMinimumDifference(TreeNode* root) {
-    auto min_dif = INT_MAX, val = -1;
-    inorderTraverse(root, val, min_dif);
-    return min_dif;
-}
-
-
-What if it is not a BST? (Follow up of the problem) The idea is to put values in a TreeSet and then every time we can use O(lgN) time to lookup for the nearest values.
+What if it is not a BST? (Follow up of the problem) The idea is to put values in a TreeSet and 
+then every time we can use O(lgN) time to lookup for the nearest values.
 
 Solution 2 - Pre-Order traverse, time complexity O(NlgN), space complexity O(N).
 
