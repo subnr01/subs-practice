@@ -1,6 +1,7 @@
 
 /*
-Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest
+of the intervals non-overlapping.
 
 Note:
 You may assume the interval's end point is always bigger than its start point.
