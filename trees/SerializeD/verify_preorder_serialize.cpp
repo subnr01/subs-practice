@@ -37,6 +37,18 @@ Return false
 
 */
 
+/*
+The capacity is the number of node that can be put in the tree. The initial value is 1, 
+which means there can be a root.
+
+When adding a node, capacity--;
+
+When adding a non-NULL node, it means we obtains two more leafs, then capacity +=2.
+
+The final capacity should be equal to 0
+
+*/
+
 
 class Solution {
 public:
