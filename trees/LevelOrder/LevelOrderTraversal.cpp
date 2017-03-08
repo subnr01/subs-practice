@@ -21,64 +21,33 @@ return its level order traversal as:
 */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
+  class Solution {
+public:
+    vector<vector<int> > levelOrder(TreeNode *root) {
+        vector<vector<int> >  result;
+        if (!root) return result;
         queue<TreeNode*> q;
-        vector<vector<int>> res;
-        vector<int> level;
-        
-        TreeNode *curr = root;
-         
-        if (!root) {
-            /* 
-             return here as 
-             we do not want queue
-             to be full of NULLs
-             */
-            return res;
-        }
-        
-        /* 
-         * push the first level
-         * intially
-         */
-        q.push(curr);
+        q.push(root);
         q.push(NULL);
-        
-        /*
-         * How do I know when the current level
-         * ends
-         */
-        while (true) {
-            TreeNode *temp = q.front();
+        vector<int> cur_vec;
+        while(!q.empty()) {
+            TreeNode* t = q.front();
             q.pop();
-
-            if ( !temp) {
-                /*
-                 * every time a NULL is encountered
-                 * push the level and clear the level
-                 * and push NULL as the delimitor for
-                 * the next LEVEL
-                 */
-                res.push_back(level);
-                level.clear();
-                /* Cover only the root case */
-                if (q.empty()) {
-                    break;
+            if (t==NULL) {
+                result.push_back(cur_vec);
+                cur_vec.resize(0);
+                if (q.size() > 0) {
+                    q.push(NULL);
                 }
-                q.push(NULL);
             } else {
-                level.push_back(temp->val);
-                if ( temp->left) {
-                    q.push(temp->left);
-                }
-                if ( temp->right) {
-                    q.push(temp->right);
-                }
+                cur_vec.push_back(t->val);
+                if (t->left) q.push(t->left);
+                if (t->right) q.push(t->right);
             }
         }
-        return res;
-        
+        return result;
     }
+};
 
     /*
     Level order using DFS
