@@ -34,7 +34,10 @@ For [2,3], the interval [3,4] has minimum-"right" start point.
 
 */
 
-
+std::map's implementation is red-black-tree, lower_bound finds the first key in the BST that is no less 
+    than the given key. We first store all the indexes of
+    intervals using starting point as key into the BST, then search it using end points of each interval. 
+    Time complexity O(nlgn).
 
 class Solution {
 public:
