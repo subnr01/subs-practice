@@ -1,5 +1,6 @@
 /*
-Given a binary search tree (BST) with duplicates, find all the mode(s) (the most frequently occurred element) in the given BST.
+Given a binary search tree (BST) with duplicates, find all the mode(s) (the most frequently occurred element) 
+in the given BST.
 
 Assume a BST is defined as follows:
 
@@ -17,7 +18,8 @@ return [2].
 
 Note: If a tree has more than one mode, you can return them in any order.
 
-Follow up: Could you do that without using any extra space? (Assume that the implicit stack space incurred due to recursion does not count).
+Follow up: Could you do that without using any extra space? (Assume that the implicit stack space incurred due to
+recursion does not count).
 
 */
 
