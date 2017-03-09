@@ -10,7 +10,7 @@ Note: You can only move either down or right at any point in time.
 https://discuss.leetcode.com/topic/15269/10-lines-28ms-o-n-space-dp-solution-in-c-with-explanations/2
 
 
-/*
+
 This is a typical DP problem. Suppose the minimum path sum of arriving at point (i, j) is S[i][j], 
 then the state equation is S[i][j] = min(S[i - 1][j], S[i][j - 1]) + grid[i][j].
 
@@ -19,7 +19,7 @@ the topmost row (S[i - 1][j] does not exist) and the leftmost column (S[i][j - 1
 Suppose grid is like [1, 1, 1, 1], then the minimum sum to arrive at each point is simply an 
 accumulation of previous points and the result is [1, 2, 3, 4].
 
-*/
+
 
 //Using a 2D vector
 
