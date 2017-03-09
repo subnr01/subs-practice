@@ -37,6 +37,7 @@ public:
                     high = mid;
                 }
             } else {
+                //to account for duplicates
                 high--;
             }
             
