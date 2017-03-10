@@ -1,0 +1,5 @@
+/*
+
+Minimum unique word abbrevation
+
+*/
