@@ -27,6 +27,8 @@ TreeNode* create(vector<int> &inorder, vector<int> &postorder, int is, int ie, i
             break;
         }
     }
+   
+    /* Order has to be maintained */
     node->right = create(inorder, postorder, pos + 1, ie, pe);
     node->left = create(inorder, postorder, is, pos - 1, pe);
     
