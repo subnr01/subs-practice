@@ -13,7 +13,7 @@ public:
     }
  
     TreeNode* bst(vector<int> &preorder, int &mid, vector<int> &inorder, int st, int ed){
-        if (st>ed || preorder.size()==mid){
+        if (st>ed ){
             return NULL;
         }
         TreeNode* root = new TreeNode(preorder[mid]);
@@ -26,6 +26,7 @@ public:
      
     TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
         int mid = 0;
-        return bst(preorder, mid, inorder, 0, inorder.size());
+      
+        return bst(preorder, mid, inorder, 0, inorder.size()-1);
     }
 };
