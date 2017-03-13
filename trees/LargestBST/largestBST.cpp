@@ -37,7 +37,8 @@ public:
                 return true;
             }
         }
-        /* The tree rooted at this node is not a binary search tree, so take the maximum size of the BST in the left or right subtrees  */
+        /* The tree rooted at this node is not a binary search tree, so take the maximum size of the BST 
+        in the left or right subtrees  */
         res = max(left_size, right_size);
         return false;
     }
