@@ -18,7 +18,8 @@ public:
 
 Concept:
 
-1.Heap is a kind of data structure. It is a name for a particular way of storing data that makes certain operations very efficient. We can use a tree or array to describe it.
+1.Heap is a kind of data structure. It is a name for a particular way of 
+storing data that makes certain operations very efficient. We can use a tree or array to describe it.
 
    18
   / \
@@ -27,9 +28,11 @@ Concept:
 9  5  8  12
 
 18, 10, 16, 9, 5, 8, 12
-2.Priority queue is an abstract datatype. It is a shorthand way of describing a particular interface and behavior, and says nothing about the underlying implementation.
+2.Priority queue is an abstract datatype. It is a shorthand way of describing a particular 
+interface and behavior, and says nothing about the underlying implementation.
 
-A heap is a very good data structure to implement a priority queue. The operations which are made efficient by the heap data structure are the operations that the priority queue interface needs.
+A heap is a very good data structure to implement a priority queue. The operations which are
+made efficient by the heap data structure are the operations that the priority queue interface needs.
 
 Implementation: c++
 
