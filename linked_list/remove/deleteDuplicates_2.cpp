@@ -24,8 +24,11 @@ public:
             if((*runner)->next && (*runner)->next->val == (*runner)->val)
             {
                 ListNode *temp = *runner;
-                while(temp && (*runner)->val == temp->val)
+                while(temp && (*runner)->val == temp->val) {
+                    ListNode *dup = temp;
                     temp = temp->next;
+                    free(dup);
+                }
                 
                 *runner = temp;
             }
