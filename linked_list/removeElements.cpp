@@ -17,6 +17,8 @@ ListNode *removeElements(ListNode *head, int val)
         if ((*list)->val == val)
         {
             ListNode *curr = *list;
+            //watch the pointer here whereas the
+            //does not have the pointer.
             *list = (*list)->next;
             free(cur);
         }
