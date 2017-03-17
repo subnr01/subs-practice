@@ -7,19 +7,16 @@ Given 1->1->2, return 1->2.
 Given 1->1->2->3->3, return 1->2->3.
 */
 
-
-
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* h) {
-        if (h && (h->next = deleteDuplicates(h->next)) && h->next->val == h->val) {
-            delete h;
-            h = h->next; 
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* cur = head;
+        while(cur) {
+        	while(cur->next && cur->val == cur->next->val) {
+        		cur->next = cur->next->next;
+        	}
+        	cur = cur->next;
         }
-        
-       
-        return h;
-
-        
+        return head;
     }
 };
