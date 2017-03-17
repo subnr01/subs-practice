@@ -16,13 +16,13 @@ ListNode *removeElements(ListNode *head, int val)
     {
         if ((*list)->val == val)
         {
+            ListNode *curr = *list;
             *list = (*list)->next;
+            free(cur);
         }
         else
         {
-            ListNode *curr = *list;
             list = &(*list)->next;
-            free(cur);
         }
     }
 
