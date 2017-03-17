@@ -20,7 +20,9 @@ ListNode *removeElements(ListNode *head, int val)
         }
         else
         {
+            ListNode *curr = *list;
             list = &(*list)->next;
+            free(cur);
         }
     }
 
