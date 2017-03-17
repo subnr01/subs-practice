@@ -13,7 +13,9 @@ public:
         ListNode* cur = head;
         while(cur) {
         	while(cur->next && cur->val == cur->next->val) {
+                ListNode *next = cur->next;
         		cur->next = cur->next->next;
+                free(next);
         	}
         	cur = cur->next;
         }
