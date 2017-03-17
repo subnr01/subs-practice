@@ -36,9 +36,9 @@ public:
         p2 = p2->next;
 
         //
-        // Any time they collide or reach end together without colliding 
-        // then return any one of the pointers.
-        //
+        // Supposing they do not intersect and
+        // both become null, then we do not want
+        // their pointers reset.
         if (p1 == p2) return p1;
 
         //
