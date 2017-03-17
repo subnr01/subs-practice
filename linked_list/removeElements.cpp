@@ -22,6 +22,7 @@ ListNode *removeElements(ListNode *head, int val)
         }
         else
         {
+            //this is like list = &(head->next);
             list = &(*list)->next;
         }
     }
