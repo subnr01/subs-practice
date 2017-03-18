@@ -15,6 +15,17 @@ while (fast->next!=NULL && fast->next->next != NULL)
   fast=fast->next->next;
 }
 
+In palindrome, we are using this to split the linked list
+while (fast!=NULL && fast->next->next != NULL)
+{
+  slow=slow->next;
+  fast=fast->next->next;
+}
+if (fast->next)
+{
+  slow = slow->next;
+}
+
 
 Need to sort deleting an element by taking its address.
 If you are already at a node and you are removing the node, 
