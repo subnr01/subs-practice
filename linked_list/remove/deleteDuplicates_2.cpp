@@ -21,13 +21,16 @@ public:
         
         while(*runner)
         {
+             
             if((*runner)->next && (*runner)->next->val == (*runner)->val)
             {
                 ListNode *temp = *runner;
-                while(temp && (*runner)->val == temp->val) {
+                int data = (*runner)->val;
+                while(temp && data == temp->val) {
                     ListNode *dup = temp;
-                    temp = temp->next;
+                    
                     free(dup);
+                    temp = temp->next;
                 }
                 
                 *runner = temp;
