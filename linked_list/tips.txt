@@ -14,3 +14,9 @@ while (fast->next!=NULL && fast->next->next != NULL)
   slow=slow->next;
   fast=fast->next->next;
 }
+
+
+Need to sort deleting an element by taking its address.
+If you are already at a node and you are removing the node, 
+what happend to the previous node that is alreay pointing to it.
+Does it become dangling.
