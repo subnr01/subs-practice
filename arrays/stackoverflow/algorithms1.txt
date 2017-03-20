@@ -18,3 +18,7 @@ http://stackoverflow.com/questions/2566459/how-to-sort-100gb-worth-of-strings
 
 
 http://stackoverflow.com/questions/19227698/write-a-program-to-find-100-largest-numbers-out-of-an-array-of-1-billion-numbers
+
+http://stackoverflow.com/questions/32172144/fastest-way-to-sort-10-numbers-numbers-are-32-bit
+
+
