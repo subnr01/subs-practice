@@ -1,0 +1,20 @@
+Arrays and Strings.
+
+
+1. When every number is k far away from its intial position, then it is worthwhile to use a heap.
+
+2. When you are trying to find a subsequence within a string, use a hash table.
+
+3. sum of a number to every number in the array can be found with two for loops.
+
+
+
+
+
+
+
+Trees:
+
+
+
+Linked Lists:
