@@ -72,3 +72,27 @@ public class Solution {
 }
 
 
+//Simple straightforward solution using two vectors
+    /* Sliding window approach to cover all substrings in s of length p.size() *
+     * Time Complexity = O(s), where s = s.size()                              */
+    std::vector<int> findAnagrams(std::string s, std::string p) {
+        std::vector<int> smap(26, 0), pmap(26, 0); /* since only a-z allowed   */
+        std::vector<int> ans;                      /* output vector            */
+        /* Handle corner cases first */
+        if(s.size() == 0 || p.size() == 0 || s.size() < p.size()) return ans;
+        /* Add all chars in p and first p.size() chars of s into a table */
+        for(size_t i = 0; i < p.size(); ++i) {
+            pmap[p[i] - 'a']++;
+            smap[s[i] - 'a']++;
+        }
+        /* Sliding window to cover all substrings in s of size p           */
+        for(size_t b = 0, e = b + p.size() - 1; e < s.size(); ++b, ++e) {
+            if(b != 0) { /* If not first window, remove prev b and add e   */
+                smap[s[b-1] - 'a']--;
+                smap[s[e]   - 'a']++;
+            }
+            if(smap == pmap) ans.push_back(b); /* found anagram, add to ans */
+        }
+        return ans;
+    }
+
