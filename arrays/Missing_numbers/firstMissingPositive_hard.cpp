@@ -31,7 +31,7 @@ public:
         
         for (i=0; i<n; i++) 
         {
-            int m = nums[i] - 1;   
+              
             while (nums[i] > 0 && nums[i] <= n)
             {
                 if( nums[nums[i]-1] != nums[i] ) {
