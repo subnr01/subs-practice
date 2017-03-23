@@ -48,12 +48,14 @@ public:
     
     void put(int key, int value) {
         if(map.find(key) != map.end()) {
-            //lst.splice(lst.begin(),lst,map[key]);
+            //Put the iterator to the beginning
             touch(map[key]);
             lst.begin()->second = value;
         }
         else {
             if(map.size() == cap) {
+                //Need to remove the last one 
+                // and replace with this one.
                 int dkey = lst.back().first;
                 map.erase(dkey);
                 lst.pop_back();
@@ -71,6 +73,7 @@ private:
     
     // UPDATE THE LIST AND THE MAP (AFTER UPDATE, IT WILL BE THE LIST HEAD)
     void touch(PList::iterator it) {
+        /* Put the iterator to the beginning */
         int key = it->first;
         int value = it->second;
         lst.erase(it);
