@@ -25,6 +25,9 @@ int maxPathSum(TreeNode *root) {
 
 int dfsMaxPath(TreeNode *root, int &maxPath) {
     if (!root) return 0;
+    // the significance of 0 enables us
+    // to ignore negative values and
+    // pass root->val as is of it is the max
     int l = max(0, dfsMaxPath(root->left, maxPath));
     int r = max(0, dfsMaxPath(root->right, maxPath));
     maxPath = max(maxPath, l + r + root->val);
