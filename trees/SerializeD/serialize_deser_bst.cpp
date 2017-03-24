@@ -25,7 +25,11 @@ TreeNode* construct(vector<int>& A, int* i, int l, int r){
         return NULL;
     *i = *i + 1;
     TreeNode* root = new TreeNode(key);
+    //l and key are the min and root elements 
+    // of the current subtree
     root->left = construct(A,i,l,key);
+    //key and r are the root and max elements 
+    // of the current subtree
     root->right = construct(A,i,key,r);
     return root;
 }
