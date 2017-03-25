@@ -29,6 +29,12 @@ TreeNode* upsideDownBinaryTree(TreeNode* root) {
     cur_left->left = cur_right;
     root->left = nullptr;
     root->right = nullptr;
+    /*
+    new root and cur_left need to be same
+    as the new_root is the most bottom node
+    in the tree and it keeps bubbling up
+    as it makes way to the top
+    */
     return new_root;
 }
 
