@@ -5,10 +5,19 @@ Given a non-empty binary search tree and a target value, find the value in the B
 
 */
 
-int closestValue(TreeNode* root, double target) {
+int closestValue(TreeNode* root, double target, double &val) {
+    if (!root) {
+        return;
+    }
     int a = root->val;
     auto kid = target < a ? root->left : root->right;
-    if (!kid) return a;
-    int b = closestValue(kid, target);
-    return abs(a - target) < abs(b - target) ? a : b;
+    if (!kid) {
+        val = a;
+        return;
+    } else {
+        int b;
+        closestValue(kid, target, b);
+    }
+    val = abs(a - target) < abs(b - target) ? a : b;
+    return;
 }
