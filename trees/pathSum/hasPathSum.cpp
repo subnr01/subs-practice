@@ -33,6 +33,7 @@ public:
             return sum == 0;
         }
         
+      // do not forget this OR comdition
         return hasPathSum(root->left,sum) || hasPathSum(root->right,sum);
         
     }
