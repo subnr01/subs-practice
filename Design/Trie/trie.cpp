@@ -6,6 +6,20 @@ You may assume that all inputs are consist of lowercase letters a-z.
 
 */
 
+Implementation:
+
+1. Trie datastructure is filled with TrieNodes.
+2. Each TrieNode contains 26 Pointers to other TrieNodes.
+3. The root of the Trie is a TrieNode and intialised with the constructor.
+4. Everytime a word is added, we start from root and we move on to the next letter node pointer.
+5. If the next pointer does not exist, then we create the new node.
+6. Every trieNode takes a boolean variable which when set means that the trieNode is the end of a word.
+7. Find will always start from root and traverse along the Trie to find a last node with boolean set to true.
+8. This means that the node exists in the tree.
+    
+    
+    
+
 class TrieNode
 {
 public:
