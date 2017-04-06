@@ -12,21 +12,18 @@ Both num1 and num2 does not contain any leading zero.
 
 class Solution {
 public:
-string addStrings(string num1, string num2) {
-    int i = num1.size() - 1;
-    int j = num2.size() - 1;
-    int carry = 0;
-    string res = "";
-    while(i>=0 || j>=0 || carry){
-        long sum = 0;
-        if(i >= 0){sum += (num1[i] - '0');i--;}
-        if(j >= 0){sum += (num2[j] - '0');j--;}
-        sum += carry; 
-        carry = sum / 10;
-        sum = sum % 10;
-        res = to_string(sum) +res;
-    }
-    
+string addStrings(string a, string b) {
+   
+      string res = "";
+        
+        int c = 0, i = a.size() - 1, j = b.size() - 1;
+        while(i >= 0 || j >= 0 || c == 1)
+        {
+            c += i >= 0 ? a[i --] - '0' : 0;
+            c += j >= 0 ? b[j --] - '0' : 0;
+            res = to_string(c % 10 ) + res;
+            c /= 10;
+        }
     return res;
 }
 };
