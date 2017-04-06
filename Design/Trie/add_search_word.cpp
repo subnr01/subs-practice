@@ -20,6 +20,8 @@ Note:
 You may assume that all words are consist of lowercase letters a-z.
 */
 
+Same as the trie implementation, but there is a recursive call
+if the tire contains a dot somewhere.
 
 class TrieNode {
 public:
