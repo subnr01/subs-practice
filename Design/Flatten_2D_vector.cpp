@@ -34,13 +34,14 @@ public:
     }
 
     int next() {
-        hasNext();
+        //hasNext();
         return (*i)[j++];
     }
 
     bool hasNext() {
-        while (i != iEnd && j == (*i).size())
+        if (i != iEnd && j == (*i).size()) {
             i++, j = 0;
+        }
         return i != iEnd;
     }
 };
