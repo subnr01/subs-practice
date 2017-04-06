@@ -25,7 +25,10 @@ public:
 
   bool find(int value) {
     for (auto nc : ctr)
-      if (ctr.count(value - nc.first) && (nc.first != value - nc.first || nc.second > 1))
+      //smart way of saying, whether the other elements exists or not
+      if (ctr.count(value - nc.first) && 
+      //check whether the other number is the same number and we have count more than 1    
+          (nc.first != value - nc.first || nc.second > 1))
         return true;
     return false;
   }
