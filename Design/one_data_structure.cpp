@@ -20,6 +20,23 @@ Challenge: Perform all these in O(1) time complexity.
 //https://discuss.leetcode.com/topic/63827/c-solution-with-comments
 
 
+The premise that you have a set of keys that can map to a value.
+Everytime you inc using a key, then the value associated with the key increments
+by one.
+Everytime you dec using a key, then the value associated with the key decrements
+by one.
+You have to remember that everytime a key is associated with a different element
+from last time, then it starts to having its node associated with the new value, 
+compared to the previous value.
+
+And now this brings us to the notion of thing called node.
+Node is a key value pair, having a value and a set of keys associated with 
+that value. Everytime a key is incremented or decremented, then a new node
+is created to assicated with the new value, while the other keys remain with the
+old value in the old node.
+
+           
+           
 class AllOne {
 public:
 
