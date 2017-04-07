@@ -30,7 +30,7 @@ public:
             bucketOfKey[key] = buckets.insert(buckets.begin(), {0, {key}});
         }    
         // Insert the key in next bucket and update the lookup.
-        auto next = bucketOfKey[key], 
+        auto next = bucketOfKey[key];
         auto bucket = next;
         next++;
                
