@@ -26,20 +26,27 @@ public:
     void inc(string key) {
         
         // If the key doesn't exist, insert it with value 0.
-        if (!bucketOfKey.count(key))
+        if (!bucketOfKey.count(key)) {
             bucketOfKey[key] = buckets.insert(buckets.begin(), {0, {key}});
-            
+        }    
         // Insert the key in next bucket and update the lookup.
-        auto next = bucketOfKey[key], bucket = next++;
-        if (next == buckets.end() || next->value > bucket->value + 1)
+        auto next = bucketOfKey[key], 
+        auto bucket = next;
+        next++;
+               
+        if (next == buckets.end() || next->value > bucket->value + 1) {
             next = buckets.insert(next, {bucket->value + 1, {}});
+        }
+               
         next->keys.insert(key);
         bucketOfKey[key] = next;
         
         // Remove the key from its old bucket.
         bucket->keys.erase(key);
-        if (bucket->keys.empty())
+               
+        if (bucket->keys.empty()) {
             buckets.erase(bucket);
+        }           
     }
 
     void dec(string key) {
