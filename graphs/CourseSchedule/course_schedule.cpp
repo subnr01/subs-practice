@@ -27,7 +27,7 @@ You may assume that there are no duplicate edges in the input prerequisites.
 https://discuss.leetcode.com/topic/17273/18-22-lines-c-bfs-dfs-solutions/3
 
 
-Solution:
+Solution (DFS)
 Since pair<int, int> is inconvenient for the implementation of graph algorithms, we first transform it to a graph.
     If course u is a prerequisite of course v, we will add a directed edge from node u to node v.
 
@@ -55,5 +55,39 @@ private:
             if (onpath[neigh] || dfs_cycle(graph, neigh, onpath, visited))
                 return true;
         return onpath[node] = false;
+    }
+};
+
+
+Solution (BFS);
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
+        vector<unordered_set<int>> graph = make_graph(numCourses, prerequisites);
+        vector<int> degrees = compute_indegree(graph);
+        for (int i = 0; i < numCourses; i++) {
+            int j = 0;
+            for (; j < numCourses; j++)
+                if (!degrees[j]) break;
+            if (j == numCourses) return false;
+            degrees[j] = -1;
+            for (int neigh : graph[j])
+                degrees[neigh]--;
+        }
+        return true;
+    }
+private:
+    vector<unordered_set<int>> make_graph(int numCourses, vector<pair<int, int>>& prerequisites) {
+        vector<unordered_set<int>> graph(numCourses);
+        for (auto pre : prerequisites)
+            graph[pre.second].insert(pre.first);
+        return graph;
+    }
+    vector<int> compute_indegree(vector<unordered_set<int>>& graph) {
+        vector<int> degrees(graph.size(), 0);
+        for (auto neighbors : graph)
+            for (int neigh : neighbors)
+                degrees[neigh]++;
+        return degrees;
     }
 };
