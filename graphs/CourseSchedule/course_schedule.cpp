@@ -28,7 +28,8 @@ https://discuss.leetcode.com/topic/17273/18-22-lines-c-bfs-dfs-solutions/3
 
 
 Solution:
-Since pair<int, int> is inconvenient for the implementation of graph algorithms, we first transform it to a graph. If course u is a prerequisite of course v, we will add a directed edge from node u to node v.
+Since pair<int, int> is inconvenient for the implementation of graph algorithms, we first transform it to a graph.
+    If course u is a prerequisite of course v, we will add a directed edge from node u to node v.
 
 class Solution {
 public:
