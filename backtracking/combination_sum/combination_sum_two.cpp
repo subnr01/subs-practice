@@ -30,7 +30,8 @@ public:
         return res;
     }
 private:
-    void combinationSum2(std::vector<int> &candidates, int target, std::vector<std::vector<int> > &res, std::vector<int> &combination, int begin) {
+    void combinationSum2(std::vector<int> &candidates, int target, std::vector<std::vector<int> > &res,
+			 std::vector<int> &combination, int begin) {
 		if  (!target) {
 			res.push_back(combination);
 			return;
@@ -38,8 +39,10 @@ private:
 		int i;
 		
         for (i = begin; i != candidates.size() && target >= candidates[i]; ++i) {
+            // look at the if condition, confirmed we need this.		
             if (i == begin ||  candidates[i] != candidates[i - 1]) {
                 combination.push_back(candidates[i]);
+		//sending (i+1) compared to sending (i) in the previous version    
                 combinationSum2(candidates, target - candidates[i], res, combination, i + 1);
                 combination.pop_back();
             }
