@@ -30,38 +30,32 @@ DP Solution
  * }
  */
 public class Solution {
-   public static List<TreeNode> generateTrees(int n) {
-    List<TreeNode>[] result = new List[n + 1];
-    result[0] = new ArrayList<TreeNode>();
-    if (n == 0) {
-        return result[0];
-    }
-
-    result[0].add(null);
-    for (int len = 1; len <= n; len++) {
-        result[len] = new ArrayList<TreeNode>();
-        for (int j = 0; j < len; j++) {
-            for (TreeNode nodeL : result[j]) {
-                for (TreeNode nodeR : result[len - j - 1]) {
-                    TreeNode node = new TreeNode(j + 1);
-                    node.left = nodeL;
-                    node.right = clone(nodeR, j + 1);
-                    result[len].add(node);
-                }
-            }
-        }
-    }
-    return result[n];
+public List<TreeNode> generateTrees(int n) {
+    if(n==0) return new LinkedList<TreeNode>();
+	return generateSubtrees(1, n);
 }
 
-private static TreeNode clone(TreeNode n, int offset) {
-    if (n == null) {
-        return null;
-    }
-    TreeNode node = new TreeNode(n.val + offset);
-    node.left = clone(n.left, offset);
-    node.right = clone(n.right, offset);
-    return node;
+private List<TreeNode> generateSubtrees(int s, int e) {
+	List<TreeNode> res = new LinkedList<TreeNode>();
+	if (s > e) {
+		res.add(null); // empty tree
+		return res;
+	}
+
+	for (int i = s; i <= e; ++i) {
+		List<TreeNode> leftSubtrees = generateSubtrees(s, i - 1);
+		List<TreeNode> rightSubtrees = generateSubtrees(i + 1, e);
+
+		for (TreeNode left : leftSubtrees) {
+			for (TreeNode right : rightSubtrees) {
+				TreeNode root = new TreeNode(i);
+				root.left = left;
+				root.right = right;
+				res.add(root);
+			}
+		}
+	}
+	return res;
 }
 }
 
