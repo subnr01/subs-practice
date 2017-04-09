@@ -13,16 +13,24 @@ https://discuss.leetcode.com/topic/28436/simple-and-clean-c-solution-with-detail
 class Solution {
 public:
     bool validTree(int n, vector<pair<int, int>>& edges) {
-        vector<int> nodes(n,0);
-        for(int i=0; i<n; i++) nodes[i] = i;
-        for(int i=0; i<edges.size(); i++){
-            int f = edges[i].first;
-            int s = edges[i].second;
-            while(nodes[f]!=f) f = nodes[f];
-            while(nodes[s]!=s) s = nodes[s];
-            if(nodes[f] == nodes[s]) return false;
-            nodes[s] = f;
+        if(edges.size() != n-1) return false;
+
+        parent.resize(n);
+        iota(parent.begin(), parent.end(), 0);
+        
+        for(auto e : edges)
+        {
+            auto x = find(e.first), y = find(e.second);
+            if(x == y) return false;
+            parent[x] = y;
         }
-        return edges.size() == n-1;
+        
+        return true;
+    }
+private:
+    vector<int> parent;
+    int find(int x)
+    {
+        return parent[x] == x ? x : find(parent[x]);
     }
 };
