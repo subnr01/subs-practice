@@ -1,0 +1,17 @@
+
+
+Given a harddrive with 120GB, 100 of which are filled with the strings of length 256 and 2 GB Ram how do I sort those strings in Java most efficiently? How long will it take?]
+<stackoverflow>
+
+
+I am basically repeating Krystian's answer, but elaborating:
+
+Yes you need to do this more-or-less in place, since you have little RAM available. But naive in-place sorts would be a disaster here just due to the cost of moving strings around.
+
+Rather than actually move strings around, just keep track of which strings should swap with which others and actually move them, once, at the end, to their final spot. That is, if you had 1000 strings, make an array of 1000 ints. array[i] is the location where string i should end up. If array[17] == 133 at the end, it means string 17 should end up in the spot for string 133. array[i] == i for all i to start. Swapping strings, then, is just a matter of swapping two ints.
+
+Then, any in-place algorithm like quicksort works pretty well.
+
+The running time is surely dominated by the final move of the strings. Assuming each one moves, you're moving around about 100GB of data in reasonably-sized writes. I might assume the drive / controller / OS can move about 100MB/sec for you. So, 1000 seconds or so? 20 minutes?
+
+But does it fit in memory? You have 100GB of strings, each of which is 256 bytes. How many strings? 100 * 2^30 / 2^8, or about 419M strings. You need 419M ints, each is 4 bytes, or about 1.7GB. Voila, fits in your 2GB.
