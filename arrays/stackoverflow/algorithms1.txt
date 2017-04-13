@@ -22,3 +22,12 @@ http://stackoverflow.com/questions/19227698/write-a-program-to-find-100-largest-
 http://stackoverflow.com/questions/32172144/fastest-way-to-sort-10-numbers-numbers-are-32-bit
 
 
+https://www.quora.com/What-is-the-most-efficient-way-to-sort-a-million-32-bit-integers
+
+https://www.quora.com/What-is-the-best-way-to-sort-one-million-32-bit-integers-based-on-the-value-in-its-lower-16-bits-without-extra-space
+
+https://www.quora.com/What-is-the-best-way-to-store-search-through-1-million-URLs
+
+http://rmandvikar.blogspot.com/2008/08/how-do-you-sort-million-32-bit-integers.html
+https://www.glassdoor.com/Interview/Sort-a-million-32-bit-integers-using-only-2MB-of-RAM-QTN_120936.htm
+
