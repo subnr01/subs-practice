@@ -18,3 +18,11 @@ notes:
 - HDD mirror raid would increase sequential read and write speed to disk as well as HDD speed
 - compression of input would also reduce I/O
 - we choose quicksort over mergesort as mergesort requires O(n) space. quicksort therefore reduces the number of merge operations.
+
+
+------------------------
+Sort a big array
+-------------------------
+what is the best way to sort a huge array. say I have 1G RAM, array is 16G. What is the most efficient method to do this? I got enough disk for files.
+
+Split into chunks and sort 512MB at a time into 32 files. Then do a streaming merge sort of the files into one file.
