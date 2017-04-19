@@ -14,7 +14,7 @@ public:
     }
 };
 
-
+/*
 
 Concept:
 
@@ -37,6 +37,8 @@ made efficient by the heap data structure are the operations that the priority q
 Implementation: c++
 
 1.priority_queue: we can only get the top element (from ChiangKaiShrek's solution)
+
+*/
 struct compare {
     bool operator()(const ListNode* l, const ListNode* r) {
         return l->val > r->val;
