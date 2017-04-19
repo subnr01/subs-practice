@@ -62,10 +62,17 @@ ListNode *mergeKLists(vector<ListNode *> &lists) { //priority_queue
     }
     return result;
 }
+
+
+/*
 2.make_heap: we can access all the elements (from my answer for that solution)
+(
+*/
+
 static bool heapComp(ListNode* a, ListNode* b) {
         return a->val > b->val;
 }
+
 ListNode* mergeKLists(vector<ListNode*>& lists) { //make_heap
     ListNode head(0);
     ListNode *curNode = &head;
