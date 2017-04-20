@@ -3,6 +3,7 @@ Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
 
 */
 
+http://www.programcreek.com/2014/05/leetcode-valid-sudoku-java/
 
 
 class Solution {
