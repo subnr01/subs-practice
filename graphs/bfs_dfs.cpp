@@ -23,6 +23,14 @@ Graph::Graph(int V)
     adj = new list<int>[V];
 }
 
+Graph:: ~Graph()
+{
+ for (std::list< int >::iterator it = adj.begin() ; it != adj.end(); ++it)
+ {
+     delete (*it);
+ } 
+   adj.clear();   
+}
 void Graph::addEdge(int v, int w)
 {
     adj[v].push_back(w); // Add w to v’s list.
