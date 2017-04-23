@@ -6,7 +6,7 @@
 class Graph
 {
     int V;
-    list<int> *adj;
+    vector< list<int> > adj;;
     
 public:
     Graph(int V);  // Constructor
@@ -20,17 +20,10 @@ public:
 Graph::Graph(int V)
 {
     this->V = V;
-    adj = new list<int>[V];
+    adj.resize(V);
 }
 
-Graph:: ~Graph()
-{
- for (std::list< int >::iterator it = adj.begin() ; it != adj.end(); ++it)
- {
-     delete (*it);
- } 
-   adj.clear();   
-}
+
 void Graph::addEdge(int v, int w)
 {
     adj[v].push_back(w); // Add w to v’s list.
