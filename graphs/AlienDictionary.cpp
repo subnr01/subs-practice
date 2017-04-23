@@ -21,6 +21,8 @@ if any chars has not found and there is no dependence what then ?
 
 //https://discuss.leetcode.com/topic/22476/16-18-lines-python-30-lines-c
 
+http://www.geeksforgeeks.org/given-sorted-dictionary-find-precedence-characters/
+
 
 string alienOrder(vector<string>& words) {
     map<char, set<char>> suc, pre;
