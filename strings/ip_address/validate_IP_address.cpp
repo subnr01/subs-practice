@@ -34,60 +34,63 @@ Explanation: This is neither a IPv4 address nor a IPv6 address.
 
 */
 
-public class Solution {
-   public String validIPAddress(String IP) {
-	if(isValidIPv4(IP)) return "IPv4";
-	else if(isValidIPv6(IP)) return "IPv6";
-	else return "Neither";
-}
-
-public boolean isValidIPv4(String ip) {
-	if(ip.length()<7) return false;
-	if(ip.charAt(0)=='.') return false;
-	if(ip.charAt(ip.length()-1)=='.') return false;
-	String[] tokens = ip.split("\\.");
-	if(tokens.length!=4) return false;
-	for(String token:tokens) {
-		if(!isValidIPv4Token(token)) return false;
-	}
-	return true;
-}
-public boolean isValidIPv4Token(String token) {
-	if(token.startsWith("0") && token.length()>1) return false;
-	try {
-		int parsedInt = Integer.parseInt(token);
-		if(parsedInt<0 || parsedInt>255) return false;
-		if(parsedInt==0 && token.charAt(0)!='0') return false;
-	} catch(NumberFormatException nfe) {
-		return false;
-	}
-	return true;
-}
-	
-public boolean isValidIPv6(String ip) {
-	if(ip.length()<15) return false;
-	if(ip.charAt(0)==':') return false;
-	if(ip.charAt(ip.length()-1)==':') return false;
-	String[] tokens = ip.split(":");
-	if(tokens.length!=8) return false;
-	for(String token: tokens) {
-		if(!isValidIPv6Token(token)) return false;
-	}
-	return true;
-}
-public boolean isValidIPv6Token(String token) {
-	if(token.length()>4 || token.length()==0) return false;
-	char[] chars = token.toCharArray();
-	for(char c:chars) {
-		boolean isDigit = c>=48 && c<=57;
-		boolean isUppercaseAF = c>=65 && c<=70;
-		boolean isLowerCaseAF = c>=97 && c<=102;
-		if(!(isDigit || isUppercaseAF || isLowerCaseAF)) 
-			return false;
-	}
-	return true;
-}
-}
-
+class Solution {
+public:
+    const string validIPv6Chars = "0123456789abcdefABCDEF";
+    
+    bool isValidIPv4Block(string& block) {
+    	int num = 0;
+    	if (block.size() > 0 && block.size() <= 3) {
+    	    for (int i = 0; i < block.size(); i++) {
+    	        char c = block[i];
+    	        // special case: if c is a leading zero and there are characters left
+    	        if (!isalnum(c) || (i == 0 && c == '0' && block.size() > 1))
+    		    return false;
+    	        else {
+    		    num *= 10;
+    		    num += c - '0';
+    	        }
+    	    }
+    	    return num <= 255;
+    	}
+    	return false;
+    }
+    
+    bool isValidIPv6Block(string& block) {
+    	if (block.size() > 0 && block.size() <= 4) {
+    	    for (int i = 0; i < block.size(); i++) {
+    	        char c = block[i];
+    	        if (validIPv6Chars.find(c) == string::npos)
+    	    	    return false;
+    	    }
+    	    return true;
+    	}
+    	return false;
+    }
+    
+    string validIPAddress(string IP) {
+    	string ans[3] = {"IPv4", "IPv6", "Neither"};
+    	stringstream ss(IP);
+    	string block;
+    	// ipv4 candidate
+    	if (IP.substr(0, 4).find('.') != string::npos) {
+    	    for (int i = 0; i < 4; i++) {
+    		if (!getline(ss, block, '.') || !isValidIPv4Block(block))
+    	   	    return ans[2];
+    	    }
+    	    return ss.eof() ? ans[0] : ans[2];
+    	}
+    	// ipv6 candidate
+    	else if (IP.substr(0, 5).find(':') != string::npos) {
+    	    for (int i = 0; i < 8; i++) {
+    		if (!getline(ss, block, ':') || !isValidIPv6Block(block))
+    		    return ans[2];
+    	    }
+    	    return ss.eof() ? ans[1] : ans[2];
+    	}
+    
+    	return ans[2];
+    }
+};
 
 
