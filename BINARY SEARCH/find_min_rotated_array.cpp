@@ -8,7 +8,7 @@ Refer leet code
 
 
 /*
-With duplicates
+Without duplicates
 */
  int findMin(vector<int> &num) {
         int start=0,end=num.size()-1;
