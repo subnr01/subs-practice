@@ -48,3 +48,41 @@ public:
 		return le;
 	}
 };
+
+
+
+//Another solution
+
+class Solution {
+public:
+    struct cmp{
+        bool operator() (const pair<int,pair<int,int>> &a, const pair<int,pair<int,int>> &b){
+            return a.first > b.first;
+        }
+    };
+
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        const int n = matrix.size();
+        if(k == 1)  return matrix[0][0];
+
+        priority_queue<pair<int,pair<int,int> >, vector <pair<int,pair<int,int>>  > , cmp> q;   // pair<matrix[i][j],pair<i,j>>
+        for(int i = 0; i < n; i++){
+            q.push({matrix[i][0],{i,0}});
+        }
+        int ans;
+        
+        for(int i = 0; i < k; i++){
+            ans = q.top().first;
+            int r = (q.top().second).first;
+            int c = (q.top().second).second + 1;
+            q.pop();
+            if(c < n){  
+                q.push({matrix[r][c],{r,c}});
+            }
+        }
+        return ans;
+    }
+};
+
+
+
