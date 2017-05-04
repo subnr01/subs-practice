@@ -32,6 +32,7 @@ public:
         	pre = tmp;
         }
         if(fast != NULL) {
+		//Skip over the centre element
         	slow = slow->next;
         }
         return isSameList(pre, slow);
