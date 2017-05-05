@@ -16,7 +16,7 @@ while (fast->next!=NULL && fast->next->next != NULL)
 }
 
 In palindrome, we are using this to split the linked list
-while (fast!=NULL && fast->next->next != NULL)
+while (fast!=NULL && fast->next != NULL)
 {
   slow=slow->next;
   fast=fast->next->next;
