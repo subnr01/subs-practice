@@ -14,6 +14,15 @@ You should return [1,2,3,6,9,8,7,4,5].
 
 */
 
+/*
+
+The idea is just to add the elements in the spiral order. 
+First the up-most row (u), then the right-most column (r), 
+then the down-most row (d), and 
+finally the left-most column (l). 
+After finishing a row or a column, 
+update the corresponding variable to continue the process.
+*/
 
 class Solution {
 public:
