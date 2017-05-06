@@ -9,31 +9,6 @@ Design a Tic-tac-toe game that is played between two players on a n x n grid.
 
 
 
-class TicTacToe {
-private:
-    //count parameter: player 1 + : player 2: -
-    vector<int> rowJudge;
-    vector<int> colJudge;
-    int diag, anti;
-    int total;
-public:
-    /** Initialize your data structure here. */
-
-    TicTacToe(int n):total(n), rowJudge(n), colJudge(n),diag(0),anti(0){}
-
-    int move(int row, int col, int player) {
-        int add = player == 1 ? 1 : -1;
-        diag += row == col ? add : 0;
-        anti += row == total - col - 1 ? add : 0;
-        rowJudge[row] += add;
-        colJudge[col] += add;
-        if(abs(rowJudge[row]) == total || abs(colJudge[col]) == total || abs(diag) == total || abs(anti) == total) 
-            return player;
-        return 0;
-    }
-};
-
-
 //Another solution
 class TicTacToe {
 public:
@@ -69,24 +44,3 @@ private:
     int diagonal, anti_diagonal;
     int sz;
 };
-
-
-
-//stefan
-public class TicTacToe {
-
-    public TicTacToe(int n) {
-        count = new int[6*n][3];
-    }
-    
-    public int move(int row, int col, int player) {
-        int n = count.length / 6;
-        for (int x : new int[]{row, n+col, 2*n+row+col, 5*n+row-col})
-            if (++count[x][player] == n)
-                return player;
-        return 0;
-    }
-    
-    int[][] count;
-}
-
