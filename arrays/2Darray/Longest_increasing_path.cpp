@@ -11,3 +11,40 @@ ideal empty land to build a house, as the total travel distance of 3+3+1=7 is mi
 
 
 */
+class Solution {
+private:
+    vector<vector<int>> cache;
+    vector<pair<int, int>> direction;
+    int m, n;
+    int DFS(int i, int j, vector<vector<int>>& matrix) {
+        if(cache[i][j] != 0) return cache[i][j];
+        int longest = 1;
+        for(auto dir : direction) {
+            int x = i + dir.first, y = j + dir.second;
+            if(x < 0 || x >= m || y < 0 || y >= n || matrix[x][y] <= matrix[i][j]) {
+                continue;
+            } else {
+                longest = max(longest, DFS(x, y, matrix) + 1);
+            }
+        }
+        cache[i][j] = longest;
+        return longest;
+    }
+public:
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.empty()) return 0;
+        m = matrix.size(), n = matrix[0].size();
+        direction.push_back(pair<int, int>(0, 1));
+        direction.push_back(pair<int, int>(0, -1));
+        direction.push_back(pair<int, int>(1, 0));
+        direction.push_back(pair<int, int>(-1, 0));
+        cache = vector<vector<int>>(m, vector<int>(n, 0));
+        int longest = 1;
+        for (int i = 0; i < m; i++) {
+           for(int j = 0; j < n; j++) {
+               longest = max(longest, DFS(i, j, matrix));
+           } 
+        }
+        return longest;
+    }
+};
