@@ -8,3 +8,14 @@ TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
         root = (root->val > p->val) ? (candidate = root)->left : root->right;
     return candidate;
 }
+
+
+
+TreeNode* predecessor(TreeNode* root, TreeNode* p) {
+    TreeNode* candidate = NULL;
+    while (root)
+        root = (root->val < p->val) ? (candidate = root)->right : root->left;
+    return candidate;
+}
+
+ 
