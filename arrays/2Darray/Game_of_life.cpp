@@ -11,20 +11,29 @@ Write a function to compute the next state (after one update) of the board given
 */
 
 
-void gameOfLife(vector<vector<int>>& board) {
-    int m = board.size(), n = m ? board[0].size() : 0;
-    for (int i=0; i<m; ++i) {
-        for (int j=0; j<n; ++j) {
-            int count = 0;
-            for (int I=max(i-1, 0); I<min(i+2, m); ++I)
-                for (int J=max(j-1, 0); J<min(j+2, n); ++J)
-                    count += board[I][J] & 1;
-            if (count == 3 || count - board[i][j] == 3)
-                board[i][j] |= 2;
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& board) {
+        if(board.empty()) return;
+        const int m = board.size();
+        const int n = board[0].size();
+        for(int i=0; i<m; i++) {
+            for(int j=0; j<n; j++) {
+                check(board,i,j,i+1,j-1);
+                check(board,i,j,i+1,j);
+                check(board,i,j,i+1,j+1);
+                check(board,i,j,i,j+1);
+                if(board[i][j]>=5 && board[i][j]<=7) board[i][j]=1;
+                else board[i][j]=0;
+            }
         }
     }
-    for (int i=0; i<m; ++i)
-        for (int j=0; j<n; ++j)
-            board[i][j] >>= 1;
-}
-
+private:
+    void check(vector<vector<int>>& board, int i, int j, int a, int b) {
+        const int m = board.size();
+        const int n = board[0].size();
+        if(a>=m || b<0 || b>=n) return;
+        if(board[i][j]%2!=0) board[a][b]+=2;
+        if(board[a][b]%2!=0) board[i][j]+=2;
+    } 
+};
