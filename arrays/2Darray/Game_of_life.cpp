@@ -1,5 +1,6 @@
 /*
-Given a board with m by n cells, each cell has an initial state live (1) or dead (0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules:
+Given a board with m by n cells, each cell has an initial state live (1) or dead (0). Each cell interacts with
+its eight neighbors (horizontal, vertical, diagonal) using the following four rules:
 
 Any live cell with fewer than two live neighbors dies, as if caused by under-population.
 Any live cell with two or three live neighbors lives on to the next generation.
