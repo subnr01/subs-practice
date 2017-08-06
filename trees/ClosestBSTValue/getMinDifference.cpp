@@ -24,6 +24,10 @@ The minimum absolute difference is 1, which is the difference between 2 and 1 (o
 */
 
 
+
+// The idea is good, but finding it difficult to implement in C++
+
+
 class Solution {
 public:
     int getMinimumDifference(TreeNode* root) {
