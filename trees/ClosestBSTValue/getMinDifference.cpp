@@ -54,27 +54,41 @@ then every time we can use O(lgN) time to lookup for the nearest values.
 
 Solution 2 - Pre-Order traverse, time complexity O(NlgN), space complexity O(N).
 
-public class Solution {
-    TreeSet<Integer> set = new TreeSet<>();
-    int min = Integer.MAX_VALUE;
-    
-    public int getMinimumDifference(TreeNode root) {
-        if (root == null) return min;
-        
-        if (!set.isEmpty()) {
-            if (set.floor(root.val) != null) {
-                min = Math.min(min, Math.abs(root.val - set.floor(root.val)));
-            }
-            if (set.ceiling(root.val) != null) {
-                min = Math.min(min, Math.abs(root.val - set.ceiling(root.val)));
-            }
+// C++ implementation
+void getMinimumDifference(TreeNode* root, set<int, int> &myset, int &min) {
+
+        if (!root) {
+        	return;
         }
         
-        set.add(root.val);
+        if (!myset.empty()) {
+        	std::set<int>::iterator itup;
+        	int upper = 0;
+        	int lower = 0;
+
+        	// Find the upper bound
+        	itup=myset.upper_bound (root->val); 
+        	upper = *itup;
+
+        	// Find the lower bound
+        	--itup;
+        	if( itup != myset.end())
+        	{
+        		lower = *itup;
+        	}
+
+        	// Find the minimum difference
+            min = min(min, abs(root.val - lower));
+            min = min(min, abs(root.val - upper));
+            
+        }
         
-        getMinimumDifference(root.left);
-        getMinimumDifference(root.right);
+        // Add the new element into the set
+        set.add(root->val);
+        
+        // Perform DFS
+        getMinimumDifference(root->left, myset, min);
+        getMinimumDifference(root->right, myset, min);
         
         return min;
     }
-}
