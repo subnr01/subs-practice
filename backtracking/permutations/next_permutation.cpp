@@ -32,13 +32,19 @@ class Solution {
     	    return;
     	}
     	int l = -1;
+        
+        // We run the loop till k
     	for (int i = nums.size() - 1; i > k; i--) {
+            
+            // To be noted here, we are comparing with k
     		if (nums[i] > nums[k]) {
     			l = i;
     			break;
     		} 
     	} 
     	swap(nums[k], nums[l]);
+        
+        //reverse from k to end.
     	reverse(nums.begin() + k + 1, nums.end()); 
     }
 }; 
