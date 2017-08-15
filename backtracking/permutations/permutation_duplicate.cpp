@@ -12,23 +12,33 @@ For example,
 */
 
 
+
 class Solution {
 public:
-    void recursion(vector<int> num, int i, int j, vector<vector<int> > &res) {
-        if (i == j-1) {
-            res.push_back(num);
-            return;
-        }
-        for (int k = i; k < j; k++) {
-            if (i != k && num[i] == num[k]) continue;
-            swap(num[i], num[k]);
-            recursion(num, i+1, j, res);
-        }
+    vector<vector<int> > permute(vector<int> &num) {
+	    vector<vector<int> > result;
+	    
+	    permuteRecursive(num, 0, result);
+	    return result;
     }
-    vector<vector<int> > permuteUnique(vector<int> &num) {
-        sort(num.begin(), num.end());
-        vector<vector<int> >res;
-        recursion(num, 0, num.size(), res);
-        return res;
+    
+    // permute num[begin..end]
+    // invariant: num[0..begin-1] have been fixed/permuted
+	void permuteRecursive(vector<int> &num, int begin, vector<vector<int> > &result)	{
+		if (begin == num.size()) {
+		    // one permutation instance
+		    result.push_back(num);
+		    return;
+		}
+		
+		for (int i = begin; i < num.size(); i++) {
+            if ( i != begin && num[begin] == num[i]) {
+                continue;
+            }
+		    swap(num[begin], num[i]);
+		    permuteRecursive(num, begin + 1, result);
+		    // reset
+		    swap(num[begin], num[i]);
+		}
     }
-};
+};  
