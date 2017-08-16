@@ -17,6 +17,31 @@ If nums = [1,2,2], a solution is:
 
 */
 
+// Using recursion
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> subs;
+        vector<int> sub;  
+        std::sort(nums.begin(), nums.end());
+        genSubsets(nums, 0, sub, subs);
+        return subs; 
+    }
+    void genSubsets(vector<int>& nums, int start, vector<int>& sub, vector<vector<int>>& subs) {
+        subs.push_back(sub);
+        for (int i = start; i < nums.size(); i++) {
+            if ( i != start && nums[i] == nums[i-1]) {
+ 			continue;
+            }
+            sub.push_back(nums[i]);
+            genSubsets(nums, i + 1, sub, subs);
+            sub.pop_back();
+            
+        }
+    }
+};
+
+
 class Solution {
 public:
     vector<vector<int> > subsetsWithDup(vector<int> &S) {
@@ -41,24 +66,4 @@ public:
 
 
 
-//Using recursion
-class Solution {
-public:
-    std::vector<std::vector<int> > subsetsWithDup(std::vector<int> &nums) {
-		std::sort(nums.begin(), nums.end());
-        std::vector<std::vector<int> > res;
-		std::vector<int> vec;
-		subsetsWithDup(res, nums, vec, 0);
-		return res;
-    }
-private:
-	void subsetsWithDup(std::vector<std::vector<int> > &res, std::vector<int> &nums, std::vector<int> &vec, int begin) {
-		res.push_back(vec);
-		for (int i = begin; i != nums.size(); ++i)
-			if (i == begin || nums[i] != nums[i - 1]) { 
-				vec.push_back(nums[i]);
-				subsetsWithDup(res, nums, vec, i + 1);
-				vec.pop_back();
-			}
-	}
-};
+
