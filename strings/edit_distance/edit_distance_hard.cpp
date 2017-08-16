@@ -20,24 +20,25 @@ This is a dynamic programming question.
 Solution with the 2D version: relatively simpler
 */
 
-class Solution {
+class Solution { 
 public:
-    int minDistance(string word1, string word2) {
-        int m = word1.size(), n = word2.size();
-        if(m==0 || n==0 )return max(m,n);
-        int dp[m+1][n+1];
-        for(int i=0; i<=m; i++)  dp[i][0] = i;
-        for(int i=0; i<=n; i++)  dp[0][i] = i;
-        for(int i=0; i<m; i++) {
-            for(int j=0; j<n; j++) {
-                if(word1[i] == word2[j]) dp[i+1][j+1] = dp[i][j];
-                else dp[i+1][j+1] = min( min(dp[i+1][j]+1, dp[i][j+1]+1), dp[i][j]+1);
+    int minDistance(string word1, string word2) { 
+        int m = word1.length(), n = word2.length();
+        vector<vector<int> > dp(m + 1, vector<int> (n + 1, 0));
+        for (int i = 1; i <= m; i++)
+            dp[i][0] = i;
+        for (int j = 1; j <= n; j++)
+            dp[0][j] = j;  
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (word1[i - 1] == word2[j - 1]) 
+                    dp[i][j] = dp[i - 1][j - 1];
+                else dp[i][j] = min(dp[i - 1][j - 1] + 1, min(dp[i][j - 1] + 1, dp[i - 1][j] + 1));
             }
         }
         return dp[m][n];
     }
 };
-
 
 /*
 Solution with the 
@@ -46,6 +47,26 @@ Solution with the
 
 https://discuss.leetcode.com/topic/17639/20ms-detailed-explained-c-solutions-o-n-space/2
 
-
+class Solution { 
+public:
+    int minDistance(string word1, string word2) {
+        int m = word1.length(), n = word2.length();
+        vector<int> cur(m + 1, 0);
+        for (int i = 1; i <= m; i++)
+            cur[i] = i;
+        for (int j = 1; j <= n; j++) {
+            int pre = cur[0];
+            cur[0] = j;
+            for (int i = 1; i <= m; i++) {
+                int temp = cur[i];
+                if (word1[i - 1] == word2[j - 1])
+                    cur[i] = pre;
+                else cur[i] = min(pre + 1, min(cur[i] + 1, cur[i - 1] + 1));
+                pre = temp;
+            }
+        }
+        return cur[m]; 
+    }
+}; 
 
 
