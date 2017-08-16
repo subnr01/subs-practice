@@ -32,9 +32,13 @@ public:
 		}
 		
 		for (int i = begin; i < num.size(); i++) {
-            if ( i != begin && num[begin] == num[i]) {
-                continue;
-            }
+			
+                    if ( i != begin && num[begin] == num[i]) {
+                       /* if elements belonging to DIFFERENT
+		          indexes are same
+		       */
+			    continue;
+                    }
 		    swap(num[begin], num[i]);
 		    permuteRecursive(num, begin + 1, result);
 		    // reset
