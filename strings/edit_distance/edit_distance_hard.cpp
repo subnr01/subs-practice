@@ -13,12 +13,37 @@ c) Replace a character
 
 /* 
 This is a dynamic programming question.
+
+
 */
 
 
 /*
 Solution with the 2D version: relatively simpler
-*/
+1. Let dp[i][j] to be the minimum number of operations to convert word1[0..i - 1] to word2[0..j - 1].
+2. Empty string case (either of them)
+   dp[i][0] = i;
+   dp[0][j] = j.
+3. Suppose we have already known how to convert word1[0..i - 2] to word2[0..j - 2], which is dp[i - 1][j - 1]. 
+   Now let's consider word[i - 1] and word2[j - 1]. If they are euqal, then no more operation is needed and 
+   dp[i][j] = dp[i - 1][j - 1]. Well, what if they are not equal?
+   
+   If they are not equal, then we consider three cases:
+   
+   1. Replace word1[i - 1] by word2[j - 1] (dp[i][j] = dp[i - 1][j - 1] + 1 (for replacement));
+   2. Delete word1[i - 1] and word1[0..i - 2] = word2[0..j - 1] (dp[i][j] = dp[i - 1][j] + 1 (for deletion));
+   3. Insert word2[j - 1] to word1[0..i - 1] and 
+   word1[0..i - 1] + word2[j - 1] = word2[0..j - 1] (dp[i][j] = dp[i][j - 1] + 1 (for insertion)).
+   
+   So we will consider the minimum of the above operations.
+   
+   The crux is 
+   1. If we replace, then we need to move on and consider the remaining elements of A and B.
+   2. If we delete something from A, then we need to consider the remaining elements of A and all
+      the elements of B. (dp[i - 1][j])
+   3. If we add something to A, then we need to consider all the elements of A (except the one added)
+      with the remaining elements of B. (dp[i][j - 1])
+ */
 
 class Solution { 
 public:
@@ -39,6 +64,7 @@ public:
         return dp[m][n];
     }
 };
+
 
 /*
 Solution with the 
