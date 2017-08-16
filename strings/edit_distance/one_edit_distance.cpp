@@ -2,6 +2,14 @@
 
 Given two strings S and T, determine if they are both one edit distance apart.
 
+An edit between two strings is one of the following changes.
+
+Add a character
+Delete a character
+Change a character
+Given two string s1 and s2, find if s1 can be converted to s2 with exactly one edit. Expected time complexity is
+O(m+n) where m and n are lengths of two strings.
+
 */
 
 
