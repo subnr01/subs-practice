@@ -17,6 +17,52 @@ O(m+n) where m and n are lengths of two strings.
 
 
 
+//Simple solution (programm creek)
+bool isOneEditDistance(string s, string t) {
+	int len1 = s.size();
+	int len2 = t.size();
+
+	if ( abs(len1 - len2) > 1) {
+		return false;
+	}
+
+	int i = 0;
+	int j = 0;
+	int count = 0;
+
+
+	while ( i<len1 && j<len2)
+	{
+		if (s[i] == t[j]) {
+			i++;
+			j++;
+		} else {
+			count++;
+			if (count > 1) {
+				return false;
+			}
+
+			if (len1 > len2) {
+				i++;
+			} else {
+				j++;
+			}
+			i++;
+			j++;
+		}
+	}
+
+	if(i<len1 || j<len2){
+		count++;
+	}
+
+	return count == 1;
+
+
+}
+
+
+// Slightly difficult solution.
 class Solution {
 public:
     bool isOneEditDistance(string s, string t) {
