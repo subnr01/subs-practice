@@ -28,15 +28,25 @@ Could you solve it in linear time?
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        deque<int> dq;
-        vector<int> ans;
-        for (int i=0; i<nums.size(); i++) {
-            if (!dq.empty() && dq.front() == i-k) dq.pop_front();
-            while (!dq.empty() && nums[dq.back()] < nums[i])
-                dq.pop_back();
-            dq.push_back(i);
-            if (i>=k-1) ans.push_back(nums[dq.front()]);
+        deque<int> buffer;
+        vector<int> res;
+        
+        for(auto i=0; i<nums.size();++i)
+        {
+            while(!buffer.empty() && nums[i]>=nums[buffer.back()])
+            {
+                buffer.pop_back();
+   
+            }
+            buffer.push_back(i);
+            
+            if(i>=k-1) {
+             res.push_back(nums[buffer.front()]);
+            }
+            if(buffer.front()<= i-k + 1) {
+                buffer.pop_front();
+            }
         }
-        return ans;
+        return res;
     }
 };
