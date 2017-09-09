@@ -15,27 +15,50 @@ For example, given n = 3, a solution set is:
 */
 
 
+//For n = 3
+// output is ["((()))","(()())","(())()","()(())","()()()"]
+
 
 class Solution {
 public:
     vector<string> generateParenthesis(int n) {
+        
         vector<string> result;
-        if (n < 1) return result;
-        string parens;
-        collect(result, parens, n, n);
+        if (n < 1) {
+            return result;
+        }
+        
+        string s;
+        func(result, s, n, n); 
+        
         return result;
+        
     }
-    void collect(vector<string> &result, string &parens, int left, int right) {
-        if (left > right || left < 0) return;
+    
+    
+    void func(vector<string> &result, string s, int left, int right)
+    {
+        if ( left > right) {
+                return;
+        }
+        
         if (left + right == 0) {
-            result.push_back(parens);
+            result.push_back(s);
             return;
         }
-        parens.push_back('(');
-        collect(result, parens, left - 1, right);
-        parens.pop_back();
-        parens.push_back(')');
-        collect(result, parens, left, right - 1);
-        parens.pop_back();
+        
+        if (left > 0) {
+            s.push_back('(');
+            func(result, s, left-1, right);
+            s.pop_back();
+        }
+        
+        if (right > 0) {
+            s.push_back(')');
+            func(result, s, left, right - 1);
+            s.pop_back();
+        }
+        
+        return;
     }
 };
