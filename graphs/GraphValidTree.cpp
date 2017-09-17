@@ -6,6 +6,11 @@ Analysis
 
 This problem can be converted to finding a cycle in a graph. It can be solved by using DFS (Recursion) or BFS (Queue).
 
+
+To tell whether a graph is a valid tree, we have to:
+
+Make sure there is no cycle in the graph - this has to be a none-cyclic graph;
+Make sure every node is reached - this has to be a connected graph;
 */
 
 https://discuss.leetcode.com/topic/28436/simple-and-clean-c-solution-with-detailed-explanation/3
