@@ -62,9 +62,7 @@ bool Graph::isCyclic()
 {
     // Mark all the vertices as not visited and not part of recursion
     // stack
-    bool *visited = new bool[V];
-    for (int i = 0; i < V; i++)
-        visited[i] = false;
+    bool visited[V] = {false};
  
     // Call the recursive helper function to detect cycle in different
     // DFS trees
