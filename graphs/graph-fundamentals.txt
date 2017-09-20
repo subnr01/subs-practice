@@ -33,10 +33,33 @@ Graphs and Trees: A graph can contain a cycle unlike a tree. Simply put
 a tree is a graph without a cycle. Since a graph can contain a cycle, we
 use the visited array to keep track of visited vertices.
 
+===========================================================================================================
 BFS: It is an algorithm that for traversing or searching tree or graph data structures. 
 It starts at the tree root (or some arbitrary node of a graph, sometimes referred 
 to as a 'search key'[1]) and explores the neighbor nodes first, 
 before moving to the next level neighbours.
+  
+Time Complexity: O(|V|+|E|). When the number of vertices in the graph is known ahead 
+of time, and additional data structures are used to determine which vertices have already 
+been added to the queue, the space complexity can be expressed as O(|V|)
+
+Breadth-first search is complete, but depth-first search is not. When applied to infinite graphs represented implicitly, breadth-first search will eventually find the goal state, but depth-first search may get lost in parts of the graph that have no goal state and never return
+
+Some applications of BFS:
+1. Copying garbage collection, Cheney's algorithm
+2. Finding the shortest path between two nodes u and v, with path length 
+measured by number of edges (an advantage over depth-first search)
+3. (Reverse) Cuthill–McKee mesh numbering
+4. Ford–Fulkerson method for computing the maximum flow in a flow network
+5. Serialization/Deserialization of a binary tree vs serialization in sorted order, 
+   allows the tree to be re-constructed in an efficient manner.
+6. Construction of the failure function of the Aho-Corasick pattern matcher.
+7. Testing the bipartiteness of a graph.
+===========================================================================================================
+
+DFS:Depth-first search (DFS) is an algorithm for traversing or searching tree or graph data structures.
+One starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores 
+as far as possible along each branch before backtracking.
 
 
 
