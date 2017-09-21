@@ -44,6 +44,7 @@ of time, and additional data structures are used to determine which vertices hav
 been added to the queue, the space complexity can be expressed as O(|V|)
 
 Breadth-first search is complete, but depth-first search is not. When applied to infinite graphs represented implicitly, breadth-first search will eventually find the goal state, but depth-first search may get lost in parts of the graph that have no goal state and never return
+https://stackoverflow.com/questions/11468621/why-is-the-time-complexity-of-both-dfs-and-bfs-o-v-e
 
 Some applications of BFS:
 1. Copying garbage collection, Cheney's algorithm
@@ -61,9 +62,19 @@ DFS:Depth-first search (DFS) is an algorithm for traversing or searching tree or
 One starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores 
 as far as possible along each branch before backtracking.
 
+Complexity:
+https://stackoverflow.com/questions/33664911/how-is-big-o-of-depth-first-search-ove?noredirect=1&lq=1
+The complexity depends on its application area. In most cases, it is O(|V| + |E|)
+In infinite graphs, there is a search depth which is limited. 
 
+Applications of DFS:
+1. Finding connected components.
+2. Topological sort
+3. Finding bridges in a graph.
+4. Finding biconnectivity in graphs.
+5. Finding 2/3 connected components.
 
-=============================================================
+===========================================================================================================
 
 (1) A tree is an undirected graph in which any two vertices are
 connected by exactly one path.
