@@ -15,6 +15,9 @@ Make sure every node is reached - this has to be a connected graph;
 
 https://discuss.leetcode.com/topic/28436/simple-and-clean-c-solution-with-detailed-explanation/3
 
+
+//Union find solution
+
 class Solution {
 public:
     bool validTree(int n, vector<pair<int, int>>& edges) {
@@ -39,3 +42,32 @@ private:
         return parent[x] == x ? x : find(parent[x]);
     }
 };
+
+
+//DFS solution
+class Solution {
+public:
+    bool validTree(int n, vector<pair<int, int>>& edges) {
+        vector<vector<int>> neighbors(n);
+        for (auto e : edges) {
+            neighbors[e.first].push_back(e.second);
+            neighbors[e.second].push_back(e.first);
+        }
+        vector<bool> visited(n, false);
+        if (hasCycle(neighbors, 0, -1, visited))
+            return false;
+        for (bool v : visited)
+            if (!v) return false; 
+        return true;
+    } 
+private:
+    bool hasCycle(vector<vector<int>>& neighbors, int kid, int parent, vector<bool>& visited) {
+        if (visited[kid]) return true;
+        visited[kid] = true;
+        for (auto neigh : neighbors[kid])
+            if (neigh != parent && hasCycle(neighbors, neigh, kid, visited))
+                return true;
+        return false;
+    }
+};
+
