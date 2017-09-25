@@ -1,0 +1,34 @@
+Algorithm design Techniques Analysis
+-----------------------------------------
+
+
+Given an undirected graph, it is required to color each vertex in C with one
+of three colors, such that no two adjacent vertices have the same color.
+If two adjacent vertices have the same color, then it is illegal.
+
+
+Given a set of integers X = {x1,x2,x3...} and an integer y, find 
+a subset Y of X, whose sum is equal to y.
+if X = {10,20,30,40,50,60}
+and Y = 60
+then solutions: {10,20,30}, {20,40} and {60}
+
+Design a backtracking algorithm to generate all permutations of
+a numbers 1,2,3..n
+
+Design a backtracking algorithm to generate subsets
+
+Write a backtracking algorithm for a knight tour problem. Given a chess board, 
+decide if it is possible for a knight placed at a certain postion in the board
+to visit every square of the board exactly once and return to its start postion
+
+
+Given an undirected graph, determine whether it contains a simple cycle
+that visits each vertex exactly once. (hamiltonian cycle)
+
+Give an algorithm for the assignment problem. Given n employees to be assigned
+to n jobs such the cost of assigning the ith person to the jth person is
+C(ij). Find the assignment that minimizes the cost.
+
+Use the Backtracking algorithm for the 0–1 Knapsack problem 
+
