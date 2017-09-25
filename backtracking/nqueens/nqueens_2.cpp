@@ -76,8 +76,8 @@ class Solution {
 public:
     int totalNQueens(int n) {
     vector<bool> col(n, true);
-    vector<bool> anti(2*n-1, true);
-    vector<bool> main(2*n-1, true);
+    vector<bool> anti(2*n-1, true); //135
+    vector<bool> main(2*n-1, true); //45
     vector<int> row(n, 0);
     int count = 0;
     dfs(0, row, col, main, anti, count);
