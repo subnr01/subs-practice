@@ -21,23 +21,29 @@ Note: Given n will be between 1 and 9 inclusive.
 
 class Solution {
 public:
-    string getPermutation(int n, int k) {
-        string ans = "";
-        int i, j, t, sum, jie;
-        jie = 1;
+     string getPermutation(int n, int k) {
+        string str;
+        string result;
+        
+        int i, j, t, sum, mod;
+        mod = 1;
         for (i = 1; i <= n; i++){
-            jie = i * jie;
-            ans += to_string(i);
+            mod = i * mod;
+            str += to_string(i);
         }
+        //Change k to reflect the index
+        k--;
+        
         for (i = 0; i < n; i++){
-            jie /= n - i;
-            for (sum = 0, j = 1; j <= n; j++){
-                if (sum + jie >= k) break;
-                sum += jie;
-                swap(ans[i], ans[i + j]);
-            }
-            k -= sum;
+            mod /= n - i;
+            int curindex  = k/mod;
+            k = k % mod;
+            result.push_back(str[curindex]);
+            str.erase(str.begin()+curindex);
+            
         }
-        return ans;
+         
+        return result;
     }
+    
 };
