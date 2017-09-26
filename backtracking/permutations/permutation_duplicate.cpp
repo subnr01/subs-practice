@@ -15,34 +15,38 @@ For example,
 
 class Solution {
 public:
-    vector<vector<int> > permute(vector<int> &num) {
-	    vector<vector<int> > result;
-	    
-	    permuteRecursive(num, 0, result);
-	    return result;
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(), nums.end());
+        int start = 0;
+        genPerm(res, nums, start);
+        return res;
+    
     }
     
-    // permute num[begin..end]
-    // invariant: num[0..begin-1] have been fixed/permuted
-	void permuteRecursive(vector<int> &num, int begin, vector<vector<int> > &result)	{
-		if (begin == num.size()) {
-		    // one permutation instance
-		    result.push_back(num);
-		    return;
-		}
-		
-		for (int i = begin; i < num.size(); i++) {
-			
-                    if ( i != begin && num[begin] == num[i]) {
-                       /* if elements belonging to DIFFERENT
-		          indexes are same
-		       */
-			    continue;
-                    }
-		    swap(num[begin], num[i]);
-		    permuteRecursive(num, begin + 1, result);
-		    // reset
-		    swap(num[begin], num[i]);
-		}
+    void genPerm(vector<vector<int>> &res, vector<int> nums, int start)
+    {
+        
+        if(start == nums.size()) {
+            res.push_back(nums);
+            return;
+        }
+  
+        for (int i = start; i < nums.size(); i++) {
+            if ( i == start || nums[i] != nums[start]) {
+                swap(nums[i], nums[start]);
+                genPerm(res, nums, start+1);
+                /* See we are not swapping back */
+                //swap(nums[i], nums[start]);
+                
+            }      
+        }
+        
     }
-};  
+    
+};
+
+
+
+//Solution using map
+https://discuss.leetcode.com/topic/18471/my-c-recursive-dfs-backtracking-solutions
