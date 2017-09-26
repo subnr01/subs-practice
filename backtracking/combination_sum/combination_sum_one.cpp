@@ -29,7 +29,12 @@ private:
 	    res.push_back(combination);
 	    return;
 	}
-	    
+	
+	/*
+	   Notice that we are not passing i+1, so every subsequent function call
+	   uses the same number, and thats how we can repeat the same number to 
+	   be summed to get the result
+	*/
         for (int i = begin; i != candidates.size() && target >= candidates[i]; ++i) {
             combination.push_back(candidates[i]);
             combinationSum(candidates, target - candidates[i], res, combination, i);
