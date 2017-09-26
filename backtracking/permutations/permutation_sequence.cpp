@@ -25,7 +25,9 @@ public:
         string str;
         string result;
         
-        int i, j, t, sum, mod;
+        //Taking example n = 3, k =3
+          
+        int i,  mod;
         mod = 1;
         for (i = 1; i <= n; i++){
             mod = i * mod;
@@ -34,10 +36,11 @@ public:
         //Change k to reflect the index
         k--;
         
+        //mod = 6, k = 2
         for (i = 0; i < n; i++){
-            mod /= n - i;
-            int curindex  = k/mod;
-            k = k % mod;
+            mod /= n - i;  //(mod = (n-1)!
+            int curindex  = k/mod; //k/(n-1)!
+            k = k % mod;  //2%mod
             result.push_back(str[curindex]);
             str.erase(str.begin()+curindex);
             
