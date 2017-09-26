@@ -16,6 +16,8 @@ outputs are in the right-hand column.
 1,1,5 → 1,5,1
 */
 
+//https://discuss.leetcode.com/topic/15216/a-simple-algorithm-from-wikipedia-with-c-implementation-can-be-used-in-permutations-and-permutations-ii
+
 
 class Solution {
     public:
