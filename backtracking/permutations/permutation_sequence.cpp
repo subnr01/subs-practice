@@ -16,6 +16,9 @@ Note: Given n will be between 1 and 9 inclusive.
 
 */
 
+//https://discuss.leetcode.com/topic/17348/explain-like-i-m-five-java-solution-in-o-n
+
+
 class Solution {
 public:
     string getPermutation(int n, int k) {
