@@ -25,6 +25,12 @@ public:
         }
         int count = 0;
         vector<vector<char>> test;
+        
+        //Note how two vectors are copied here
+        // No need to use a for loop like arrays
+        // the assignment operator takes care
+        // of copying the elements between two
+        // vectors
         test = grid;
         
         int row = test.size();
