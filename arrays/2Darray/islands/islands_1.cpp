@@ -14,83 +14,54 @@ Answer: 1
 */
 
 
-public class Solution {
-    char[][] g;
-    public int numIslands(char[][] grid) {
-        int islands = 0;
-        g = grid;
-        for (int i=0; i<g.length; i++)
-            for (int j=0; j<g[i].length; j++)
-                islands += sink(i, j);
-        return islands;
-    }
-    int sink(int i, int j) {
-        if (i < 0 || i == g.length || j < 0 || j == g[i].length || g[i][j] == '0')
+//DFS solution where O(m*n)
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        if (grid.empty()) 
+        {
             return 0;
-        g[i][j] = '0';
-        sink(i+1, j); sink(i-1, j); sink(i, j+1); sink(i, j-1);
-        return 1;
-    }
-}
-
-
-//Solution 2
-public class Solution {
-    public int numIslands(char[][] grid) {
-        int islands = 0;
-        for (int i=0; i<grid.length; i++)
-            for (int j=0; j<grid[i].length; j++)
-                islands += sink(grid, i, j);
-        return islands;
-    }
-    int sink(char[][] grid, int i, int j) {
-        if (i < 0 || i == grid.length || j < 0 || j == grid[i].length || grid[i][j] == '0')
-            return 0;
-        grid[i][j] = '0';
-        for (int k=0; k<4; k++)
-            sink(grid, i+d[k], j+d[k+1]);
-        return 1;
-    }
-    int[] d = {0, 1, 0, -1, 0};
-}
-
-
-
-//Merging the islands: O(m*n)
-
-public int numIslands(char[][] grid) {
-    if(grid==null || grid.length==0||grid[0].length==0)
-        return 0;
- 
-    int m = grid.length;
-    int n = grid[0].length;
- 
-    int count=0;
-    for(int i=0; i<m; i++){
-        for(int j=0; j<n; j++){
-            if(grid[i][j]=='1'){
-                count++;
-                merge(grid, i, j);
+        }
+        int count = 0;
+        vector<vector<char>> test;
+        test = grid;
+        
+        int row = test.size();
+        int col = test[0].size();
+        
+        for (int i = 0; i < row; i++)
+        {
+            for(int j = 0; j < col; j++)
+            {
+                if (test[i][j] == '1') {
+                    count++;
+                    merge(test, i, j);
+                }
             }
         }
+        return count;
+        
     }
- 
-    return count;
-}
- 
-public void merge(char[][] grid, int i, int j){
-    int m=grid.length;
-    int n=grid[0].length;
- 
-    if(i<0||i>=m||j<0||j>=n||grid[i][j]!='1')
-        return;
- 
-    grid[i][j]='X';
- 
-    merge(grid, i-1, j);
-    merge(grid, i+1, j);
-    merge(grid, i, j-1);
-    merge(grid, i, j+1);
-}
+    
+    
+    void merge(vector<vector<char>>&test, int i, int j)
+    {
+        if(i == test.size() || j == test[0].size() || i < 0 || j < 0 || test[i][j] == '0') {
+            return;
+        }
+        //recursively update all neighboring '1's 
+        // until a zero is found when you return
+        test[i][j] = '0';
+        merge(test, i+1, j);
+        merge(test, i, j+1);
+        merge(test, i-1, j);
+        merge(test, i, j-1);
+    }
+    
+};
+
+
+
 
 
