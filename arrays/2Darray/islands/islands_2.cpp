@@ -43,6 +43,8 @@ vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
     for (auto pos : positions) {
         int x = pos.first, 
         int y = pos.second;
+        
+        //see how 2D index is changed to 1d index
         int idx_p = x * n + y;
         
         roots[idx_p] = idx_p;
@@ -51,6 +53,7 @@ vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
         for (auto dir : dirs) {
             int row = x + dir.first; 
             int col = y + dir.second; 
+            //see how 2D index is changed to 1d index
             idx_new = row * n + col;
             
             if(row < 0 || row >= m || col < 0 || col >= n || roots[idx_new] == -1) continue;
@@ -58,6 +61,9 @@ vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
             int rootNb = findRoot(idx_new);
             if (idx_p != rootNb) {
                 roots[idx_p] = rootNb;
+                //Update the correct index to the neighbor's value
+                //so that we can trace back to the parent
+                // root[parent] = parent;
                 idx_p = rootNb;
                 --island;
             }
