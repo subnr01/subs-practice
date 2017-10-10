@@ -41,18 +41,27 @@ vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
     vector<pair<int, int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     int island = 0;
     for (auto pos : positions) {
-        int x = pos.first, y = pos.second, idx_p = x * n + y;
+        int x = pos.first, 
+        int y = pos.second;
+        int idx_p = x * n + y;
+        
         roots[idx_p] = idx_p;
+        
         ++island;
         for (auto dir : dirs) {
-            int row = x + dir.first, col = y + dir.second, idx_new = row * n + col;
-            if (row >= 0 && row < m && col >= 0 && col < n && roots[idx_new] != -1) {
-                int rootNew = findRoot(idx_new), rootPos = findRoot(idx_p);
-                if (rootPos != rootNew) {
-                    roots[rootPos] = rootNew;
-                    --island;
-                }
+            int row = x + dir.first; 
+            int col = y + dir.second; 
+            idx_new = row * n + col;
+            
+            if(row < 0 || row >= m || col < 0 || col >= n || roots[idx_new] == -1) continue;
+            
+            int rootNb = findRoot(idx_new);
+            if (idx_p != rootNb) {
+                roots[idx_p] = rootNb;
+                idx_p = rootNb;
+                --island;
             }
+            
         }
         res.push_back(island);
     }
@@ -63,7 +72,6 @@ private:
 vector<int> roots;
 int findRoot(int idx) {
     while(idx != roots[idx]) {
-        roots[idx] = roots[roots[idx]]; 
         idx = roots[idx];
     }
     return idx;
