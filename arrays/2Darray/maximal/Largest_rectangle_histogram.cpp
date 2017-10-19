@@ -12,7 +12,8 @@ int largestRectangleArea(vector<int>& height) {
     int i = 0, max_a = 0;
     while (i < size_h) {
         if (stk.empty() || height[i] >= height[stk.top()]) {
-          stk.push(i++);
+          stk.push(i);
+          i++;  
         } else {
             int h = stk.top();
             stk.pop();
