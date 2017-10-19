@@ -13,7 +13,8 @@ find the area of largest rectangle in the histogram.
 //The difference between (left - right)*height will 
 //give the largest area.
 
-
+//Some good explanation under
+//https://stackoverflow.com/questions/4311694/maximize-the-rectangular-area-under-histogram
 
 /*
 This problem comes down to basically get the height of the smallest bar and
