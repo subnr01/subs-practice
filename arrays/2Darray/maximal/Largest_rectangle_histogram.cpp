@@ -76,6 +76,13 @@ public int largestRectangleArea(int[] height) {
 		}
  
 	}
+	/*
+	Since we do not have an extra element at the end, 
+	we may have to do two more iterations to
+	get the smallest height * the largest stretch 
+	and compare against the greatest area that 
+	we have till now
+	*/
  
 	while (!stack.isEmpty()) {
 		int p = stack.pop();
