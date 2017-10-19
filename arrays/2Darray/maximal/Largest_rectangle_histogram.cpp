@@ -26,7 +26,10 @@ There is a trick logic.
 1. push into the stack until you find a bar of lesser height.
 2. Pop the top, now the top signifies the tallest building and the area of the tallest building
 is height * 1 unit ( this is constant and is calculated by (s.pop(); i - s.top() - 1).
-
+3. After every pop peration, we do not increment i (THIS IS KEY) because we want to push i again and get the 
+height of the small building into the stack. The last element in the stack will probably be the smallest
+height and will be mulitplied finally with the entire stretch
+*/
 
 int largestRectangleArea(vector<int>& height) {
     height.push_back(0);
@@ -49,3 +52,37 @@ int largestRectangleArea(vector<int>& height) {
 }
 
 //Without modifying the vector
+public int largestRectangleArea(int[] height) {
+	if (height == null || height.length == 0) {
+		return 0;
+	}
+ 
+	Stack<Integer> stack = new Stack<Integer>();
+ 
+	int max = 0;
+	int i = 0;
+ 
+	while (i < height.length) {
+		//push index to stack when the current height is larger than the previous one
+		if (stack.isEmpty() || height[i] >= height[stack.peek()]) {
+			stack.push(i);
+			i++;
+		} else {
+		//calculate max value when the current height is less than the previous one
+			int p = stack.pop();
+			int h = height[p];
+			int w = stack.isEmpty() ? i : i - stack.peek() - 1;
+			max = Math.max(h * w, max);
+		}
+ 
+	}
+ 
+	while (!stack.isEmpty()) {
+		int p = stack.pop();
+		int h = height[p];
+		int w = stack.isEmpty() ? i : i - stack.peek() - 1;
+		max = Math.max(h * w, max);
+	}
+ 
+	return max;
+}
