@@ -5,6 +5,16 @@ find the area of largest rectangle in the histogram.
 
 */
 
+//WHAT ABOUT BRUTE FORCE SOLUTION
+//THE BRUTE FORCE SOLUTION IS A O(n*2)solution.
+//Basically we start from every bar and move right 
+//and stop if we get a lesser height and same
+//way for left as well.
+//The difference between (left - right)*height will 
+//give the largest area.
+
+
+
 /*
 This problem comes down to basically get the height of the smallest bar and
 width of the entire histogram stretch unless you have another slightly bigger one
@@ -31,6 +41,7 @@ height of the small building into the stack. The last element in the stack will 
 height and will be mulitplied finally with the entire stretch
 */
 
+//O(n) solution
 int largestRectangleArea(vector<int>& height) {
     height.push_back(0);
     const int size_h = height.size();
