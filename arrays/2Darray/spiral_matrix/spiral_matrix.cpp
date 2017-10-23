@@ -32,16 +32,16 @@ public:
         vector<int> spiral(m * n);
         int u = 0, d = m - 1, l = 0, r = n - 1, k = 0;
         while (true) {
-            // up
+            // left to right
             for (int col = l; col <= r; col++) spiral[k++] = matrix[u][col];
             if (++u > d) break;
-            // right
+            // up to down
             for (int row = u; row <= d; row++) spiral[k++] = matrix[row][r];
             if (--r < l) break;
-            // down
+            // right to left
             for (int col = r; col >= l; col--) spiral[k++] = matrix[d][col];
             if (--d < u) break;
-            // left
+            // down to up
             for (int row = d; row >= u; row--) spiral[k++] = matrix[row][l];
             if (++l > r) break;
         }
