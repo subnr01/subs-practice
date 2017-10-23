@@ -30,7 +30,11 @@ public:
         if (matrix.empty()) return {};
         int m = matrix.size(), n = matrix[0].size();
         vector<int> spiral(m * n);
-        int u = 0, d = m - 1, l = 0, r = n - 1, k = 0;
+        int u = 0, 
+        int d = m - 1; 
+        int l = 0; 
+        int r = n - 1; 
+        int k = 0;
         while (true) {
             // left to right
             for (int col = l; col <= r; col++) spiral[k++] = matrix[u][col];
