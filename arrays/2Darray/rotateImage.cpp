@@ -30,8 +30,8 @@ void rotate(vector<vector<int>>& matrix) {
         	 	for (int j = i + 1; j < n; ++j)
         	 		swap(matrix[i][j], matrix[j][i]);
 
-2 1
-4 3
+3 1
+4 2
 
 
 }
