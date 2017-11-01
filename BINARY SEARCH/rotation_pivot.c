@@ -21,6 +21,7 @@ int FindSortedArrayRotation(int A[], int N) {
     else
       R = M;
   }
+  //N - L should give how many times of rotation
   return L;
 }
 
