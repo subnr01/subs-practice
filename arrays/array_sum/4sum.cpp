@@ -21,17 +21,18 @@ public:
     vector<vector<int> > fourSum(vector<int> &num, int target) {
     
         vector<vector<int> > res;
+        int n = res.size();
     
         if (num.empty())
             return res;
     
         std::sort(num.begin(),num.end());
     
-        for (int i = 0; i < num.size(); i++) {
+        for (int i = 0; i < n-3; i++) {
         
             int target_3 = target - num[i];
         
-            for (int j = i + 1; j < num.size(); j++) {
+            for (int j = i + 1; j < n-2; j++) {
             
                 int target_2 = target_3 - num[j];
             
@@ -65,11 +66,11 @@ public:
                 }
                 
                 // Processing the duplicates of number 2
-                while(j + 1 < num.size() && num[j + 1] == num[j]) ++j;
+                while(j + 1 < n - 2 && num[j + 1] == num[j]) ++j;
             }
         
             // Processing the duplicates of number 1
-            while (i + 1 < num.size() && num[i + 1] == num[i]) ++i;
+            while (i + 1 < n - 3 && num[i + 1] == num[i]) ++i;
         
         }
     
