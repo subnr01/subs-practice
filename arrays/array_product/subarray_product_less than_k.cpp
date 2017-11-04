@@ -18,3 +18,25 @@ Note:
 0 <= k < 10^6.
 
 */
+
+o(n) solution
+
+class Solution {
+public:
+    int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+        int n = nums.size();
+        int len = 0;
+        int right = 0;
+        int left = 0;
+        int prod = 1;
+        for (right = 0; right < n; right++) {
+            prod = prod * nums[right];
+            while ( left <= right && prod >= k) {
+                prod = prod/nums[left++];
+            }
+            len = len + (right - left + 1);
+        }
+        return len;
+    }
+};
+
