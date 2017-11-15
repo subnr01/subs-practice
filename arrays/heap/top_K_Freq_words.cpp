@@ -11,6 +11,9 @@ Your algorithm's time complexity must be better than O(n log n), where n is the 
 
 */
 
+//Complexity
+//O(n log(n-k)
+
 
 //Using heap
 class Solution {
