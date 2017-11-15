@@ -95,5 +95,10 @@ class Node {
 Complexity Analysis
 
 /*
+Time Complexity: O((k+N)logN), where N is the length of nums. As k = O(N^2)
+, this is O(N^2) in the worst case. The complexity added by 
+our heap operations is  O((k+N)logN) in the Java solution, 
+Additionally, we add O(NlogN) complexity due to sorting.
 
+Space Complexity: O(N)O(N), the space used to store our heap of at most N-1 elements.
 */
