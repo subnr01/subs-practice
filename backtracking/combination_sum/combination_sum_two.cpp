@@ -39,7 +39,17 @@ private:
 		int i;
 		
         for (i = begin; i != candidates.size() && target >= candidates[i]; ++i) {
-            // look at the if condition, confirmed we need this.		
+            /* 
+	      we need the if condition here because we want to avoid duplicate solutions.
+	      If we do not put this if condition, then we can get [1,2,5] repeated in the 
+	      solution. 
+	     */
+		
+             /* 
+		Also notice is set to begin, and begin is always (index+1), so
+		(2,2,2,2) with target 8 will also give us the right solution.         
+	     */		
+			
             if (i == begin ||  candidates[i] != candidates[i - 1]) {
                 combination.push_back(candidates[i]);
 		//sending (i+1) compared to sending (i) in the previous version    
