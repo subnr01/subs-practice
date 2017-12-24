@@ -30,12 +30,11 @@ public:
     void genSubsets(vector<int>& nums, int start, vector<int>& sub, vector<vector<int>>& subs) {
         subs.push_back(sub);
         for (int i = start; i < nums.size(); i++) {
-            if ( i != start && nums[i] == nums[i-1]) {
- 			continue;
+            if ( i == start || nums[i] != nums[i-1]) {
+               sub.push_back(nums[i]);
+               genSubsets(nums, i + 1, sub, subs);
+               sub.pop_back();
             }
-            sub.push_back(nums[i]);
-            genSubsets(nums, i + 1, sub, subs);
-            sub.pop_back();
             
         }
     }
