@@ -56,11 +56,16 @@ private:
         for (int i = 0; i != row; ++i)
             if (nQueens[i][col] == 'Q')
                 return false;
-        //check if the 45° diagonal had a queen before.
+        /*
+        you need to check only the above diagonals, as
+        there are no queens placed yet below
+        */
+     
+        //check if the 135° diagonal had a queen before.
         for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j)
             if (nQueens[i][j] == 'Q')
                 return false;
-        //check if the 135° diagonal had a queen before.
+        //check if the 45° diagonal had a queen before.
         for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j)
             if (nQueens[i][j] == 'Q')
                 return false;
