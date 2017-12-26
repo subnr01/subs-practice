@@ -12,6 +12,8 @@ class Solution {
 public:
     int totalNQueens(int n) {
     vector<bool> col(n, true);
+    //There are 15 left diagonals and
+    //15 right diagaonals  in a 8*8 chess board
     vector<bool> anti(2*n-1, true); //135
     vector<bool> main(2*n-1, true); //45
     int count = 0;
