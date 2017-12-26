@@ -7,9 +7,34 @@ two queens attack each other.
 Given an integer n, return the total number of distinct solutions.
 
 */
+// solution
+class Solution {
+public:
+    int totalNQueens(int n) {
+    vector<bool> col(n, true);
+    vector<bool> anti(2*n-1, true); //135
+    vector<bool> main(2*n-1, true); //45
+    int count = 0;
+    dfs(0, col, main, anti, count);
+    return count;
+}
+void dfs(int i, vector<bool> &col, vector<bool>& main, vector<bool> &anti, int &count) {
+        if (i == col.size()) {
+            count++;
+            return;
+        }
+       for (int j = 0; j < col.size(); j++) {
+         if (col[j] && main[i+j] && anti[i+col.size()-1-j]) {
+             col[j] = main[i+j] = anti[i+col.size()-1-j] = false;
+             dfs(i+1, col, main, anti, count);
+             col[j] = main[i+j] = anti[i+col.size()-1-j] = true;
+      }
+    }
+}
+};
 
-
-//My solution: clean and simple
+// Solution like the first one, but the issue here is isValid is not a O(1)
+// like the solution above.
 class Solution {
 public:
     int totalNQueens(int n) {
@@ -71,30 +96,3 @@ public:
 };
 
 
-//Another solution
-class Solution {
-public:
-    int totalNQueens(int n) {
-    vector<bool> col(n, true);
-    vector<bool> anti(2*n-1, true); //135
-    vector<bool> main(2*n-1, true); //45
-    vector<int> row(n, 0);
-    int count = 0;
-    dfs(0, row, col, main, anti, count);
-    return count;
-}
-void dfs(int i, vector<int> &row, vector<bool> &col, vector<bool>& main, vector<bool> &anti, int &count) {
-        if (i == row.size()) {
-            count++;
-            return;
-        }
-       for (int j = 0; j < col.size(); j++) {
-         if (col[j] && main[i+j] && anti[i+col.size()-1-j]) {
-             row[i] = j; 
-             col[j] = main[i+j] = anti[i+col.size()-1-j] = false;
-             dfs(i+1, row, col, main, anti, count);
-             col[j] = main[i+j] = anti[i+col.size()-1-j] = true;
-      }
-    }
-}
-};
