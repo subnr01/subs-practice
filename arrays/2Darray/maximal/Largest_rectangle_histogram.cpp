@@ -12,6 +12,32 @@ find the area of largest rectangle in the histogram.
 //way for left as well.
 //The difference between (left - right)*height will 
 //give the largest area.
+//TLE for some reason
+class Solution {
+public:
+    //brute force, O(n^2)
+    int largestRectangleArea(vector<int> &height) {
+        int n = height.size();
+        if (n == 0) {
+            return 0;
+        }
+        int minHeight = 0;
+        int maxArea = 0;
+        
+        for(int i = 0; i < height.size(); i++) {
+            minHeight = height[i];
+            maxArea = max(maxArea, minHeight * 1);
+            for(int j = i + 1; j < height.size(); j++) {
+                minHeight = min(minHeight, height[j]);
+                maxArea = max(maxArea, minHeight * (j - i + 1));
+            }
+        }
+        return maxArea;
+    }
+    
+};
+
+
 
 //Some good explanation under
 //https://stackoverflow.com/questions/4311694/maximize-the-rectangular-area-under-histogram
