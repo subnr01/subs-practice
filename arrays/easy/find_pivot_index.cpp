@@ -23,3 +23,27 @@ nums = [1, 2, 3]
 Output: -1
 Explanation: 
 There is no index that satisfies the conditions in the problem statement.
+
+*/
+
+
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        size_t sz  = nums.size();
+        if (sz < 1) return -1;
+        int total = 0;
+        int sum = 0;
+        for (int i = 0; i < sz; i++) {
+            total += nums[i];
+        }
+        
+        for (int i = 0; i < sz; i++) {
+            sum += nums[i];
+            if(2*sum == total + nums[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};
