@@ -16,3 +16,33 @@ Input: "FlaG"
 Output: False
 
 */
+
+
+class Solution {
+public:
+   bool detectCapitalUse(string word) {
+    int count = 0;
+    if(word.size() <= 1) {
+        return true;
+    }
+    
+    //i is intialised from 1
+    for( int i = 1; i < word.size(); i++) {
+        if(word[i] >= 'a' && word[i] <= 'z') {
+            count+=1;
+        } else {
+            // note count is increased by 2
+            count+=2;
+        }
+    }
+    if(count == word.size()-1) {
+        return true;
+    }
+    // we are checking again with (n-1)
+    else if(count == 2*(word.size()-1)) {
+        return (word[0] >= 'A' && word[0] <= 'Z');
+    }
+    
+    return false;
+}
+};
