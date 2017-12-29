@@ -1,5 +1,5 @@
 /* 
-Longest common subsequence
+Longest uncommon subsequence
 
 
 Given a group of two strings, you need to find the longest uncommon subsequence of this group of two strings. 
