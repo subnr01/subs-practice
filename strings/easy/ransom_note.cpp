@@ -1,5 +1,7 @@
 /*
 
+Given two strings, find out whether the first string can be constructed from the second string.
+
 You may assume that both strings contain only lowercase letters.
 
 canConstruct("a", "b") -> false
