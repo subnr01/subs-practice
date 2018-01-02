@@ -40,6 +40,12 @@ public:
     }
     
     string leftShift(string &str, int l){
+        /*
+        Remove a character(s) and add it at the end
+        abab 
+        ret = baba
+        ret = abab
+        */
         string ret = str.substr(l);
         ret += str.substr(0, l);
         return ret;
