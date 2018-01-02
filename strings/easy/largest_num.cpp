@@ -12,6 +12,7 @@ Note: The result may be very large, so you need to return a string instead of an
 class Solution {
 public:
     string largestNumber(vector<int> &num) {
+        //Note this is a vector of strings
         vector<string> arr;
         for(auto i:num)
             arr.push_back(to_string(i));
