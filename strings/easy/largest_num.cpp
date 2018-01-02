@@ -19,6 +19,7 @@ public:
         string res;
         for(auto s:arr)
             res+=s;
+        //If the input is "00" hence
         while(res[0]=='0' && res.length()>1)
             res.erase(0,1);
         return  res;
