@@ -23,6 +23,7 @@ public:
             // reverse the last word
             if(i == s.length() || s[i] == ' '){
                 reverse(&s[front], &s[i]);
+                // to move beyond the space
                 front = i + 1;
             }
         }
