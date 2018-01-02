@@ -47,10 +47,11 @@ public:
             }
         }
         
-        while(left >= 0 && nums[left] > rmin) --left;
+        while(left >= 0 && rmin < nums[left) --left;
         
-        while(right < sz && nums[right] < lmax) ++right;
+        while(right < sz && lmax > nums[right]) ++right;
         
+        /* look at the calculation */
         return (right - left - 1);
         
     }
