@@ -9,8 +9,8 @@ majority element always exist in the array.
 class Solution {
 public:
     int majorityElement(vector<int>& num) {
-        int major=num[0], count = 1;
-        for(int i=1; i<num.size();i++){
+        int major, count = 0;
+        for(int i=0; i<num.size();i++){
             if(count==0){
                 count++;
                 major=num[i];
