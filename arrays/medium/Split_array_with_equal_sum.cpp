@@ -1,4 +1,5 @@
 /*
+Split Array with Equal Sum 
 
 Given an array with n integers, you need to find if there are triplets (i, j, k) which satisfies following conditions:
 
