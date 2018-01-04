@@ -32,7 +32,7 @@ public:
             return 0;
         }
         right = sz - 1;
-        while(right > 1 && nums[right] >= nums[right - 1]) {
+        while(right > 0 && nums[right] >= nums[right - 1]) {
             right --;
         }
         
