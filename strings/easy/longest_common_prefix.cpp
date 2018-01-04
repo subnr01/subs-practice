@@ -14,7 +14,11 @@ class Solution {
             for (int i = 0; i < strs[0].size(); ++i){
                 char curr = strs[0][i];
                 for (int j = 1; j < strs.size(); ++j){
-                    if (i > strs[j].size()-1 || curr != strs[j][i]) return toReturn;
+                    // Do not ignore to check whether i is within length
+                    // string at j
+                    if (i > strs[j].size()-1 || curr != strs[j][i]) {
+                        return toReturn;
+                    }
                 }
                 toReturn.push_back(curr);
             }
