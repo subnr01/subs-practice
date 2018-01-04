@@ -18,9 +18,11 @@ public:
         dict['u'] = 1, dict['U'] = 1;
         int start = 0, end = (int)s.size() - 1;
         while(start < end){
+            //Remember to check boundaries
             while(start < end && dict[s[start]] == 0) start++;
             while(start < end && dict[s[end]] == 0) end--;
             swap(s[start],s[end]);
+            //Do not forget to increment here
             start++;end--;
         }
         return s;
