@@ -17,6 +17,7 @@ class Solution {
 public:
     vector<string> fizzBuzz(int n) {
         vector<string> ret_vec(n);
+        //Notice the solution uses (i-1) for a reason...
         for(int i=1; i<=n; ++i)
         {
             if(i%3 == 0)
