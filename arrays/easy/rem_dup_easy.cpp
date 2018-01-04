@@ -8,18 +8,23 @@ doesn't matter what you leave beyond the new length.
 */
 
 
+Please note this in the problem: It doesn’t matter what you leave beyond the new length.
+
+//In the solution below, the array will still have last element unchanged. Change length to a.size() and 
+// see for tourself.
 class Solution {
 public:
-    int removeDuplicates(vector<int>& A) {
-        int n = A.size();
-        int i = 0;
-        for(int n:A) 
+    int removeDuplicates(vector<int>& a) {
+        int n = a.size();
+        int length = 1;
+        if(n < 2) return n;
+        for(int i = 1; i < n ; i++)
         {
-            if ( i < 1 || n > A[i-1]) 
-            {
-                A[i++] = n;
-            } 
+            if(a[i] != a[i-1]) {
+                a[length++] = a[i];
+            }
         }
-        return i;
+        return length;
+        
     }
 };
