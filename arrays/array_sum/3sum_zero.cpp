@@ -14,6 +14,8 @@ A solution set is:
 ]
 */
 
+
+//Important, need to handle the special case {0,0,0}
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& a) {
