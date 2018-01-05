@@ -14,19 +14,43 @@ A solution set is:
 ]
 */
 
-vector<vector<int>> threeSum(vector<int>& nums) {
-    vector<vector<int>> triples;
-    sort(nums.begin(), nums.end());
-    int i = 0, last = nums.size() - 1;
-    while (i < last) {
-        int a = nums[i], j = i+1, k = last;
-        while (j < k) {
-            int b = nums[j], c = nums[k], sum = a+b+c;
-            if (sum == 0) triples.push_back({a, b, c});
-            if (sum <= 0) while (nums[j] == b && j < k) j++;
-            if (sum >= 0) while (nums[k] == c && j < k) k--;
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& a) {
+       
+        vector<vector<int>> result;
+        sort(a.begin(), a.end());
+        for (auto i = 0; i < a.size(); i++) {
+            if (i != 0 && a[i] == a[i-1]) {
+                continue;
+            }
+           
+            auto j = i+1;
+            auto k = a.size()-1;
+            while(j<k) {
+                if (a[i] + a[j] + a[k] == 0) {
+                    vector<int>ans{a[i],a[j],a[k]};
+                    result.push_back(ans);
+                    j++; k--;
+                    
+                    while (j< k && a[j]==a[j-1]) {
+                        j++;
+                    }
+                    while (j< k && a[k]==a[k+1]) {
+                        k--;
+                    }
+                }
+                else if (a[i] + a[j] + a[k] < 0) {
+                    j++;
+                } else
+                {
+                   k--;
+                }
+                
+            }
+             
+            
         }
-        while (nums[i] == a && i < last) i++;
+        return result;
     }
-    return triples;
-}
+};
