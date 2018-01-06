@@ -42,7 +42,7 @@ private:
             /* 
 	      we need the if condition here because we want to avoid duplicate solutions.
 	      If we do not put this if condition, then we can get [1,2,5] repeated in the 
-	      solution. 
+	      solution, beacuse of the second "1".
 	     */
 		
              /* 
@@ -50,12 +50,12 @@ private:
 		(2,2,2,2) with target 8 will also give us the right solution.         
 	     */		
 			
-            if (i == begin ||  candidates[i] != candidates[i - 1]) {
-                combination.push_back(candidates[i]);
-		//sending (i+1) compared to sending (i) in the previous version    
-                combinationSum2(candidates, target - candidates[i], res, combination, i + 1);
-                combination.pop_back();
+            if (i != start && candidates[i] == candidates[i-1]) {
+                continue;
             }
+            arr.push_back(candidates[i]);
+            genSum (candidates, res, i + 1, target - candidates[i], arr);
+            arr.pop_back();
         }
     }
 };
