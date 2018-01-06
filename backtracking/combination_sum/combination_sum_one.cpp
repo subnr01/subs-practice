@@ -16,7 +16,8 @@ For example, given candidate set 2,3,6,7 and target 7, A solution set is:
 class Solution {
 public:
     std::vector<std::vector<int> > combinationSum(std::vector<int> &candidates, int target) {
-		std::sort(candidates.begin(), candidates.end());
+	//VERY IMP, REMEMBER TO SORT OTHERWISE IT WILL NOT WORK (CAN YOU FIND OUT WHY)    
+	std::sort(candidates.begin(), candidates.end());	
         std::vector<std::vector<int> > res;
         std::vector<int> combination;
         combinationSum(candidates, target, res, combination, 0);
@@ -35,6 +36,9 @@ private:
 	   uses the same number, and thats how we can repeat the same number to 
 	   be summed to get the result
 	*/
+	    
+	// THE IMPORTANT THING IS TO CHECK WHETHER TARGET IS LESS THAN THE ELEMENT,
+	//  ELSE THE RECURSION WILL NOT END
         for (int i = begin; i != candidates.size() && target >= candidates[i]; ++i) {
             combination.push_back(candidates[i]);
             combinationSum(candidates, target - candidates[i], res, combination, i);
