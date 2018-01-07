@@ -23,3 +23,65 @@ The first event can be booked.  The second can't because time 15 is already book
 The third event can be booked, as the first event takes every time less than 20, but not including 20.
 
 */
+
+
+class MyCalendar {
+    
+public:
+    map<int, int> books;
+    bool book(int s, int e) {
+        auto next = books.lower_bound(s);
+        
+        cout<<"\n in fuck\n";
+        
+        if (next == books.begin()) {
+            cout <<endl<<"begin "<<next->first<<endl;
+        }
+        else if (next == books.end()) {
+            cout <<endl<<"end "<<next->first<<endl;
+        } else {
+            cout <<endl<<"niether begin or end "<<next->first<<endl;
+        }
+        
+        
+        if (next != books.end() && next->first < e)
+        {
+            cout<<"\n 1false" ;cout<<next->first;
+            return false;
+        }
+        
+        if (next != books.begin() && (--next)->second > s) {
+            cout<<"\n 2false" ;
+            cout<<next->second;
+            
+            return false;
+        }
+        
+        books[s] = e;
+        cout<<"\n true" ;
+        return true;
+    }
+    
+    
+        
+};
+
+
+
+int main(int argc, const char * argv[]) {
+    // insert code here...
+    //Solution s1;
+    //vector<int> s = {2,1,5,6,2,3};
+    //cout<<endl<<s1.largestRectangleArea(s)<<endl;
+    MyCalendar s1;
+    
+    
+    s1.book(20,30);
+    s1.book(10,10);
+    s1.book(35,40);
+    s1.book(15,40);
+    
+    
+    std::cout << "Hello, World!\n";
+    return 0;
+}
