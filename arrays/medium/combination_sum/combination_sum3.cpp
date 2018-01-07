@@ -12,29 +12,38 @@ Output:
 */
 
 class Solution {
+    
 public:
-    vector<vector<int>> combinationSum3(int k, int n) { 
-		std::vector<std::vector<int> > res;
-        std::vector<int> combination;
+    vector<vector<int>> combinationSum3(int k, int n)
+    {
+        vector<vector<int>> res;
+        if (n == 0 || k == 0) {
+            return res;
+        }
+        vector<int> arr;
         int start = 1;
-        combinationSum2(n, res, combination, k, start);
+        genSum(res, arr, start, k, n);
         return res;
     }
-private:
-    void combinationSum2(int target, std::vector<std::vector<int> > &res, std::vector<int> &combination, int k, int begin) 
+    
+    void genSum(vector<vector<int>>& res, vector<int> &arr, int start, int k, int target)
     {
-	if  (combination.size() == k) {
-		if (!target) {
-                   res.push_back(combination);
-        	}
-		return;
-	} 
-        
-	for (int i = begin; i < 10 && target >= i; ++i) {
-            combination.push_back(i);
-            combinationSum2(target - i, res, combination, k, i + 1);
-            combination.pop_back();
-            
+        if (arr.size() > k) {
+            return;
         }
+        if (arr.size() == k && target == 0)
+        {
+            res.push_back(arr);
+            return;
+        }
+        
+        for (int i = start; i < 10 && target >= i; i++) {
+            arr.push_back(i);
+            genSum(res, arr, i+1, k, target - i);
+            arr.pop_back();
+        }
+        
     }
+        
 };
+
