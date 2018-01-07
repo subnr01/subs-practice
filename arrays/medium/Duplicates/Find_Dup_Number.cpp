@@ -11,6 +11,9 @@ There is only one duplicate number in the array, but it could be repeated more t
 
 */
 
+//Related topics
+// Binary search, two pointers, array
+
 class Solution {
 public:
     int findDuplicate(vector<int>& nums)
