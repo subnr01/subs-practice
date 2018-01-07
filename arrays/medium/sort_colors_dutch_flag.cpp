@@ -22,6 +22,7 @@ class Solution {
     {
         int tmp = 0, low = 0, mid = 0, high = a.size() - 1;
     
+        //Note we are using mid and it is compared against high and not size
         while(mid <= high)
         {
             switch(a[mid])
