@@ -4,27 +4,35 @@ Given preorder and inorder traversal of a tree, construct the binary tree.
 
 class Solution {
 public:
-    int findId(int n, vector<int> &inorder){
-        for (int i=0;i<inorder.size();i++){
-            if (inorder[i] == n) return i;
-        }
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        size_t in_sz = inorder.size() - 1;
+        int mid = 0;
+        return build (preorder, inorder, 0, in_sz, mid);
+        
     }
- 
-    TreeNode* bst(vector<int> &preorder, int &mid, vector<int> &inorder, int st, int ed){
-        if (st>ed ){
+    
+    TreeNode *build (vector<int>& preorder, vector<int>& inorder, int is, int ie, int& mid)
+    {
+        if (is > ie) {
             return NULL;
         }
-        TreeNode* root = new TreeNode(preorder[mid]);
-        int idx = findId(preorder[mid], inorder);
+        
+        TreeNode *root = new TreeNode(preorder[mid]);
         mid++;
-        root->left = bst(preorder, mid, inorder, st, idx-1);
-        root->right = bst(preorder, mid, inorder, idx+1, ed);
+        int pos = -1;
+        // you have sent (size - 1) and hence
+        // make sure you have the right comparison
+        for (int i = 0; i <= ie; i++)
+        {
+            if (inorder[i] == root->val) {
+                pos = i;
+                break;
+            }
+        }
+        
+        root->left = build (preorder, inorder, is, pos - 1, mid);
+        root->right = build (preorder, inorder, pos + 1, ie, mid);
+        
         return root;
-    }
-     
-    TreeNode *buildTree(vector<int> &preorder, vector<int> &inorder) {
-        int mid = 0;
-      
-        return bst(preorder, mid, inorder, 0, inorder.size()-1);
     }
 };
