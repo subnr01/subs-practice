@@ -13,12 +13,17 @@ If nums = [1,2,2], a solution is:
 ]
 */
 
+
+//THIS NEEDS SORTING THE INPUT.
+
 // Using recursion
 class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
         vector<vector<int>> subs;
         vector<int> sub;  
+        //REQUIRES SORTING THE INPUT, SO THAT WE CAN FILTER OUT THE DUPLICATES
+        // IN THE IF CONDITION IN THE BACKTRACKING FUNCITON.
         std::sort(nums.begin(), nums.end());
         genSubsets(nums, 0, sub, subs);
         return subs; 
