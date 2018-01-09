@@ -14,6 +14,13 @@ There is only one duplicate number in the array, but it could be repeated more t
 //Related topics
 // Binary search, two pointers, array
 
+
+/*
+Solution
+..> The fast one goes forward two steps at a time
+..> The slow one goes one step at a time.
+..> When they meet in a circle, the duplicate number must be entry point of the circle.  
+*/
 class Solution {
 public:
     int findDuplicate(vector<int>& nums)
@@ -22,6 +29,8 @@ public:
 	{
 		int slow = nums[0];
 		int fast = nums[nums[0]];
+		
+		//Find the intersection point of the two runners
 		while (slow != fast)
 		{
 			slow = nums[slow];
@@ -29,6 +38,8 @@ public:
 		}
 
 		fast = 0;
+		
+		//Find the entrance point to the cycle.
 		while (fast != slow)
 		{
 			fast = nums[fast];
