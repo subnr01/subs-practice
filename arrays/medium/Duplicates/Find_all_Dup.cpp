@@ -18,11 +18,17 @@ public:
         int i = 0;
         while (i < nums.size()) {
             /* what is the secret sauce in this algorithm */
-            if (nums[i] != nums[nums[i]-1]) swap(nums[i], nums[nums[i]-1]);
-            else i++;
+            if (nums[i] != nums[nums[i]-1]) {
+                swap(nums[i], nums[nums[i]-1]);
+            }
+            else {
+                i++;
+            }
         }
         for (i = 0; i < nums.size(); i++) {
-            if (nums[i] != i + 1) res.push_back(nums[i]);
+            if (nums[i] != i + 1) {
+                res.push_back(nums[i]);
+            }
         }
         return res;
     }
