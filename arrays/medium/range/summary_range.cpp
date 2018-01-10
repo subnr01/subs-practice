@@ -21,12 +21,13 @@ public:
         
         //more than one consecutive number
         if(consecutive){
+            // we are using (j-1) here and not j.
             res.back()+="->"+to_string(nums[j-1]);
             consecutive = false;
         } 
         
-        
-        i=j;
+        //i is not incremented, this is a while loop
+        i = j;
         
     }
     return res;
