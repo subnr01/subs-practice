@@ -20,10 +20,15 @@ public:
     int low = 0;
     int high = nums.size()-1;
     
+    //This is the key, we are doing this 
+    //because we want to avoid duplicates
+    //on both halves of the array.
     while (low < high && nums[low] == nums[high]) {
             high -= 1;  // or left += 1; if index is not asked
     }
     
+    //normal workings of how to return 
+    // pivot element in an sorted rotated array
     while (low < high)
     {
         if (nums[low] < nums[high]) {
