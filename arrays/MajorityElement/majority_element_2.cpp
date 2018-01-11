@@ -6,29 +6,38 @@ The algorithm should run in linear time and in O(1) space.
 Boyer-Moore Algorithm
 */
 
-class Solution {
-public:
-  vector<int> majorityElement(vector<int> &a) {
-    int y = 0, z = 1, cy = 0, cz = 0;
+vector<int> majorityElement(vector<int>& nums) {
+    int cnt1 = 0, cnt2 = 0, a=0, b=1;
     
-    for (auto x: a) {
-      if (x == y) cy++;
-      else if (x == z) cz++;
-      else if (! cy) y = x, cy = 1;
-      else if (! cz) z = x, cz = 1;
-      else cy--, cz--;
+    for(auto n: nums){
+        if (a==n){
+            cnt1++;
+        }
+        else if (b==n){
+            cnt2++;
+        }
+        else if (cnt1==0){
+            a = n;
+            cnt1 = 1;
+        }
+        else if (cnt2 == 0){
+            b = n;
+            cnt2 = 1;
+        }
+        else{
+            cnt1--;
+            cnt2--;
+        }
     }
     
-    cy = cz = 0;
-    for (auto x: a) {
-      if (x == y) cy++;
-      else if (x == z) cz++;
+    cnt1 = cnt2 = 0;
+    for(auto n: nums){
+        if (n==a)   cnt1++;
+        else if (n==b)  cnt2++;
     }
     
-    vector<int> r;
-    if (cy > a.size()/3) r.push_back(y);
-    if (cz > a.size()/3) r.push_back(z);
-    return r;
-    
-  }
-};
+    vector<int> res;
+    if (cnt1 > nums.size()/3)   res.push_back(a);
+    if (cnt2 > nums.size()/3)   res.push_back(b);
+    return res;
+}
