@@ -19,13 +19,13 @@ public:
         vector<Interval> res;
         int index = 0;
 	/*
-	Move till our start is greater than interval element end 
+	end should be lesser than start
 	*/
         while(index < intervals.size() && intervals[index].end < newInterval.start){
             res.push_back(intervals[index++]);
         }
 	/*
-	If interval start is lesser than our end
+	start should be lesser than end
 	*/
         while(index < intervals.size() && intervals[index].start <= newInterval.end){
 		
