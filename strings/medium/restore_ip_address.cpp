@@ -24,7 +24,12 @@ public:
         return result;
     }
     void dfs(string s,int start,int step,string ip,vector<string>& result){
-        if(start==s.size()&&step==4){
+        
+        //did we get a full ipaddress
+        // notice step should be equal to 4.
+        // and start should be equal to the
+        // size of the string.
+        if(start==s.size() && step==4){
             ip.erase(ip.end()-1); //remove the last '.' from the last decimal number
             result.push_back(ip);
             return;
