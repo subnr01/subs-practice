@@ -42,10 +42,14 @@ public:
         };
         
         int num=0;
+        
+        //start is not 0 everytime, but only
+        // in the first call.
         for(int i=start;i<start+3;i++){
             num=num*10+(s[i]-'0');
             if(num<=255){
                 ip+=s[i];
+                //DFS with both i++ and step++
                 dfs(s,i+1,step+1,ip+'.',result);
             }
             if(num==0) break;
