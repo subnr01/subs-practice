@@ -16,22 +16,23 @@ public:
         bool comment = false;
      
         for(int i = 0; i < source.size(); i++) {
+            //SEE J IS COMPARED TO source[i].size()
             for(int j = 0; j < source[i].size(); j++) {
-                 //If comment not set to true and the first two characters are //, then break and go
-                 // to the next line
+              
+                 //SEE J IS COMPARED TO source[i].size()
                 if(!comment && 
                    j + 1 < source[i].size() && source[i][j] == '/' && source[i][j+1]=='/') {
                  break;
                 }
-                
-                //if comment is not set to true and it looks like beginning of a comment, then set comment
-                //to true and parse the string continuously.
+   
+                //SEE J IS COMPARED TO source[i].size()
                 else if(!comment && 
                         j + 1 < source[i].size() && source[i][j] == '/' && source[i][j+1]=='*') {
                  comment = true; 
                  j++;
                 }
-                // if comment is set to true and we are at the end of a comment, then set it to false.
+
+                //SEE J IS COMPARED TO source[i].size()
                 else if(comment &&
                         j + 1 < source[i].size() && source[i][j] == '*' && source[i][j+1]=='/') {
                  comment = false; 
@@ -42,8 +43,8 @@ public:
                  s.push_back(source[i][j]);
                 }
             }
-            // if it is not a comment and we reached size of the string, then push it 
-            // into the vector.
+    
+            //String size is also compared
             if(!comment && s.size()) {
              ans.push_back(s); 
              s.clear();
