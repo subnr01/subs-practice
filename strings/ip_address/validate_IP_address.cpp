@@ -39,11 +39,13 @@ public:
     const string validIPv6Chars = "0123456789abcdefABCDEF";
     
     bool isValidIPv4Block(string& block) {
+        //initilisation is important
     	int num = 0;
+        //block size must be less than or equal to 3
     	if (block.size() > 0 && block.size() <= 3) {
     	    for (int i = 0; i < block.size(); i++) {
     	        char c = block[i];
-    	        // special case: if c is a leading zero and there are characters left
+    	        // if c is not a single digit 0, then return false;
     	        if (!isalnum(c) || (i == 0 && c == '0' && block.size() > 1))
     		    return false;
     	        else {
@@ -57,6 +59,7 @@ public:
     }
     
     bool isValidIPv6Block(string& block) {
+        //block size must be less than or equal to 4
     	if (block.size() > 0 && block.size() <= 4) {
     	    for (int i = 0; i < block.size(); i++) {
     	        char c = block[i];
@@ -72,16 +75,18 @@ public:
     	string ans[3] = {"IPv4", "IPv6", "Neither"};
     	stringstream ss(IP);
     	string block;
-    	// ipv4 candidate
+    	//if any of the first 4 characters contain '.'
     	if (IP.substr(0, 4).find('.') != string::npos) {
+            //There are 4 strings delimited by '.'
     	    for (int i = 0; i < 4; i++) {
     		if (!getline(ss, block, '.') || !isValidIPv4Block(block))
     	   	    return ans[2];
     	    }
     	    return ss.eof() ? ans[0] : ans[2];
     	}
-    	// ipv6 candidate
+    	//if any of the first 4 characters contain ':'
     	else if (IP.substr(0, 5).find(':') != string::npos) {
+            //There are 8 strings delimited by ':'
     	    for (int i = 0; i < 8; i++) {
     		if (!getline(ss, block, ':') || !isValidIPv6Block(block))
     		    return ans[2];
