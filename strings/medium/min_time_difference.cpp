@@ -15,23 +15,44 @@ class Solution {
 public:
     int findMinDifference(vector<string>& timePoints) {
         int n = timePoints.size();
-        if (n > 1440) return 0;
-        vector<int> times;
-        for (int i = 0; i < n; i++) 
-            times.push_back(to_min(timePoints[i]));
-        sort(times.begin(), times.end());
-        int ans = times[0]+60*24-times.back();
-        for (int i = 1; i < n; ++i) {
-            ans = min(ans, times[i]-times[i-1]);
+        if (n == 0 || n > 1440) {
+            return 0;
         }
-        return ans;
+        
+        vector<int> times;
+        
+        for (int i = 0; i < n; i++)
+        {
+            //I have to use push_back as I have not allacoted
+            // memory for the vector
+            times.push_back(to_min(timePoints[i]));
+        }
+        
+        sort(times.begin(), times.end());
+        
+        //This takes account of circular nature of time. 
+        //VREY IMP
+        int minDiff = times[0] + 60*24 - times.back();
+        
+        for (int i = 1; i < n; i++) {
+            int mintime = times[i] - times[i-1];
+            minDiff = min(mintime, minDiff);
+        }
+        return minDiff;
     }
-private:
-    int to_min(string& a) {
-        int h = (a[0]-'0')*10+(a[1]-'0'), m = (a[3]-'0')*10+(a[4]-'0');
-        return 60*h+m;
+    
+    int to_min(string time)
+    {
+        
+        int hours = (time[0] - '0') * 10 + (time[1] - '0');
+        int min = (time[3]- '0') * 10 + (time[4] - '0');
+        
+        return 60*hours + min;
     }
 };
+
+
+
 
 //array solution without using sorting
 public class Solution {
