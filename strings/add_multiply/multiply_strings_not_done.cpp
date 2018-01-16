@@ -10,26 +10,31 @@ You must not use any built-in BigInteger library or convert the inputs to intege
 
 */
 
+/*
+Compute the ones-digit, then the tens-digit, then the hundreds-digit, etc.
+For example when multiplying 1234 with 5678, the thousands-digit of the 
+product is 4\*5 + 3\*6 + 2\*7 + 1\*8 (plus what got carried from the hundreds-digit).
+*/
 
-
-string multiply(string num1, string num2) {
-    string sum(num1.size() + num2.size(), '0');
-    
-    for (int i = num1.size() - 1; 0 <= i; --i) {
-        int carry = 0;
-        for (int j = num2.size() - 1; 0 <= j; --j) {
-            int tmp = (sum[i + j + 1] - '0') + (num1[i] - '0') * (num2[j] - '0') + carry;
-            sum[i + j + 1] = tmp % 10 + '0';
-            carry = tmp / 10;
+string multiply(string a, string b) {
+    if (a=="0" || b=="0")
+        return "0";
+    int m = a.size() - 1;
+    int n = b.size() - 1;
+    int carry = 0;
+    string product;
+    int total_digits = m + n;
+    for (int i = 0; i <= total_digits || carry; ++i) {
+        int j = max(0, i-n);
+        while(j <= min(i, m)) {
+            carry += (a[m-j] - '0') * (b[n-i+j] - '0');
+            j++;
         }
-        sum[i] += carry;
+        product += carry % 10 + '0';
+        carry /= 10;
     }
-    
-    size_t startpos = sum.find_first_not_of("0");
-    if (string::npos != startpos) {
-        return sum.substr(startpos);
-    }
-    return "0";
+    reverse(product.begin(), product.end());
+    return product;
 }
 
 
