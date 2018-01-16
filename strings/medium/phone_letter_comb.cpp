@@ -21,6 +21,9 @@ public:
                 string token = q.front();
                 q.pop_front();
                 for (char ch : words[d]) {
+                    //first iteration : token is nothing, ch is "a", "b" and "c"
+                    //second iteration: queue contains "a", "b" and "c", and ch is "d", "e", "f"
+                    // and in the second iteration, we combine to get 9 combinations.
                     q.push_back(token + ch);
                 }
             }
@@ -30,32 +33,7 @@ public:
     }
 };
 
-//BFS double queue
-class Solution {
-public:
-    vector<string> letterCombinations(string digits) {
-        if (digits.empty()) {
-            return vector<string>();
-        }
-        vector<string> words{ " ", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-        deque<string> q, next;
-        q.push_back("");
 
-        for (char digit : digits) {
-            int d = digit - '0';
-            while (!q.empty()) {
-                string token = q.front();
-                q.pop_front();
-                for (char ch : words[d]) {
-                    next.push_back(token + ch);
-                }
-            }
-            swap(q, next);
-        }
-
-        return vector<string>(q.begin(), q.end());
-    }
-};
 
 
 //Rolling vector
@@ -83,30 +61,7 @@ public:
     }
 };
 
-//BFS - rolling vector - Recycle Next
-class Solution {
-public:
-    vector<string> letterCombinations(string digits) {
-        if (!digits.size()) {
-            return {};
-        }
 
-        vector<string> combs{ "" }, next;
-        vector<string> chars = { "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
-        for (char digit : digits) {
-            int d = digit - '0';
-            for (string comb : combs) {
-                for (char ch : chars[d]) {
-                    next.push_back(comb + ch);
-                }
-            }
-            combs.swap(next);
-            next.clear();
-        }
-
-        return combs;
-    }
-};
 
 //backtracking
 class Solution {
