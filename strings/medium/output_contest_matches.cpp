@@ -45,6 +45,9 @@ Since the third round will generate the final winner, you need to output the ans
 class Solution {
 public:
     string findContestMatch(int n) {
+        //you have to initiliase the vector
+        // to n so that you can access the elements
+        // by the subscript method.
         vector<string> m(n);
         for (int i = 0; i < n; i++) {
             m[i] = to_string(i + 1);
