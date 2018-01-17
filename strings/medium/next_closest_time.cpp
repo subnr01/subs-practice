@@ -43,56 +43,47 @@ public:
 
 
 //Java soln
-  int diff = 0x3f3f3f3f;
-    String result = "";
-    int h;
-    int m;
-    public String nextClosestTime(String time) {
-        int[] digit = new int[4];
-        int tot = 0;
-        String[] val = time.split(":");
-        int hour = Integer.parseInt(val[0]);
-        int minu = Integer.parseInt(val[1]);
-        digit[tot++] = hour / 10;
-        digit[tot++] = hour % 10;
-        digit[tot++] = minu / 10;
-        digit[tot++] = minu % 10;
-
-        h = hour;
-        m = minu;
-
-        dfs(digit, 0, new int[4]);
-
-        return result;
+class Solution {
+public:
+    string nextClosestTime(string time) {
+        vector<int> d = {
+            time[0] - '0', time[1] - '0', time[3] - '0', time[4] - '0' };
+        
+        int h = d[0] * 10 + d[1];
+        int m = d[2] * 10 + d[3];
+        vector<int> curr(4, 0);
+        int now = toTime(h, m);
+        int best = now;
+        
+        dfs(0, d, curr, now, best);
+        char buff[5];
+        sprintf(buff, "%02d:%02d", best / 60, best % 60);
+        return string(buff);
     }
-
-    void dfs(int[] digit, int i, int[] ans) {
-        if (i == 4) {
-            int hour = 10 * ans[0] + ans[1];
-            int minu = 10 * ans[2] + ans[3];
-            if (hour >= 0 && hour <= 23 && minu >= 0 && minu <= 59) {
-                int df = diff(hour, minu);
-                if (df < diff) {
-                    diff = df;
-                    result = valid(hour) + ":" + valid(minu);
-                }
-            }
-        }
-        else {
-            for (int j = 0; j < 4; ++j) {
-                ans[i] = digit[j];
-                dfs(digit, i + 1, ans);
-            }
-        }
+private:
+    void dfs(int dep, const vector<int>& digits, vector<int>& curr, int time, int& best) {
+        if (dep == 4) {
+            int curr_h = curr[0] * 10 + curr[1];
+            int curr_m = curr[2] * 10 + curr[3];
+            if (curr_h > 23 || curr_m > 59) return;
+            int curr_time = toTime(curr_h, curr_m);
+            if (timeDiff(time, curr_time) < timeDiff(time, best))
+                best = curr_time;
+            return;
+        }            
+        
+        for (int digit : digits) {
+            curr[dep] = digit;
+            dfs(dep + 1, digits, curr, time, best);
+        }        
     }
-
-    int diff(int hour, int minu) {
-        int c2o = 60 * 60 - h * 60 - m;
-        int n2o = 60 * 60 - hour * 60 - minu;
-        return n2o < c2o ? c2o - n2o : c2o - n2o + 3600;
+    
+    int toTime(int h, int m) {
+        return h * 60 + m;
     }
-
-    public String valid(int time) {
-        if (time >= 0 && time <= 9) return "0" + time;
-        else return time + "";
+    
+    int timeDiff(int t1, int t2) {
+        if (t1 == t2) return INT_MAX;
+        return ((t2 - t1) + 24 * 60) % (24 * 60);
     }
+};
