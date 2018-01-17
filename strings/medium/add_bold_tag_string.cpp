@@ -52,6 +52,8 @@ private:
         vector<pair<int, int>> res;
         for (string w : dict) {
             int n = w.size();
+            //if there is more than one occurrence of the w
+            // inside s.
             for (int i = 0; (i = s.find(w, i)) != string::npos; i++) {
                 res.push_back(pair<int, int>(i, i + n));
             }
