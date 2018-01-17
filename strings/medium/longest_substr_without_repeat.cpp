@@ -12,20 +12,32 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
 
 */
 
-
-int lengthOfLongestSubstring(string s) {
-        vector<int> dict(256, -1);
-        int maxLen = 0, start = -1;
-        for (int i = 0; i != s.length(); i++) {
-            if (dict[s[i]] > start) 
-            {
-                start = dict[s[i]];
-            }
-            dict[s[i]] = i;
-            maxLen = max(maxLen, i - start);
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        
+        if (s.size() <= 1) {
+            return s.size();
         }
-        return maxLen;
+        unordered_map<char, int> m;
+        int start = -1;
+        int maxlen = 0;
+        int i;
+        for (i = 0; i < s.size(); i++)
+        {
+            //Look how the count function is useful    
+            if (m.count(s[i]) != 0) {
+                //why we need to take "max". "abba" is a fine example
+                start = max(start, m[s[i]]);
+                break;
+            }
+            m[s[i]] = i;
+            maxlen = max(maxlen, i - start);
+        }
+        
+        return maxlen;
     }
+};
 
 
 
