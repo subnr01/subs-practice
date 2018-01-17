@@ -23,6 +23,17 @@ Output:
 
 //https://leetcode.com/articles/add-bold-tag-in-a-string/
 
+/*
+Find the strings in dict inside x and note the start and end indices 
+in a pair.
+Call merge function, where you sort and then merge overlapping pairs.
+
+Insert into the string the bold tags whereever the range start and
+end appears.
+
+*/
+
+
 //Alexander
 class Solution {
 public:
@@ -51,6 +62,7 @@ private:
     vector<pair<int, int>> merge(vector<pair<int, int>>& a) {
         vector<pair<int, int>> r;
         sort(a.begin(), a.end(), compare);
+        //j keeps track of the previous element.
         for (int i = 0, j = -1; i < a.size(); i++) {
             if (j < 0 || a[i].first > r[j].second) {
                 r.push_back(a[i]);
@@ -65,6 +77,7 @@ private:
     }
 
     static bool compare(pair<int, int>& a, pair<int, int>& b) {
+        //This is amazing logic, make a note
         return a.first < b.first || a.first == b.first && a.second < b.second;
     }
 };
