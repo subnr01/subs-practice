@@ -17,3 +17,7 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 
 
 //Related topics:  Queue, Greedy
+
+
+//https://zhuhan0.blogspot.com/2017/07/leetcode-621-task-scheduler.html
+
