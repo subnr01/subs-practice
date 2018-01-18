@@ -45,18 +45,17 @@ public:
         int n = sum.size();
         for (int j = 3; j < n - 3; j++) {
             set<int> subsums;
-            for (int i = 0; i < j - 1; i++) {
-                int sum1 = sum[i - 1];
-                int sum2 = sum[j - 1] - sum[i];
+            for (int i = 1; i < j - 1; i++) {
+        
                 if (sum[i - 1] == sum[j - 1] - sum[i]) {
-                    subsums.insert(sum1);
+                    subsums.insert(sum[i - 1]);
                 }
             }
 
             for (int k = j + 1; k < n - 1; k++) {
-                int sum3 = sum[k - 1] - sum[j];
-                int sum4 = sum[n - 1] - sum[k];
-                if (sum3 == sum4 && subsums.count(sum3)) {
+                int sum1 = sum[k - 1] - sum[j];
+                int sum2 = sum[n - 1] - sum[k];
+                if (sum1 == sum2 && subsums.count(sum1)) {
                     return true;
                 }
             }
