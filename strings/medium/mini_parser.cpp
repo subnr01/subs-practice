@@ -26,8 +26,54 @@ Return a NestedInteger object containing a nested list with 2 elements:
     ii. A nested list with one element:
          a. An integer containing value 789.
 */
+//using stack
+class Solution {
+public:
+    static bool isnumber(char c) {
+        return (c == '-') || isdigit(c); 
+    }
+    NestedInteger deserialize(string s) {
+       
+        
+        stack<NestedInteger> stk;
+        stk.push(NestedInteger());
+        //example:"[123,[456,[789]]]",
+        for (auto it = s.begin(); it != s.end();) {
+            const char & c = (*it);
+            if (isnumber(c)) {
+                //what does find_if_not do???
+                auto it2 = find_if_not(it, s.end(), isnumber);
+                int val = stoi(string(it, it2));
+                stk.top().add(NestedInteger(val));
+                it = it2;
+            }
+            else {
+                if (c == '[') {
+                    stk.push(NestedInteger());
+                }
+                //Beautiful logic here.
+                // if A is top having 789 and 
+                // Z is top - 1 having 456, after
+                // the below statements, 
+                // Z = {456, A} and then
+                // X = {123, Z} and so oon.
+                else if (c == ']') {
+                    NestedInteger ni = stk.top();
+                    stk.pop();
+                    stk.top().add(ni);
+                }
+                ++it;
+            }
+        }
+        
+        //return the front
+        NestedInteger result = stk.top().getList().front();
+        return result;
+    }
+};
 
 
+//using istream
 class Solution {
 public:
     NestedInteger deserialize(string s) {
