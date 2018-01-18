@@ -11,7 +11,9 @@ Design a log storage system to implement the following functions:
 void Put(int id, string timestamp): Given a log's unique id and timestamp, store the log in your storage system.
 
 int[] Retrieve(String start, String end, String granularity): Return the id of logs
-whose timestamps are within the range from start to end. Start and end all have the same format as timestamp. However, granularity means the time level for consideration. For example, start = "2017:01:01:23:59:59", end = "2017:01:02:23:59:59", granularity = "Day", it means that we need to find the logs within the range from Jan. 1st 2017 to Jan. 2nd 2017.
+whose timestamps are within the range from start to end. Start and end all have the same format as timestamp. However,
+granularity means the time level for consideration. For example, start = "2017:01:01:23:59:59", end = "2017:01:02:23:59:59",
+granularity = "Day", it means that we need to find the logs within the range from Jan. 1st 2017 to Jan. 2nd 2017.
 
 Example 1:
 
@@ -33,6 +35,7 @@ public:
     LogSystem() { }
 
     void put(int id, string time) {
+        //why emplace?
         logs.emplace(time, id);
     }
 
@@ -46,6 +49,7 @@ public:
             string time = it->first; // 2017:01:01:23:59:59
             int id = it->second;
             string etime = time.substr(0, el);
+            //Do not forget the "="
             if (es <= etime && etime <= ee) {
                 ids.push_back(id);
             }
@@ -57,5 +61,6 @@ private:
     multimap<string, int> logs;
 
     // effective lengths of time stamps for different granularity
+    // look how this is intiailised
     map<string, int> lengths{ { "Year", 4 },{ "Month", 7 },{ "Day", 10 },{ "Hour", 13 },{ "Minute", 16 },{ "Second", 19 } };
 };
