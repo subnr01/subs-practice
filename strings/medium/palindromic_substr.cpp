@@ -42,8 +42,11 @@ int countPalindrome(string &s, int l, int r) {
     return count;
 }
 
-
+//THIS DP SOLN NOT UNDERSTOOD
 //DP Solution
+//This is same as the DP soln for the longest palindromic substring, 
+// instead of storing the longest, just get the count of the
+// palindromic substrings.
 class Solution {
     public int countSubstrings(String s) {
     int n = s.length();
@@ -51,6 +54,7 @@ class Solution {
     boolean[][] dp = new boolean[n][n];
     for (int i = n - 1; i >= 0; i--) {
         for (int j = i; j < n; j++) {
+            // the meaning of 3 is for one or two characters like "a" or "aa"
             dp[i][j] = s.charAt(i) == s.charAt(j) && (j - i < 3 || dp[i + 1][j - 1]);
             if(dp[i][j]) ++res;
         }
