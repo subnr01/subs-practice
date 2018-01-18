@@ -21,3 +21,47 @@ sum(k + 1, n - 1) = sum(6, 6) = 1
 
 
 */
+
+
+/*
+Time complexity : O(n^2)
+One outer loop and two inner loops are used.
+
+Space complexity : O(n)O(n). HashSet size can go upto nn.
+
+*/
+
+class Solution {
+public:
+    bool splitArray(vector<int>& nums) {
+        vector<int> sum;
+        int prev = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (nums[i] == 0 && i > 0 && nums[i - 1] == 0)  continue; // skip extra 0s to accelerate
+            prev += nums[i];
+            sum.push_back(prev);
+        }
+
+        int n = sum.size();
+        for (int j = 3; j < n - 3; j++) {
+            set<int> subsums;
+            for (int i = 0; i < j - 1; i++) {
+                int sum1 = sum[i - 1];
+                int sum2 = sum[j - 1] - sum[i];
+                if (sum[i - 1] == sum[j - 1] - sum[i]) {
+                    subsums.insert(sum1);
+                }
+            }
+
+            for (int k = j + 1; k < n - 1; k++) {
+                int sum3 = sum[k - 1] - sum[j];
+                int sum4 = sum[n - 1] - sum[k];
+                if (sum3 == sum4 && subsums.count(sum3)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+};
