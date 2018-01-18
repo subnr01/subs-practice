@@ -20,4 +20,5 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 
 
 //https://zhuhan0.blogspot.com/2017/07/leetcode-621-task-scheduler.html
+//https://leetcode.com/problems/task-scheduler/solution/
 
