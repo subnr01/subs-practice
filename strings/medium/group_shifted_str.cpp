@@ -40,35 +40,8 @@ private:
         for (int i = 1; i < n; i++) {
             int diff = s[i] - s[i - 1];
             if (diff < 0) diff += 26;
-            t += 'a' + diff + ',';
+            t += to_string(diff);
         }
         return t;
     }
 };
-
-
-//Another soln
-vector<vector<string>> groupStrings(vector<string>& strings) {
-	unordered_map<string, vector<string>> hmap;
-
-	for (int i = 0; i<strings.size(); i++) {
-		string t = strings[i];
-		int diff = t[0] - 'a';
-		for (int j = 0; j<strings[i].size(); j++) {
-			if (t[j] - diff - 'a' >= 0)
-				t[j] = t[j] - diff;
-			else 
-				t[j] = (t[j] - diff) + 26;
-		}
-
-		hmap[t].push_back(strings[i]);
-	}
-
-	vector<vector<string>> result;
-	for (auto iter = hmap.begin(); iter != hmap.end(); ++iter) {
-		result.push_back(iter->second);
-		sort(result.back().begin(), result.back().end());
-	}
-
-	return result;
-}
