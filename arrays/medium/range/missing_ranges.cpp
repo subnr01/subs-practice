@@ -8,28 +8,21 @@ For example, given [0, 1, 3, 50, 75], lower = 0 and upper = 99, return ["2", "4-
 
 
 class Solution {
-    public:
-        vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
-            vector<string> ranges;
-            int next = lower;
-            for (int i = 0; i < nums.size(); i++ ) {
-                //if (nums[i] < next)  continue;
-                if (nums[i] == next) {
-                    next ++;
-                    continue;
-                }
-                ranges.push_back(getRange(next, nums[i] - 1));
-                next = nums[i] + 1;
+public:
+    vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
+        vector<string> res;
+        for (int n : nums) {
+            if (n == std::numeric_limits<int>::min()) {
+                lower = n + 1; 
+                continue;
             }
-            if(next <= upper)  ranges.push_back(getRange(next, upper));
-            return ranges;
+            if (lower == n - 1) res.push_back(to_string(lower));
+            else if (lower < n - 1)   res.push_back(to_string(lower) + "->" + to_string(n - 1)); 
+            if (n == std::numeric_limits<int>::max())     return res; // added
+            lower = n + 1;
         }
-        
-        string getRange(const int lower, const int upper) {
-            if (lower == upper) {
-                return to_string(lower);
-            } else {
-                return to_string(lower) + "->" + to_string(upper);
-            }
-        }
-    };
+        if (lower == upper) res.push_back(to_string(lower));
+        else if (lower < upper)   res.push_back(to_string(lower) + "->" + to_string(upper));
+        return res;
+    }
+};
