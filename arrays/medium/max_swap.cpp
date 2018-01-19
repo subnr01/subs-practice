@@ -15,3 +15,29 @@ Output: 9973
 Explanation: No swap.
 
 */
+
+
+class Solution {
+public:
+    int maximumSwap(int num) {
+        string s = to_string(num);
+        swaponce(s);
+        int l = stoi(s);
+        return l;
+    }
+private:
+    void swaponce(string& s) {
+        for (int i = 0; i < s.size(); i++) {
+            int maxpos = i;
+            for (int j = s.size() - 1; j > i; j--) {
+                if (s[j] > s[maxpos]) {
+                    maxpos = j;
+                }
+            }
+            if (maxpos != i) {
+                swap(s[i], s[maxpos]);
+                break;
+            }
+        }
+    }
+};
