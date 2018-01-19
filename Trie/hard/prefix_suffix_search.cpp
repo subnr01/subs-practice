@@ -22,7 +22,62 @@ words[i] and prefix, suffix queries consist of lowercase letters only.
 
 */
 
+//Related topics
+Trie
 
+
+//Trie with map
+struct Trie {
+    unordered_map<char,Trie*> nxt;
+    int mx;
+    
+    Trie() {
+        mx = -1;
+    }
+    
+    void add(string w, int x) {
+        Trie *cur = this;
+        for (char c:w) {
+            if (!cur->nxt.count(c)) cur->nxt[c] = new Trie();
+            cur= cur->nxt[c];
+            cur->mx = max(cur->mx,x);
+        }
+    }
+    
+    int f(string w) {
+        Trie *cur = this;
+        for (char c:w) {
+            if (!cur->nxt.count(c)) return -1;
+            cur= cur->nxt[c];
+        }
+        return cur->mx;
+    }
+};
+
+class WordFilter {
+public:
+    Trie* root;
+    
+    WordFilter(vector<string> words) {
+        root = new Trie();
+        for (int i = 0; i < words.size(); ++i) {
+            int m = min(10,(int)words[i].size());
+            string r = words[i].substr(words[i].size()-m) + "*";
+            reverse(r.begin(),r.end());
+            string t;
+            for (int j = 0; j < m; ++j) {
+                root->add(t + r,i);
+                t+= words[i][j];
+            }
+            root->add(t+r,i);
+        }
+    }
+    
+    int f(string prefix, string suffix) {
+        reverse(suffix.begin(), suffix.end());
+        return root->f(prefix + "*" + suffix);
+    }
+};
 
 
 
