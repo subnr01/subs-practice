@@ -34,17 +34,28 @@ int countComponents(int n, vector<pair<int, int>>& edges) {
 }
 C++ solution 2
 
-int countComponents(int n, vector<pair<int, int>>& edges) {
-    vector<int> p(n);
-    iota(begin(p), end(p), 0);
-    function<int (int)> find = [&](int v) {
-        return p[v] == v ? v : p[v] = find(p[v]);
-    };
-    for (auto& edge : edges) {
-        int v = find(edge.first), w = find(edge.second);
-        p[v] = w;
-        n -= v != w;
+class Solution {
+public:
+    vector<int> leader;
+    
+    int getParent(int child) {
+        if (leader[child] == -1) return child;
+        leader[child] = getParent(leader[child]);
+        return leader[child];
     }
-    return n;
-}
-
+    
+    int countComponents(int n, vector<pair<int, int>>& edges) {
+        leader.resize(n, -1);
+        for (auto& pr : edges) {
+            int small = min(pr.first, pr.second);
+            int large = max(pr.first, pr.second);
+            int sp = getParent(small);
+            int lp = getParent(large);
+            if (sp != lp) leader[lp] = sp;  // effectively decrease roots by one
+        }
+        
+        int rv = 0;
+        for (int i = 0; i < n; i++) if (leader[i] == -1) rv++;
+        return rv;
+    }
+};
