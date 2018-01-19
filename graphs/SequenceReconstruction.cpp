@@ -67,3 +67,35 @@ https://discuss.leetcode.com/topic/65961/simple-solution-one-pass-using-only-arr
         }
         return toMatch == 0;
     }
+
+class Solution {
+public:
+  bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
+    if (seqs.empty()) return false;
+
+    vector<int> pos(org.size() + 1);
+    for (int i = 0; i < org.size(); ++i)
+      pos[org[i]] = i;
+
+    unordered_set<int> visited;
+    bool hasElement = false;
+    int match = 0;
+    
+    for (const auto& v: seqs) {
+      for (int i = 0; i < v.size(); ++i) {
+	hasElement = true; // To handle case when org = [1], seqs = [[],[]]
+	if (v[i] <= 0 || v[i] > org.size())
+	  return false;
+
+	if (i == 0) continue;
+	int x = v[i - 1], y = v[i];
+	if (pos[x] >= pos[y]) return false; // To handle case when org = [1], seqs = [[1,1]]
+	if (visited.find(x) == visited.end() && pos[x] == pos[y] - 1) { // flag[x] means x position adjent element found or not
+	  visited.insert(x); // Mark adjcent at postion x found
+	  match++;
+	}
+      }
+    }
+    return match == org.size() - 1 && hasElement;
+  }
+};
