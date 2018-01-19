@@ -23,8 +23,8 @@ words[i] and prefix, suffix queries consist of lowercase letters only.
 */
 
 //Related topics
-Trie
-
+//Trie
+//LOOK at solns for complexity
 
 //Trie with map
 struct Trie {
