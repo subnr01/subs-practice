@@ -29,6 +29,28 @@ Rule 2, the rows have black pixel at column C = 1 are row 0, row 1 and row 2. Th
 
 
 */
+/**
+ * Steps:
+ * >> 1. create map<int, set<int>> cols, rows; -- to store black dots on that row;
+ * 
+ *     _0_1_2_3_4_5_
+ *  0 | 0 l 0 1 1 0     rows[0] = {1, 3, 4}
+ *  1 | 0 l 0 1 1 0     rows[1] = {1, 3, 4}
+ *  2 | 0 l 0 1 1 0     rows[2] = {1, 3, 4}
+ *  3 | 0 0 1 0 1 0     rows[3] = {  2,  4}
+ * 
+ * >> 2. for every pixel meet rule 1, that is: pic[i][j] == 'B' && rows[i].size() == N && cols[j].size() == N
+ *       check rule2: for every row k in cols[j];  check that row[k] = row[i];
+ * 
+ * We can tell the 6 black pixel in col 1 and col 3 are lonely pixels
+ *     _0_1_2_3_4_5_
+ *  0 | 0 L 0 L 1 0     rows[0] = {1, 3, 4}  =
+ *  1 | 0 L 0 L 1 0     rows[1] = {1, 3, 4}  =
+ *  2 | 0 L 0 L 1 0     rows[2] = {1, 3, 4} 
+ *  3 | 0 0 1 0 1 0     rows[3] = {  2,  4}
+ *
+ */
+
 
 class Solution {
 public:
