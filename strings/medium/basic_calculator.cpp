@@ -18,11 +18,14 @@ Note: Do not use the eval built-in library function.
 int calculate(string s) {
     stack<int> myStack;
     char sign = '+';
-    int res = 0, tmp = 0;
+    int tmp = 0;
     for (unsigned int i = 0; i < s.size(); i++) {
-        if (isdigit(s[i]))
-            tmp = 10*tmp + s[i]-'0';
-        //if it is not a digit
+        if (isdigit(s[i])) {
+            tmp = 10 * tmp + s[i]-'0';
+        }
+        //there is no else here, hence the check for isdigit required
+        // here again. Also the or condition is also important, as
+        // it ensures that the last number is pushed in.
         if (!isdigit(s[i]) && !isspace(s[i]) || i == s.size()-1) {
             if (sign == '-')
                 myStack.push(-tmp);
@@ -41,15 +44,19 @@ int calculate(string s) {
                 //Replacing the top with the
                 //result
                 myStack.pop();
+                //look at what we are pushing
                 myStack.push(num);
             }
             //temp and sign reset
+            // do not forget this
             sign = s[i];
             tmp = 0;
         }
     }
     
     //Here is where addition happens
+    // do not forget this
+    int res = 0;
     while (!myStack.empty()) {
         res += myStack.top();
         myStack.pop();
