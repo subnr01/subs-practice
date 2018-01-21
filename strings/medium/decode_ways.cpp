@@ -17,59 +17,69 @@ The number of ways decoding "12" is 2.
 
 //related topics: dynamic programming
 
-//non dp, but fibonacci
+Fibonacci
+F(n) = F(n-1) + F(n-2);
+where F(0) and F(1) = 1;
+The series becomes:
+1, 1, 2, 3, 5, 8, 13, 21,
+
+
 class Solution {
 public:
     int numDecodings(string s) {
-    int n = s.size();
-    if ( n == 0 || s[0] == '0' ) return 0;
-    if ( n == 1 ) return 1;
-    int m1 = 1, m2 = 1, num;
-    for ( int i = 1; i < n; i++ ) {
-        num = 0;
-        if ( !isValid(s[i]) && !isValid(s[i-1], s[i]) ) return 0;
-        if ( isValid(s[i]) ) num = m1;
-        if ( isValid(s[i-1], s[i]) ) num += m2;
-        m2 = m1;
-        m1 = num;
+        
+        if (s.size () == 0 || s[0] == '0') {
+            return 0;
+        }
+        if (s.size () == 1) {
+            return 1;
+        }
+        int num = 0;
+        int m1 = 1;
+        int m2 = 1;
+        int count;
+        bool found = false;
+        for (int i = 1; i < s.size(); i++)
+        {
+            //REMEBER TO SET NUM TO ZERO HERE
+            // num should be zero for every iteration of
+            // the loop.
+            num = 0;
+            if (isValid(s[i])) {
+                found = true;
+                num = m1;
+            }
+            if (isValid(s[i-1], s[i])) {
+                found = true;
+                num += m2;
+            }
+            if (!found) {
+                return 0;
+            } else {
+                m2 = m1;
+                m1 = num;
+                
+            }
+        }
+        return num;
     }
-    return num;
-}
     
-    bool isValid(char a,char b){
-    return a == '1'||(a == '2' && b <='6');
-}
-  bool isValid(char a) {
-    return a != '0';
-  }
+    int isValid(const char ch)
+    {
+        //return ch != 0;
+        int num = ch - '0';
+        return (num > 0 && num <= 26);
+        
+    }
+    
+    int isValid(const char a, const char b)
+    {
+        if (a == '1' || a == '2' && b <= '6') {
+            return true;
+        }
+        return false;
+    }
+    
 };
 
 
-//DP soln from program creek
-public int numDecodings(String s) {
-if (s.length() == 0){
-    return 0;
-}
-int[] t = new int[s.length()+1];
-t[0] = 1;
-
-if(s.charAt(0)!='0')t[1]=1;
-for(int i=2; i<=s.length(); i++){
-    if(isValid(s.substring(i-1,i))){
-        t[i]+=t[i-1];
-    }
-
-    if(isValid(s.substring(i-2,i))){
-        t[i]+=t[i-2];
-    }
-}
-
-return t[s.length()];
-}
-
-public boolean isValid(String s){
-if(s.charAt(0)=='0')
-    return false;
-int value = Integer.parseInt(s);
-return value>=1&&value<=26;
-}
