@@ -12,7 +12,10 @@ Here is an example of version numbers ordering:
 */
 
 
-//Look at the other solution for insane C++
+
+
+//This is really a good telephonic interview question
+// The inputs could be of different size.
 int compareVersion(string version1, string version2) {
     int i = 0; 
     int j = 0;
@@ -21,6 +24,11 @@ int compareVersion(string version1, string version2) {
     
     int num1 = 0;
     int num2 = 0;
+    
+    //Look at the "OR" condition below.
+    // This ensures that we continue processing
+    // even if we run out of length in one
+    // of the strings
     while(i<n1 || j<n2)
     {
         while(i<n1 && version1[i]!='.'){
@@ -36,6 +44,8 @@ int compareVersion(string version1, string version2) {
         if(num1>num2) return 1;
         else if(num1 < num2) return -1;
         
+        // Setting num(s) back to 0 is
+        // very important.
         num1 = 0;
         num2 = 0;
         i++;
