@@ -33,16 +33,15 @@ public:
         return to_string(ra) + "+" + to_string(rb) + "i";
     }
 
-    pair<int, int> parse(const string& a) {
-        //begin to plus
-        int plus = find(a.begin(), a.end(), '+') - a.begin();
-        //begin to i        
-        int i = find(a.begin(), a.end(), 'i') - a.begin();
-      
-        // 0 to plus position
-        int ra = stoi(a.substr(0, plus));
-        // plus + 1 to i -plus
-        int rb = stoi(a.substr(plus + 1, i - plus));
-        return {ra, rb};
+   pair<int, int> gen(string s) {
+        int plus = s.find('+', 0);
+        int i = s.find('i', 0);
+        
+        
+        int ra = stoi(s.substr(0, plus));
+        int ima = stoi(s.substr(plus + 1, i - plus));
+        
+        return {ra, ima};
+        
     }
 };
