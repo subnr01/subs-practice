@@ -23,21 +23,27 @@ Explanation: You need one step to make "sea" to "ea" and another step to make "e
 class Solution {
 public:
     int minDistance(string word1, string word2) {
-        int m = word1.size();
-        int n = word2.size();
         
-        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        size_t m = word1.size();
+        size_t n = word2.size();
         
-        for (int i = m; i >= 0; i--) {
+        vector<vector<int>> matrix (m+1, vector<int>(n+1, 0));
+        
+        for ( int i = m; i >= 0; i--) {
             for (int j = n; j >= 0; j--) {
+                 //DO NOT FORGET THE OR CONDITION BUT WHY
                 if (i < m || j < n) {
-                    dp[i][j] = (i < m && j < n && word1[i] == word2[j]) ?
-                               dp[i+1][j+1]:
-                               1 + min(i < m ? dp[i+1][j]: INT_MAX, j < n? dp[i][j+1]: INT_MAX);  
+                    matrix[i][j] = (word1[i] == word2[j])?
+                                matrix[i+1][j+1]:
+                                //DO NOT FORGET INT_MAX BUT WHY
+                                1 + min(i < m ? matrix[i+1][j]: INT_MAX, 
+                                        j < n? matrix[i][j+1]: INT_MAX); 
+            
                 }
             }
         }
-        return dp[0][0];
+        
+        return matrix[0][0];
         
     }
 };
