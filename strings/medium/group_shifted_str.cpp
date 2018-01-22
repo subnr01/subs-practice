@@ -28,6 +28,8 @@ public:
         vector<vector<string> > groups;
         for (auto m : mp) {
             vector<string> group = m.second;
+         
+            // do not forget, we need to sort here.
             sort(group.begin(), group.end());
             groups.push_back(group);
         }
