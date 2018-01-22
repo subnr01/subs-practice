@@ -57,7 +57,11 @@ public:
                 //DFS with both i++ and step++
                 dfs(s,i+1,step+1,ip+'.',result);
             }
-            if(num==0) break;
+            // we need the below condition as we do not
+            // want 0 prefix on real numbers
+            if(num==0) {
+                break;
+            }
         }
     }
 };
