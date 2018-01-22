@@ -10,6 +10,7 @@ Given [[0, 30],[5, 10],[15, 20]],
 return 2.
 */
 
+//Related topics: Heap, Greedy, Sort
 
 //Using priority queue (12 ms)
 class Solution {
