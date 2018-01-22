@@ -12,6 +12,11 @@ Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer 
 
 */
 
+/*
+Trace
+abba and pwwkew as good examples
+*/
+
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -29,7 +34,7 @@ public:
             if (m.count(s[i]) != 0) {
                 //why we need to take "max". "abba" is a fine example
                 start = max(start, m[s[i]]);
-                break;
+                
             }
             m[s[i]] = i;
             maxlen = max(maxlen, i - start);
