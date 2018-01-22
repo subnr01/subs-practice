@@ -38,7 +38,9 @@ strings be m and n respectively.
 
 
 //Simple solution (programm creek)
-bool isOneEditDistance(string s, string t) {
+class Solution {
+public:
+    bool isOneEditDistance(string s, string t) {
 	int len1 = s.size();
 	int len2 = t.size();
 
@@ -54,8 +56,8 @@ bool isOneEditDistance(string s, string t) {
 	while ( i<len1 && j<len2)
 	{
 		if (s[i] == t[j]) {
-			i++;
-			j++;
+			++i;
+			++j;
 		} else {
 			count++;
 			if (count > 1) {
@@ -63,15 +65,17 @@ bool isOneEditDistance(string s, string t) {
 			}
 
 			if (len1 > len2) {
-				i++;
+				++i;
+            }
+			else if (len2 > len1) {
+				++j;
 			} else {
-				j++;
-			}
 			/*
 			Do not forget to do this part
 			*/
-			i++;
-			j++;
+			    ++i;
+			    ++j;
+            }
 		}
 	}
 
@@ -81,8 +85,9 @@ bool isOneEditDistance(string s, string t) {
 
 	return count == 1;
 
-
 }
+
+};
 
 
 // Slightly difficult solution.
