@@ -32,6 +32,11 @@ public:
                     s[storeindex++] = s[j++];
                 }
                 //begin to end of the word, begin to the beginning of the word
+                // WE CANNOT USE JUST I HERE, BECAUSE THE REVERSE MUST HAPPEN
+                // ON THE CHANGED STRING WHICH IS INDEXED BY STOREINDEX, BUT 
+                // STOREINDEX HAS CHANGED TO END OF THE WORD, SO TO MAKE IT
+                // COME TO THE BEINGNING OF THE WORD, WE HAVE TO SUBSTRACT THE
+                // WORD SIZE . (j-i)
                 reverse (s.begin() + storeindex - (j-i), s.begin() + storeindex);
                 
                 i = j;
