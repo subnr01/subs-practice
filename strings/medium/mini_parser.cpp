@@ -38,6 +38,7 @@ public:
         stack<NestedInteger> stk;
         stk.push(NestedInteger());
         //example:"[123,[456,[789]]]",
+        //there is no it++ here.
         for (auto it = s.begin(); it != s.end();) {
             const char & c = (*it);
             if (isnumber(c)) {
@@ -62,6 +63,7 @@ public:
                     stk.pop();
                     stk.top().add(ni);
                 }
+                //Look where it is incremented and not outside this block.
                 ++it;
             }
         }
