@@ -50,6 +50,7 @@ public:
         
         //start is not 0 everytime, but only
         // in the first call.
+        //DO NOT FORGET THIS START + 3
         for(int i=start;i<start+3;i++){
             num=num*10+(s[i]-'0');
             if(num<=255){
