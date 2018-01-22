@@ -39,11 +39,15 @@ public:
                 return;
         }
         
+        // Mostly left and right are 0
+        // for this to happen
         if (left + right == 0) {
             result.push_back(s);
             return;
         }
         
+        //do not forget this left > 0 check, 
+        // this is how we can enter the right function.
         if (left > 0) {
             s.push_back('(');
             func(result, s, left-1, right);
