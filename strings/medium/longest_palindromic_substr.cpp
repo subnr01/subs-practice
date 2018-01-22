@@ -22,9 +22,13 @@ string longestPalindrome(string s) {
     int max_pal_len = 1;
     //initialise i to 0, important
     int i = 0;
+    
+    //USE WHILE HERE AND NOT FOR AS i is
+    // not incremented in the loop delcaration.
     while(i < s.size()) 
     {
-      //obtained length is greater than what is left in the string.
+      //what is left is lesser than half the 
+      // obtained max palindrome length, then exit
       if (s.size() - i <= max_pal_len / 2) {
           break;
       }
