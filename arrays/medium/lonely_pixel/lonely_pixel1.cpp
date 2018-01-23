@@ -35,23 +35,31 @@ Explanation: All the three 'B's are black lonely pixels.
 
 class Solution {
 public:
-    int findLonelyPixel(vector<vector<char>>& pic) {
-        int m = pic.size();
-        int n = pic[0].size();
-        vector<int> rows = vector<int>(m, 0);
-        vector<int> cols = vector<int>(n, 0);
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                rows[i] += pic[i][j] == 'B';
-                cols[j] += pic[i][j] == 'B';
+    int findLonelyPixel(vector<vector<char>>& picture) 
+    {
+        int m = picture.size();
+        int n = picture[0].size();
+        int count = 0;
+        vector<int> rows(m, 0);
+        vector<int> columns(n, 0);
+        
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++) 
+            {
+                rows[i] += picture[i][j] == 'B';
+                columns[j] += picture[i][j] == 'B';
             }
         }
-        int lonely = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n && rows[i] > 0; j++) {
-                lonely += pic[i][j] == 'B' && rows[i] == 1 && cols[j] == 1;
-            }
+        
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++) 
+            {
+                count += picture[i][j] == 'B' ? rows[i] == 1 && columns[j] == 1: 0;
+            }           
         }
-        return lonely;
+        
+        return count;
     }
 };
