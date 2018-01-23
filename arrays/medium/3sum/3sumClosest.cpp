@@ -10,26 +10,43 @@ Return the sum of the three integers. You may assume that each input would have 
 */
 
 
-int threeSumClosest(vector<int>& nums, int target) {
-    if(nums.size() < 3) return 0;
-    int closest = nums[0]+nums[1]+nums[2];
-    sort(nums.begin(), nums.end());
-    for(int first = 0 ; first < nums.size()-2 ; ++first) {
-        if(first > 0 && nums[first] == nums[first-1]) continue;
-        int second = first+1;
-        int third = nums.size()-1;            
-        while(second < third) {
-            int curSum = nums[first]+nums[second]+nums[third];
-            if(curSum == target) return curSum;
-            if(abs(target-curSum)<abs(target-closest)) {
-                closest = curSum;
+class Solution {
+public:
+    int threeSumClosest(vector<int>& a, int target) {
+        int n = a.size();
+        int closest = a[0] + a[1] + a[2];
+        sort(a.begin(), a.end());
+        int ans;
+        
+        for (int i = 0; i < n - 2; i++) {
+            if (i != 0 && a[i] == a[i-1]) {
+                continue;
+            } 
+            
+            int j = i + 1;
+            int k = n - 1;
+            while (j < k) 
+            {
+                int sum = a[i] + a[j] + a[k];
+                if (sum == target) {
+                    return sum;
+                }
+                
+                if (sum < target) {
+                    j++;
+                } 
+                else  {
+                    k--;
+                }
+                
+                if (abs(target - sum) < abs(target - closest)) 
+                {
+                    closest = sum;
+                }
+                
             }
-            if(curSum > target) {
-                --third;
-            } else {
-                ++second;
-            }
+            
         }
+        return closest;
     }
-    return closest;
-}
+};
