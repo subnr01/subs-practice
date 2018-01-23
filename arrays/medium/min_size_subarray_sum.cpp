@@ -7,71 +7,35 @@ the subarray [4,3] has the minimal length under the problem constraint.
 
 */
 
-
-// 12 ms
-class Solution {
-public:
-    int minSubArrayLen(int s, vector<int>& a) {
-        
-        int len = a.size();
-        
-        if (!len) {
-            return 0;
-        }
-        
-        int i = 0;
-        int j = 0;
-        int sum = 0;
-        int min_len = INT_MAX;
-        
-        while(j<len) {
-            if ( sum < s) {
-                sum += a[j++];
-            } else {
-                if (i == j-1) {
-                    return 1;
-                }
-                min_len = (j-i) < min_len? (j-i): min_len;
-                sum-=a[i++];
-            }
-        }
-        
-        while (sum >= s) {
-            min_len = (j-i) < min_len? (j-i): min_len;
-            sum -=a[i++];
-        }
-        
-        return min_len == INT_MAX? 0: min_len;
-    }
-};
-
-
-
-
-// 9 ms
+//good soln
 class Solution {
 public:
     int minSubArrayLen(int s, vector<int>& nums) {
-        int N = nums.size();
-        if(N == 0) return 0;
+        int n = nums.size();
         
-        int i = 0, j = 0, sum = 0;
-        int res = N+1;
+        int sum = 0;
+        int minlen = INT_MAX;
         
-        for(int j = 0; j < N; ++j)
+        int i = 0;
+        
+        for (int j = 0; j < n; j++)
         {
             sum += nums[j];
-            
-            while(sum >= s)
+            while (sum >= s)
             {
-                int len = j-i+1;
-                res = min(len, res);
-
+                int len = j - i + 1;
+                minlen = min(minlen, len);
+                /// look how sum is decremented 
+                // and i is moved forward until 
+                // sum is less than s.
                 sum -= nums[i];
-                ++i;
+                i++;
             }
         }
         
-        return res > N? 0: res;
+        // We need to check for INT_MAX 
+        // because we may not find a soln for
+        // cases such as {1,1} and 4.
+        return minlen == INT_MAX? 0: minlen;
     }
 };
