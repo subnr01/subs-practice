@@ -9,3 +9,31 @@ Note: You may not slant the container and n is at least 2.
 */
 
 //Related topics: two pointers
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int i = 0;
+        int j = height.size() - 1;
+        int max_a = 0;
+        while (i < j)
+        {
+            if(height[i] < height[j])
+            {
+                if(max_a < (j - i)*height[i]) 
+                {   
+                    max_a = (j - i)*height[i];
+                }
+                i++;
+            }
+            else
+            {
+                if(max_a < (j - i)*height[j]) {
+                    max_a = (j - i)*height[j];
+                }
+                j--;
+            }
+        }
+        return max_a;
+    }
+};
