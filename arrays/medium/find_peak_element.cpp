@@ -12,7 +12,7 @@ For example, in array [1, 2, 3, 1], 3 is a peak element and your function should
 
 */
  
-
+//7 ms
 class Solution {
 public:
     int findPeakElement(const vector<int> &num) 
@@ -32,4 +32,49 @@ public:
         return low;
     }
 };
+
+//6 ms
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        
+        
+        int n = nums.size();
+        
+        if(nums.size()<2) return 0; //index 
+        
+        
+        if(nums[0]>nums[1]) return 0;
+        
+        if(nums[n-1]>nums[n-2]) return n-1;
+        
+        for(int i=1; i<nums.size()-1; i++) {
+            
+            if(nums[i]>nums[i-1] && nums[i]>nums[i+1])
+                return i;
+        }
+        
+    }
+};
+
   
+//3 ms
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        if (nums.size()==1)
+            return 0;
+        vector<int> diff;
+        for(int i=0; i<nums.size()-1;i++){
+            diff.push_back(nums[i]-nums[i+1]);
+        }
+        if (diff[0] > 0)
+            return 0;
+        for (int i=1; i<diff.size(); i++)
+            if (diff[i-1]<0 && diff[i]>0)
+                return i;
+        if (diff.back()<0)
+            return diff.size();
+        return -1;
+    }
+};
