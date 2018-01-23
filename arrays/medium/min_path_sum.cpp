@@ -14,26 +14,13 @@ Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes
 
 Related topics: array, DP
 
-//9 ms
-class Solution {
-public:
-    int minPathSum(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        vector<int> cur(m, grid[0][0]);
-        for (int i = 1; i < m; i++)
-            cur[i] = cur[i - 1] + grid[i][0]; 
-        for (int j = 1; j < n; j++) {
-            cur[0] += grid[0][j]; 
-            for (int i = 1; i < m; i++)
-                cur[i] = min(cur[i - 1], cur[i]) + grid[i][j];
-        }
-        return cur[m - 1];
-    }
-};
-
 
 //dp 6 ms
+/*
+This is a typical DP problem. Suppose the minimum path sum of arriving at 
+point (i, j) is S[i][j], then the state equation is S[i][j] = min(S[i - 1][j], S[i][j - 1]) + grid[i][j].
+*/
+
 class Solution {
 public:
     int minPathSum(vector<vector<int>>& grid) {
@@ -59,3 +46,23 @@ public:
 
     }
 };
+
+
+//dp 1d array (9ms)
+class Solution {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<int> cur(m, grid[0][0]);
+        for (int i = 1; i < m; i++)
+            cur[i] = cur[i - 1] + grid[i][0]; 
+        for (int j = 1; j < n; j++) {
+            cur[0] += grid[0][j]; 
+            for (int i = 1; i < m; i++)
+                cur[i] = min(cur[i - 1], cur[i]) + grid[i][j];
+        }
+        return cur[m - 1];
+    }
+};
+
