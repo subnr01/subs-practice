@@ -29,6 +29,10 @@ Explanation: All the three 'B's are black lonely pixels.
  * cols[0][1][2]
  *     1  1  1
  */
+
+//Related topics
+//Array and Depth first search
+
 class Solution {
 public:
     int findLonelyPixel(vector<vector<char>>& pic) {
