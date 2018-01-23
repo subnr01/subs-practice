@@ -46,6 +46,7 @@ vector<int> majorityElement(vector<int>& nums) {
     }
     
     vector<int> res;
+    //the sign is greater and NOT ">="
     if (cnt1 > nums.size()/3)   res.push_back(a);
     if (cnt2 > nums.size()/3)   res.push_back(b);
     return res;
