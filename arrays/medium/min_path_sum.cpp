@@ -12,6 +12,7 @@ Given the above grid map, return 7. Because the path 1→3→1→1→1 minimizes
 
 */
 
+Related topics: array, DP
 
 //9 ms
 class Solution {
