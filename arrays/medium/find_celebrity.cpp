@@ -21,32 +21,40 @@ bool knows(int a, int b);
 class Solution {
 public:
     int findCelebrity(int n) {
-    if(n<=1) return n;
-    
-    int candidate = 0;
-    
-    for(int i=1; i<n; i++){
         
-        if ( !knows(i,candidate) ){
-            candidate = i;
-        }
-    }
-    
-   
-    for(int j=0; j<n; j++){
+        int candidate = 0;
         
-        if(j== candidate) continue;
-     
-        if( !knows(j,candidate) || knows(candidate,j) ){
-              //if j does not know candidate, or candidate knows j, return -1;
-            return -1;
+        for (int i = 1; i < n; i++)
+        {
+            // Does i know the candidate, if no
+            // then reset the candidate function.
+            // what happens if we get two candidate funcitons.
+            // the candidate will have the outer index.
+            if (knows(i, candidate) == false) {
+                candidate = i;
+            }
         }
-   
+        
+        /* 
+        If we found two candidates, but recorded only one in the
+        last loop iteration, we need to make sure that these two
+        come face to face to decide whether they know each other 
+        or not
+        */
+        for (int j = 0; j < n; j++)
+        {
+            if (j == candidate) continue;
+            // if J does not know the candidate or 
+            // candidate knows j then exit.
+            // the condition must be, j knows the candidate and 
+            // the candidate does not know j(keeping with the requirements)
+            // 
+            if (!knows(j, candidate) || knows(candidate, j)) {
+                return -1;
+            }
+        }
+        
+        return candidate;
+        
     }
-   
-    
-    return candidate;
-  
-}
-
 };
