@@ -14,6 +14,7 @@ public:
     
     while (low < high)
     {
+        //DO NOT FORGET TO CHECK THIS INSIDE THE LOOP
         if (nums[low] < nums[high]) {
             return nums[low];
         }
