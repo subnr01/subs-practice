@@ -11,18 +11,35 @@ class Solution {
 public:
     vector<string> findMissingRanges(vector<int>& nums, int lower, int upper) {
         vector<string> res;
+        
         for (int n : nums) {
-            if (n == std::numeric_limits<int>::min()) {
+            
+            if (n == INT_MIN) {
                 lower = n + 1; 
                 continue;
             }
-            if (lower == n - 1) res.push_back(to_string(lower));
-            else if (lower < n - 1)   res.push_back(to_string(lower) + "->" + to_string(n - 1)); 
-            if (n == std::numeric_limits<int>::max())     return res; // added
+            
+            if (lower == n - 1) {
+                res.push_back(to_string(lower));
+            }
+            else if (lower < n - 1)  {
+                string s = to_string(lower) + "->" + to_string(n - 1);
+                res.push_back(s);  
+            }  
+            
+            if (n == INT_MAX) {
+                 return res;
+            }
+            
             lower = n + 1;
         }
-        if (lower == upper) res.push_back(to_string(lower));
-        else if (lower < upper)   res.push_back(to_string(lower) + "->" + to_string(upper));
+        
+        if (lower == upper) { 
+            res.push_back(to_string(upper));
+        }
+        else if (lower < upper)  {
+          res.push_back(to_string(lower) + "->" + to_string(upper));  
+        } 
         return res;
     }
 };
