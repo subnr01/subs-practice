@@ -31,6 +31,7 @@ public:
         size_t maxsize = 0;
         for (int i = 0; i < a.size(); i++) {
             size_t size = 0;
+            //Do not forget the equals to 0 comparison here
             for (int k = i; a[k] >= 0; size++) {
                 int ak = a[k];
                 a[k] = -1; // mark a[k] as visited;
