@@ -23,9 +23,9 @@ order then there are still more permutations to go
 
 How to do it.
 
-Find p,
+Find p, p is the first digit from the end which is lesser than the number to the right.
 if p is not there, then reverse the entire array.
-if p is there, then find q.
+if p is there, then find q. q is the first number that is greater than p from the right.
 swap p and q.
 reverse(p+1, end)
 */
