@@ -8,6 +8,14 @@ Input: n = 3, k = 1
 Output: [1, 2, 3]
 Explanation: The [1, 2, 3] has three different positive integers ranging from 1 to 3, and
 the [1, 1] has exactly 1 distinct integer: 1.
+
+
+Example 2:
+Input: n = 3, k = 2
+Output: [1, 3, 2]
+Explanation: The [1, 3, 2] has three different positive integers ranging from 1 to 3, and the [2, 1] 
+has exactly 2 distinct integers: 1 and 2.
+
 */
 
 /*
@@ -40,6 +48,11 @@ public:
         vector<int> res;
         for (int i = 1, j = n; i <= j; ) {
             if (k > 1) {
+              //IMPORTANT, WHEN you pass post increment
+              // to function, it gets evaluated as
+              // the function call and hence
+              // k, i and j all values change 
+              // once you return form the funciton.
                 res.push_back(k-- % 2 ? i++ : j--);
             }
             else {
