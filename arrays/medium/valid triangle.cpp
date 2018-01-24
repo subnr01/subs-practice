@@ -20,6 +20,29 @@ The integers in the given array are in the range of [0, 1000].
 
 */
 
+
+//my soln
+
+class Solution {
+public:
+    int triangleNumber(vector<int>& a) {
+        int res = 0;
+        sort(a.begin(), a.end());
+        //reverse(a.begin(), a.end());    // a is decreasing
+        for (int i = 0; i + 2 < a.size(); i++) {
+            for (int j = i + 1, k = a.size() - 1; j < k; j++) {
+                while (j < k && a[i] + a[j] <= a[k]) {
+                    k--;
+                }
+                res += k - j;
+                k = a.size() - 1;
+            }
+        }
+        return res;
+    }
+};
+
+
 //2 Pointers O(n^2logn)
 // space complexity: O(logn) for sorting
 class Solution {
