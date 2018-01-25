@@ -10,4 +10,5 @@ Not completed
 5. Lonely Pixel 2 Not Done.
 6. GAME OF LIFE NEEDS SPECIAL ATTENTION (WEEKEND ???)
 7. TEEMO ATTACKING NEEDS WEEKEND ATTENTION
+8. subarray prefix sum needs more attention
 
