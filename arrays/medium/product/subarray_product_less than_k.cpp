@@ -25,9 +25,12 @@ public:
         int prod = 1;
         for (right = 0; right < n; right++) {
             prod = prod * nums[right];
+            //Remember the equality comparison is very important here
+            // for example [1,2,3] and target = 0
             while ( left <= right && prod >= k) {
                 prod = prod/nums[left++];
             }
+            //remember you need to add length here.
             len = len + (right - left + 1);
         }
         return len;
