@@ -13,3 +13,26 @@ Write a function to determine if a given target is in the array.
 The array may contain duplicates.
 
 */
+
+
+class Solution {
+
+	public:
+		bool search(vector<int>& nums, int target) {
+			
+			int size = nums.size();
+			
+			for(int i =0 ; i <size; i++){
+                
+				int n  = nums[i];
+                
+				if (n == target) {
+                    
+                    return true;
+				}
+				
+			}
+        return false;
+
+        }
+};
