@@ -12,3 +12,9 @@ Not completed
 7. TEEMO ATTACKING NEEDS WEEKEND ATTENTION
 8. subarray prefix sum needs more attention
 
+
+---------------------------
+
+Difficult ones
+-------------------
+--Search a range is a difficult problem (search_a_range.cpp)
