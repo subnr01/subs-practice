@@ -19,12 +19,16 @@ You may assume word1 and word2 are both in the list.
 
 
 int shortestWordDistance(vector<string>& words, string word1, string word2) {
-    int res = words.size(), l = words.size(), r = -words.size();
+    int res = words.size(), 
+    int l = words.size(), 
+    int r = -words.size();
     for (unsigned int i=0; i<words.size(); i++) {
-        if (words[i] == word1)
+        if (words[i] == word1) {
             l = (word1==word2)?r:i;
-        if (words[i] == word2) 
+        }
+        if (words[i] == word2) {
             r = i;
+        }
         res = min(res, abs(l-r));
     }
     return res;
