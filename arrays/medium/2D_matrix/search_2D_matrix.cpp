@@ -25,6 +25,7 @@ public:
         int low = 0;
         
         //This gives the highest index in the array.
+        //DO NOT FORGET THIS
         int high = m*n - 1;
         
         while (low <= high)
