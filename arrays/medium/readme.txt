@@ -11,6 +11,7 @@ Not completed
 6. GAME OF LIFE NEEDS SPECIAL ATTENTION (WEEKEND ???)
 7. TEEMO ATTACKING NEEDS WEEKEND ATTENTION
 8. subarray prefix sum needs more attention
+9. Split array with equal sum not understood properly.
 
 
 ---------------------------
