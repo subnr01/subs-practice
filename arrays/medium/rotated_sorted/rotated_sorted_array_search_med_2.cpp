@@ -25,14 +25,14 @@ public:
         int high = sz - 1;
         int low  = 0;
         
-        while (low < high) {
+        while (low <= high) {
             int mid = (high - low)/2 + low;
             
             if (a[mid] == target) return true;
             
             if (a[mid] > a[high]) {
                 if (a[mid] >target && target >= a[low]) {
-                    high = mid;
+                    high = mid - 1;
                 } else {
                     low = mid + 1;
                 }
@@ -41,7 +41,7 @@ public:
                 if (a[mid] < target && target <= a[high]) {
                     low = mid + 1;
                 } else {
-                    high = mid;
+                    high = mid - 1;
                 }
             } else {
                 high--;
@@ -50,27 +50,4 @@ public:
         }
         return a[low] == target?true:false;
     }
-};	
-
-//Linear search
-class Solution {
-
-	public:
-		bool search(vector<int>& nums, int target) {
-			
-			int size = nums.size();
-			
-			for(int i =0 ; i <size; i++){
-                
-				int n  = nums[i];
-                
-				if (n == target) {
-                    
-                    return true;
-				}
-				
-			}
-        return false;
-
-        }
 };
