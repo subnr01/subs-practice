@@ -17,6 +17,7 @@ You may assume k is always valid, 1 ≤ k ≤ array's length.
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
+        //LOOK HOW PRIORITY QUEUE IS INTIALISED WITH VECTOR CONTENTS
         priority_queue<int> pq(nums.begin(), nums.end());
         for (int i = 0; i < k - 1; i++)
             pq.pop(); 
