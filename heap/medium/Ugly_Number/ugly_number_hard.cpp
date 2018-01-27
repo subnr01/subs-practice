@@ -24,3 +24,25 @@ struct Solution {
         return results.back();
     }
 };
+
+
+//USing heap
+
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        long long ret = 0;
+        priority_queue<long long, vector<long long>, greater<long long>> s;
+        s.push(1);
+        for (int i = 0; i < n; ++ i){
+            while (s.top() == ret) s.pop();
+            ret = s.top();
+            s.pop();
+            s.push(ret * 2);
+            s.push(ret * 3);
+            s.push(ret * 5);
+        }
+        return ret;
+    }
+};
+
