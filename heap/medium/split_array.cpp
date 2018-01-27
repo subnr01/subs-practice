@@ -37,6 +37,9 @@ bool isPossible(vector<int>& nums) {
                 seqs.pop();
             }
             
+            // Can you see why we are not removing element
+            // with the same top, but pushing the new on
+            // top of the new one.
             if (seqs.empty() || nums[i] == seqs.top().first) {
                 // have to start new subsequence as the new number is equal to the top element
                 seqs.push({nums[i++], 1});
