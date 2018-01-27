@@ -26,6 +26,8 @@ public:
         priority_queue<int, vector<int>, greater<int>> q;
         
         for (auto interval : intervals) {
+            // when the next start is greater than the previous end,
+            // then they can share the same room obviously.
             if (!q.empty() && interval.start >= q.top()) {
                 q.pop();
             }
