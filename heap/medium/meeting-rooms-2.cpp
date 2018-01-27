@@ -31,6 +31,9 @@ public:
             if (!q.empty() && interval.start >= q.top()) {
                 q.pop();
             }
+            
+            //there is no else here, since we want to push this
+            // interval end too.
             q.push(interval.end);
         }
         
