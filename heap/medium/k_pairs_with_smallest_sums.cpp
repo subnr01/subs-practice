@@ -30,7 +30,43 @@ All possible pairs are returned from the sequence:
 */
 
 
-//Using C++
+
+class Solution {
+public:
+    vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        int m = nums1.size();
+        int n = nums2.size();
+        
+        
+        auto cmp = [] (const pair<int, int> &a, const pair<int, int> &b)
+        {
+            return (a.first + a.second) > (b.first + b.second);
+        };
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq(cmp);
+        vector<pair<int, int>> res;
+        
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                //SEE DIFFERENCE BETWEEN PUSH AND EMPLACE
+                //pq.push({nums1[i],nums2[j]});
+                pq.emplace(nums1[i],nums2[j]);
+            }
+        }
+        
+        while(k-- && pq.size()) 
+        {
+            res.push_back(pq.top());
+            pq.pop();
+        }
+        
+        return res;
+        
+    }
+};
+
+//Slightly complex, but effecient one
 class Solution {
 public:
     vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
@@ -55,24 +91,3 @@ public:
 };
 
 
-//Using C++ 11
-class Solution {
-public:
-    vector<pair<int, int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) 
-    {
-        vector<pair<int, int>> v;
-        if(nums1.empty() || nums2.empty()) return v;
-        auto cmp = [](const pair<int, int>& a, const pair<int, int>& b) {
-            return a.first+a.second > b.first+b.second; };
-        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> minHeap(cmp);
-        for(auto n: nums1)
-            for(auto m: nums2)
-                minHeap.emplace(n, m);
-        while(minHeap.size() && k--)
-        {
-            v.emplace_back(minHeap.top());
-            minHeap.pop();
-        }
-        return v;
-    }
-};
