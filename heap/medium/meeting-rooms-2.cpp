@@ -22,6 +22,7 @@ public:
         
         sort(intervals.begin(), intervals.end(), cmp);
         
+        /* Notice how vector<int> is necessary here . */
         priority_queue<int, vector<int>, greater<int>> q;
         
         for (auto interval : intervals) {
