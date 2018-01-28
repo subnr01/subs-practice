@@ -38,23 +38,40 @@ The substring with start index = 2 is "ab", which is an anagram of "ab".
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        vector<int> pv(256,0), sv(256,0), res;
-        if(s.size() < p.size())
-           return res;
-        for(int i = 0; i < p.size(); ++i)
+        vector<int> res;
+        vector<int> smap(256, 0);
+        vector<int> pmap(256, 0);
+        
+        int m = s.length();
+        int n = p.length();
+        
+        if (m < n)
         {
-            ++pv[p[i]];
-            ++sv[s[i]];
+            return res;
         }
-        if(pv == sv)
-           res.push_back(0);
-        for(int i = p.size(); i < s.size(); ++i)
+        
+        for (int i = 0; i < n; i++)
         {
-            ++sv[s[i]];
-            --sv[s[i-p.size()]];
-            if(pv == sv)
-               res.push_back(i-p.size()+1);
+            ++pmap[p[i]];
+            ++smap[s[i]];
+        }
+        
+        if (pmap == smap)
+        {
+            res.push_back(0);
+        }
+        
+        
+        for (int i = n; i < m; i++)
+        {
+            ++smap[s[i]];
+            int pre_index = i - n;
+            --smap[s[pre_index]];
+            if(smap == pmap) {
+                res.push_back(pre_index + 1);
+            }
         }
         return res;
+        
     }
 };
