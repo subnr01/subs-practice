@@ -21,6 +21,26 @@ public:
 };
 
 
+//Another solution
+
+class Solution {
+public:
+    bool containsDuplicate(vector<int>& nums) {
+        int* numList = new int [nums.size()];
+        for(int i = 0; i < nums.size(); i++)
+        {
+            numList[i] = nums[i];
+        }
+        sort(numList, numList + nums.size());
+        
+        for(int i = 1; i < nums.size(); i++)
+        {
+            if(numList[i] == numList[i - 1]) return true;
+        }
+        return false;
+    }
+};
+
 /*
 Given an array of integers and an integer k, 
 find out whether there are two distinct indices i and j in the array 
