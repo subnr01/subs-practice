@@ -20,7 +20,7 @@ Output: [2,3]
 //LOOK at the XOR solutions
 
 
-//Using map (my soln)
+//Using map (my soln) TC: O(N) AND SC: O(N)
 class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
