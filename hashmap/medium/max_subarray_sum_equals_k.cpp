@@ -21,3 +21,39 @@ Can you do it in O(n) time?
 
 */
 
+class Solution {
+public:
+    int maxSubArrayLen(vector<int>& nums, int k) {
+        int n = nums.size();
+        
+        unordered_map<int, int> map;
+        int sum = 0;
+        int maxlen = 0;
+        
+        for (int i = 0; i < n; i++)
+        {
+            //cumulative sum
+            sum += nums[i];
+            int diff = sum - k;
+            
+            if (diff == 0) {
+                maxlen = i + 1;
+            } 
+            // See how the logic is here.
+            // the distance from the diff
+            // to the current index.
+            else if (map.find(diff) != map.end())
+            {
+                maxlen = max(maxlen, i - map[diff]);
+            }
+            
+            if (map.find(sum) == map.end())
+            {
+                map[sum] = i;
+            }
+            
+        }
+        return maxlen;
+        
+    }
+};
