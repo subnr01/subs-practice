@@ -42,6 +42,8 @@ public:
             // See how the logic is here.
             // the distance from the diff
             // to the current index.
+            // examlple (1, 2, 3, 4, 5 and k = 12)
+            // answer is 3.
             else if (map.find(diff) != map.end())
             {
                 maxlen = max(maxlen, i - map[diff]);
