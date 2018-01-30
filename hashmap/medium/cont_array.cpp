@@ -15,3 +15,36 @@ Explanation: [0, 1] (or [1, 0]) is a longest contiguous subarray with equal numb
 */
 
 
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        unordered_map<int, int> map;
+        int n = nums.size();
+        int zero = 0;
+        int one = 0;
+        int maxlen = 0;;
+        map[0] = -1;
+        
+        for (int i = 0; i < n; i++)
+        {
+            if (nums[i]) {
+                one++;
+            } else {
+                zero++;
+            }
+            
+            auto it = map.find(one - zero);
+            if (it != map.end())
+            {
+                maxlen = max(maxlen, i - it->second);
+            } else {
+                map[one - zero] = i;
+            }
+        }
+        
+        return maxlen;
+        
+    }
+};
+
+
