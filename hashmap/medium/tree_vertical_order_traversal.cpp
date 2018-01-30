@@ -69,6 +69,11 @@ public:
         vector<vector<int> > res;
         if(!root) return res;
         
+       //important to use map here and
+       // not unordered map
+       // as you want the vertical rows in order.
+       // IF YOU ARE SO DOUBTFUL, TRY THIS AND 
+       // SEE: unordered_map<int, vector<int> > m; 
         map<int, vector<int> > m; 
         queue<pair<int, TreeNode* > > q;
         q.push({0, root});
