@@ -12,6 +12,11 @@ Given word = "word", return the following list (order does not matter):
 // that version of the answer.
 
 
+//input = word
+//output = ["word","wor1","wo1d","wo2","w1rd","w1r1","w2d","w3","1ord","1or1","1o1d","1o2","2rd","2r1","3d","4"]
+
+
+
 class Solution {
 public:
     vector<string> generateAbbreviations(string word) {
@@ -27,8 +32,10 @@ public:
         }
         
         Helper(word, abbr+word[i], i+1, result, false);
+        //if previously number has not been added
         if (!prevNum) {
-            // Add number abbreviations only when we added a character instead of an abbreviation earlier
+            // Add number abbreviations only when we added a character 
+            // instead of an abbreviation earlier
             for (int len = 1; i+len <= word.length(); ++len) {
                 Helper(word, abbr+to_string(len), i+len, result, true);
             }
