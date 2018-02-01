@@ -37,6 +37,8 @@ public:
             // Add number abbreviations only when we added a character 
             // instead of an abbreviation earlier
             for (int len = 1; i+len <= word.length(); ++len) {
+                // check the (i+len) being passed rather 
+                // than (i+1)
                 Helper(word, abbr+to_string(len), i+len, result, true);
             }
         }
