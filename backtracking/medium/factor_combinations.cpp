@@ -46,7 +46,13 @@ public:
     void getFHelp(int n, int bottom, vector<int> line) {
         for(int i=bottom; i<=sqrt(n); i++){
             if(n%i == 0) {
+                
                 vector<int> new_line = line;
+              //Look how he has a new_line vector
+              // to concatenate the subsequent factors.
+              // Not the usual push and pop
+              // as in backtracking.
+              // anaylse and repeat further
                 new_line.push_back(i);
                 getFHelp(n/i, i, new_line);
                 new_line.push_back(n/i);
@@ -57,38 +63,3 @@ public:
 };
 
 
-//not using sqrt
-class Solution {
-public:
-    vector<vector<int>> getFactors(int n) {
-        vector<vector<int>> res;
-        
-        for (int i = 2; i * i <= n; ++i) {
-            if (n % i == 0) {
-                vector<int> tmp = {i, n / i};
-                res.push_back(tmp);
-                helper(tmp, res);
-            }
-        }
-        
-        return res;
-    }
-    
-    void helper(vector<int>& cur, vector<vector<int>>& res) {
-        int back = cur.back();
-        cur.pop_back();
-        
-        for (int i = 2; i * i <= back; ++i) {
-            if (back % i == 0 && i >= cur.back()) {
-                cur.push_back(i);
-                cur.push_back(back / i);
-                res.push_back(cur);
-                helper(cur, res);
-                cur.pop_back();
-                cur.pop_back();
-            }
-        }
-        
-        cur.push_back(back);
-    }
-};
