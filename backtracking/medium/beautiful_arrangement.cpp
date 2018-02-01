@@ -41,6 +41,8 @@ public:
         int ans = 0;
         for (int i=0; i<n; ++i) {
             if (vs[i]%n==0 || n%vs[i]==0) {
+             //understood the algorithm to some extent
+             // but still not clear on the swap thing yet.
                 swap(vs[i], vs[n-1]);
                 ans += counts(n-1, vs);
                 swap(vs[i], vs[n-1]);
