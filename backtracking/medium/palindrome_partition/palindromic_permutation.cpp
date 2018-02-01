@@ -13,65 +13,44 @@ Given s = "aabb", return ["abba", "baab"].
 Given s = "abc", return [].
  
  */
- 
- 
- class Solution {
+
+//without backtracking, but using next_permutation function
+class Solution {
 public:
     vector<string> generatePalindromes(string s) {
-        vector<int> table(128);
-        for (char c : s) {
-            ++table[c];
-        }
-
-        vector<string> result;
-        int odd = 0;
-        string mid;
-        string seed;
-        for (int i = 0; i < table.size(); ++i) {
-            if (table[i] % 2) {
-                ++odd;
-                mid += i;
-                if (odd > 1) {
-                    return result;
-                }
+		vector<string> palindromes;
+        unordered_map<char, int> counts;
+        for (char c : s) counts[c]++;
+        int odd = 0; char mid; string half;
+        for (auto p : counts) {
+            if (p.second & 1) {
+                odd++, mid = p.first;
+				if (odd > 1) return palindromes;
             }
-            table[i] >>= 1;
-            seed += string(table[i], i);
+            half += string(p.second / 2, p.first);
         }
-        
-        string path;
-        vector<bool> used(seed.size());
-        dfs(seed, path, mid, used, result);
-        return result;
+        palindromes = permutations(half);
+        for (string& p : palindromes) {
+            string t(p);
+            reverse(t.begin(), t.end());
+			if (odd) t = mid + t;
+            p += t;
+        }
+        return palindromes;
     }
-
-private:
-    void dfs(string& seed, string& path, string mid, vector<bool>& used, vector<string>& result) {
-        if (path.size() == seed.size()) {
-            string rev(path);
-            reverse(rev.begin(), rev.end());
-            result.push_back(path + mid + rev);
-            return;
-        }
-
-        for (int i = 0; i < seed.size(); ++i) {
-            if (used[i]) {
-                continue;
-            }
-            if (i > 0 && seed[i] == seed[i - 1] && !used[i - 1]) {
-                continue;
-            }
-            used[i] = true;
-            path.push_back(seed[i]);
-            dfs(seed, path, mid, used, result);
-            path.pop_back();
-            used[i] = false;
-        }
+private: 
+    vector<string> permutations(string& s) {
+        vector<string> perms;
+        string t(s);
+        do {
+            perms.push_back(s);
+            next_permutation(s.begin(), s.end()); 
+        } while (s != t);
+        return perms; 
     }
 };
 
-
-//another Soln
+//using backtracking
 class Solution {
 public:
     vector<string> generatePalindromes(string s) {
