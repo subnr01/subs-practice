@@ -31,34 +31,65 @@ class trie {
     bool isRoot = false;
     trie* l[26] = {};
 public:
-    void insert(string& word, int ch, int sz) {
-        isRoot |= ch == sz;
+   void insert(string& word, int index, int sz) {
+        if (index == sz) {
+            isRoot = true;
+            return;
+        }
+       
         if (!isRoot) { // stop at the shortest root.
-            if (l[word[ch] - 'a'] == nullptr) l[word[ch] - 'a'] = new trie();
-            l[word[ch] - 'a']->insert(word, ch + 1, sz);
+            int ch = word[index] - 'a';
+            if (l[ch] == nullptr) l[ch] = new trie();
+            l[ch]->insert(word, index + 1, sz);
         }
     }
-    int root(string& word, int st, int ch, int sz) {
-        if (st + ch == sz || word[st + ch] == ' ' || this->isRoot) return ch;
-        if (l[word[st + ch] - 'a'] == nullptr) { // root was not found
-            while (st + ch < sz && word[st + ch] != ' ') ++ch; // skipping the entire word
-            return ch;
+    int root(string& word, int st, int index, int sz) {
+        if (st + index == sz || word[st + index] == ' ' || this->isRoot) {
+            return index;
         }
-        return l[word[st + ch] - 'a']->root(word, st, ch + 1, sz);
+        
+        int ch = word[st + index] - 'a';
+        
+        if (l[ch] == nullptr) { 
+            // root was not found
+            while (st + index < sz && word[st + index] != ' ') 
+            {
+                ++index; // skipping the entire word
+            }
+            return index;
+        }
+        return l[ch]->root(word, st, index + 1, sz);
     }
 };
-string replaceWords(vector<string>& dict, string snt) {
-    trie t;
-    string res;
-    for (auto s : dict) t.insert(s, 0, s.size());
-    for (int i = 0; i < snt.size(); ) {
-        if (snt[i] == ' ') res += snt[i++];
-        auto chars = t.root(snt, i, 0, snt.size());
-        res += snt.substr(i, chars);
-        for (i += chars; i < snt.size() && snt[i] != ' '; ++i);
+
+
+class Solution {
+public:
+    string replaceWords(vector<string>& dict, string snt) 
+    {
+        trie t;
+        string res;
+        for (auto s : dict) {
+            t.insert(s, 0, s.size());
+        }
+    
+        int i = 0;
+        while (i < snt.size()) 
+        {
+            
+            if (snt[i] == ' ') {
+                res += snt[i++];
+            }
+            
+            auto chars = t.root(snt, i, 0, snt.size());
+            res += snt.substr(i, chars);
+        
+            for (i += chars; i < snt.size() && snt[i] != ' '; ++i);
+    
+        }
+        return res;
     }
-    return res;
-}
+};
 
 
 //Another soln
