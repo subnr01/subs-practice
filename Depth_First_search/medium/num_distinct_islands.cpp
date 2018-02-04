@@ -26,28 +26,35 @@ Example 2:
 class Solution {
 public:
     int numDistinctIslands(vector<vector<int>>& grid) {
-        int m = grid.size(), n = grid[0].size();
-        set<vector<vector<int>>> islands;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                vector<vector<int>> island;
-                if (dfs(i, j, i, j, grid, m, n, island))
-                    islands.insert(island);
+        if (grid.empty() || grid[0].empty()) {
+            return 0;
+        }
+        
+        unordered_set<string> res;
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid[0].size(); j++) {
+                if (grid[i][j] == 1) {
+                    string path;
+                    dfs(grid, i, j, path, 'o');
+                    // cout << i << " " << j << " " << num << endl;
+                    res.insert(path);
+                }
             }
         }
-        return islands.size();
+        return res.size();
     }
-
-private:
-    int delta[4][2] = { 0, 1, 1, 0, 0, -1, -1, 0};
-
-    bool dfs(int i0, int j0, int i, int j, vector<vector<int>>& grid, int m, int n, vector<vector<int>>& island) {
-        if (i < 0 || m <= i || j < 0 || n <= j || grid[i][j] <= 0) return false;
-        island.push_back({i - i0, j - j0});
-        grid[i][j] *= -1;
-        for (int d = 0; d < 4; d++) {
-            dfs(i0, j0, i + delta[d][0], j + delta[d][1], grid, m, n, island);
+    
+    void dfs(vector<vector<int>>& grid, int row, int col, string& path, char dir) {
+        if (row < 0 || row >= (int)grid.size() || col < 0 || col >= grid[0].size() || grid[row][col] == 0) {
+            return;
         }
-        return true;
+        
+        path.push_back(dir);
+        grid[row][col] = 0;
+        dfs(grid, row - 1, col, path, 'u');
+        dfs(grid, row, col + 1, path, 'r');
+        dfs(grid, row + 1, col, path, 'd');
+        dfs(grid, row, col - 1, path, 'l');
+        path.push_back('b');
     }
 };
