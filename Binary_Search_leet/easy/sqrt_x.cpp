@@ -34,13 +34,20 @@ public:
         
         while(low <= high)
         {
+            //low = 1, high = 6, mid = 3
+            //low = 1, high = 2, mid = 1
+            // low = 2, high = 2, mid = 2
             int mid = low + (high - low)/2;
             if(mid == x/mid)
                 return mid;
-            else if(mid > x/mid)
+            else if(mid > x/mid) {
+                //3 > 2, so high = 2 and low = 1
                 high = mid - 1;
+            }
             else if(mid < x/mid)
             {
+                //1 < 6, low = 2
+                //2 < 3, low = 3, ans = mid(1) + 1 = 2
                 low = mid + 1;
                 //DO NOT FORGET THIS
                 ans = mid;
