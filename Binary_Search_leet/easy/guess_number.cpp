@@ -21,19 +21,31 @@ int guess(int num);
 
 class Solution {
 public:
-   int guessNumber(int n) {
-        int maxNumber = n, minNumber = 1;
-        while (true) {
-            int meanNumber = (maxNumber - minNumber) / 2 + minNumber;
-            // Do NOT use (maxNumber+minNumber)/2 in case of over flow
-            int res = guess(meanNumber);
-            if (res == 0) { 
-                return meanNumber;
-            } else if (res == 1) {
-                minNumber = meanNumber + 1;
-            } else {
-                maxNumber = meanNumber - 1;
+    int guessNumber(int n) {
+        int high = n;
+        int low = 1;
+        
+        while(low <= high)
+        {
+            int mid = (high - low)/2 + low;
+            
+            int ans = guess(mid);
+            
+            if (ans == 0)
+            {
+                return mid;
             }
+            else if (ans == 1)
+            {
+                low = mid + 1;
+                
+            } else
+            {
+                high = mid - 1;
+            }
+            
         }
+        return low;
+        
     }
 };
