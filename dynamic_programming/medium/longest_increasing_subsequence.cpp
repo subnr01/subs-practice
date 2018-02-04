@@ -11,6 +11,54 @@ Your algorithm should run in O(n2) complexity.
 Follow up: Could you improve it to O(n log n) time complexity?
 */
 
+//Standard soln
+class Solution {
+public:
+    // There's a typical DP solution with O(N^2) Time and O(N) space 
+    // DP[i] means the result ends at i
+    // So for dp[i], dp[i] is max(dp[j]+1), for all j < i and nums[j] < nums[i]
+    int lengthOfLIS(vector<int>& nums) {
+        const int size = nums.size();
+        if (size == 0) { return 0; } 
+        vector<int> dp(size, 1);
+        int res = 1;
+        for (int i = 1; i < size; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (nums[j] < nums[i]) {
+                    dp[i] = max(dp[i], dp[j]+1);
+                }
+            }
+            res = max (res, dp[i]);
+        }
+        return res;
+    }
+};
+
+
+
+//Using binary search
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        if (nums.empty()) return 0;
+        vector<int> ends{nums[0]};
+        for (int num : nums) {
+            if (num > ends.back()) ends.push_back(num);
+            else {
+                int l = 0, r = ends.size() - 1;
+                while (l < r) {
+                    int m = l + (r - l) / 2;
+                    if (ends[m] < num) l = m + 1;
+                    else r = m;
+                }
+                ends[r] = num;
+            }
+        }
+        return ends.size();
+    }
+};
+
+
 
 int lengthOfLIS(vector<int>& nums) {
     vector<int> res;
