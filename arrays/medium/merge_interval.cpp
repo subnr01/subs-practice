@@ -11,6 +11,7 @@ vector<Interval> merge(vector<Interval>& ins) {
     if (ins.empty()) return vector<Interval>{};
     vector<Interval> res;
     sort(ins.begin(), ins.end(), [](Interval a, Interval b){return a.start < b.start;});
+    //DO NOT FORGET TO PUSH
     res.push_back(ins[0]);
     for (int i = 1; i < ins.size(); i++) {
         if (res.back().end < ins[i].start) res.push_back(ins[i]);
