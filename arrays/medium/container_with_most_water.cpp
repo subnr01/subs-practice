@@ -13,27 +13,26 @@ Note: You may not slant the container and n is at least 2.
 class Solution {
 public:
     int maxArea(vector<int>& height) {
+        int n = height.size();
+        
         int i = 0;
-        int j = height.size() - 1;
-        int max_a = 0;
+        int j = n - 1;
+        int max_area = 0;
+        
         while (i < j)
         {
-            if(height[i] < height[j])
+            if (height[i] <= height[j])
             {
-                if(max_a < (j - i)*height[i]) 
-                {   
-                    max_a = (j - i)*height[i];
-                }
+                max_area = max(max_area, (j - i) * height[i]);
                 i++;
-            }
-            else
+            } 
+            else if (height[i] > height[j])
             {
-                if(max_a < (j - i)*height[j]) {
-                    max_a = (j - i)*height[j];
-                }
+                max_area = max(max_area, (j - i) * height[j]);
                 j--;
             }
         }
-        return max_a;
+        return max_area;
+        
     }
 };
