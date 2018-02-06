@@ -7,8 +7,8 @@ For example, given [0,1,2,4,5,7], return ["0->2","4->5","7"].
 class Solution {
 public:
     vector<string> summaryRanges(vector<int>& nums) {
-        int start = -1;
-        int end = -1;
+        int start = 0;
+        int end =  0;
         string s;
         vector<string> res;
         int n = nums.size();
