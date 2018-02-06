@@ -15,6 +15,9 @@ There is only one duplicate number in the array, but it could be repeated more t
 // Binary search, two pointers, array
 
 
+//THERE IS ONE NUM THAT IS DUPLICATED
+
+
 /*
 Solution
 ..> The fast one goes forward two steps at a time
