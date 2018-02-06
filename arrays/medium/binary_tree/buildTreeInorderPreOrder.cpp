@@ -11,6 +11,8 @@ public:
         
     }
     
+    
+    //REMEMEBER MID IS PASSED AS REFERENCE
     TreeNode *build (vector<int>& preorder, vector<int>& inorder, int is, int ie, int& mid)
     {
         if (is > ie) {
