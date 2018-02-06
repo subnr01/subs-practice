@@ -38,10 +38,13 @@ public:
     }
 private: 
     bool search(vector<vector<char>>& board, int r, int c, const char* word) {
+        //we can use word[0] for the current character
         if (!word[0]) return true;
         int m = board.size(), n = board[0].size();
         if (r < 0 || r >= m || c < 0 || c >= n || board[r][c] != word[0]) return false;
         board[r][c] = '$';
+      
+        // since word is const char, we have to use word + 1
         if (search(board, r - 1 ,c, word + 1) || search(board, r + 1, c, word + 1) ||
             search(board, r, c - 1, word + 1) || search(board, r, c + 1, word + 1))
             return true;
