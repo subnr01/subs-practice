@@ -37,7 +37,8 @@ private:
 	   be summed to get the result
 	*/
 	    
-	// THE IMPORTANT THING IS TO CHECK WHETHER TARGET IS LESS THAN THE ELEMENT,
+	// THE IMPORTANT THING IS TO CHECK WHETHER TARGET IS greater or equal to
+	// THAN THE ELEMENT,
 	//  ELSE THE RECURSION WILL NOT END
         for (int i = begin; i != candidates.size() && target >= candidates[i]; ++i) {
             combination.push_back(candidates[i]);
