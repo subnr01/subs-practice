@@ -33,6 +33,10 @@ public:
         return subs; 
     }
     void genSubsets(vector<int>& nums, int start, vector<int>& sub, vector<vector<int>>& subs) {
+      //you do not need an exit
+      //point because, the function
+      //will end when the for loop
+      //runs out of i.
         subs.push_back(sub);
         for (int i = start; i < nums.size(); i++) {
             sub.push_back(nums[i]);
