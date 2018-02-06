@@ -16,6 +16,11 @@ public:
     
     TreeNode* build (vector<int>& inorder, vector<int>& postorder, int is, int ie, int& pe)
     {
+        //important thing to notice
+        //is that there is no equal to
+        // here, as we want the function
+        // to perform its normal thing 
+        // even if start is equal to end
         if (is > ie) 
         {
             return NULL;
