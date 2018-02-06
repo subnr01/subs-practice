@@ -7,8 +7,10 @@ Boyer-Moore Algorithm
 */
 
 vector<int> majorityElement(vector<int>& nums) {
-    int cnt1 = 0, cnt2 = 0, a=0, b=1;
-    
+    int cnt1 = 0;
+    int cnt2 = 0;
+    int a=0;
+    int b=1;
     
     /*
     Looks like we need to maintain the order, else
