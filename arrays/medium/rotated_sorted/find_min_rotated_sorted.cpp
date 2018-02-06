@@ -12,6 +12,8 @@ public:
     int low = 0;
     int high = nums.size()-1;
     
+        //find out why low cannot be equal to high here
+        // when u have time
     while (low < high)
     {
         //DO NOT FORGET TO CHECK THIS INSIDE THE LOOP
