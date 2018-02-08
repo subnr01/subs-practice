@@ -25,20 +25,23 @@ The integers in the given array are in the range of [0, 1000].
 
 class Solution {
 public:
-    int triangleNumber(vector<int>& a) {
-        int res = 0;
-        sort(a.begin(), a.end());
-       
-        for (int i = 0; i + 2 < a.size(); i++) {
-            for (int j = i + 1, k = a.size() - 1; j < k; j++) {
-                while (j < k && a[i] + a[j] <= a[k]) {
-                    k--;
+    int triangleNumber(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int count = 0;
+        for ( int k = nums.size() - 1; k > 1; --k ) {
+            int i = 0, j = k - 1;
+            int value = nums[k];
+            while ( i < j ) {
+                if ( nums[i] + nums[j] > value ) {
+                    count += j - i;
+                    --j;
+                
+                } else {
+                    ++i;
                 }
-                res += k - j;
-                k = a.size() - 1;
             }
         }
-        return res;
+        return count;
     }
 };
 
