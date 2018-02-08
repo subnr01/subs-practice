@@ -23,18 +23,17 @@ The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
 //DP
 class Solution {
 public:
-    int maxProfit(vector<int>& p, int fee) {
-        int n = p.size();
-        if (n < 2) return 0;
-        vector<int> hold(n, 0), sold(n, 0);
-        hold[0] = -p[0];
-        for (int i = 1; i < n; i++) {
-            hold[i] = max(hold[i - 1], sold[i - 1] - p[i]);
-            sold[i] = max(sold[i - 1], hold[i - 1] - fee + p[i]);
+    int maxProfit(vector<int>& prices, int fee) {
+        int cash = 0;
+        int hold = -prices[0];
+        for (int i = 1; i < prices.size(); i++) {
+            cash = max(cash, hold + prices[i] - fee);
+            hold = max(hold, cash - prices[i]);
         }
-
-        return sold[n - 1];
+        return cash;
     }
+    
+}; }
 };
 
 
