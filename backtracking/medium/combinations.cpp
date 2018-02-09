@@ -19,23 +19,37 @@ If n = 4 and k = 2, a solution is:
 
 class Solution {
 public:
-    vector<vector<int> > combine(int n, int k) {
-        vector<vector<int> >res;
-        if(n<k)return res;
-        vector<int> temp(0,k);
-        combine(res,temp,0,0,n,k);
+    vector<vector<int>> combine(int n, int k) {
+        
+        vector<vector<int>> res;
+        if (k > n)
+        {
+            return res;
+        }
+        
+        vector<int> cand;
+        comb(res, cand, 0, 0, n, k);
         return res;
+        
     }
     
-    void combine(vector<vector<int> > &res,vector<int> &temp,int start,int num,int n ,int k){
-        if(num==k){
-            res.push_back(temp);
+    
+    void comb(vector<vector<int>>& res, vector<int> &cand, int start, int num, int n, int k)
+    {
+        //if num is equal to k
+        if (num == k)
+        {
+            res.push_back(cand);
             return;
         }
-        for(int i = start;i<n;i++){
-            temp.push_back(i+1);
-            combine(res,temp,i+1,num+1,n,k);
-            temp.pop_back();
-            }
+        
+        for (int i = start; i < n; i++)
+        {
+            //WATCH THE i+1 here, unlike the other backtracking solutions.
+            cand.push_back(i+1);
+            comb(res, cand, i + 1, num + 1, n, k);
+            cand.pop_back();
         }
+        return;
+    }
 };
