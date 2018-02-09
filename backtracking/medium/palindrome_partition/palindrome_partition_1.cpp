@@ -34,8 +34,11 @@ public:
             return;
         }
         for(int i = index; i < s.size(); ++i) {
+            // the order of index and i is very important
             if(isPalindrome(s, index, i)) {
+                //remember you are pushing from index
                 path.push_back(s.substr(index, i - index + 1));
+                //(i+1) baby
                 dfs(i+1, s, path, ret);
                 path.pop_back();
             }
