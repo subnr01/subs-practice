@@ -20,29 +20,10 @@ It may be assumed that the returned time is next day's time since it is smaller 
 
 */
 
-//Alexander
-//WEll this runs 1440 * x times, but is a brilliant solution. 
-// There is a optimised soln that can run only 256 times.
-class Solution {
-    int mins[4] = { 600, 60, 10, 1 };
-public:
-    string nextClosestTime(string time) {
-        size_t colon = time.find(':');
-        int cur = stoi(time.substr(0, colon)) * 60 + stoi(time.substr(colon + 1));
-        string next = "0000";
-        for (int i = 1, d = 0; i <= 1440 && d < 4; i++) {
-            int m = (cur + i) % 1440;
-            for (d = 0; d < 4; d++) {
-                next[d] = '0' + m / mins[d]; m %= mins[d];
-                if (time.find(next[d]) == string::npos) break;
-            }
-        }
-        return next.substr(0, 2) + ':' + next.substr(2, 2);
-    }
-};
 
 
-//Java soln
+
+
 class Solution {
 public:
     string nextClosestTime(string time) {
@@ -67,6 +48,7 @@ private:
             int curr_m = curr[2] * 10 + curr[3];
             if (curr_h > 23 || curr_m > 59) return;
             int curr_time = toTime(curr_h, curr_m);
+            //Look at timediff, it is not your usual difference calculation
             if (timeDiff(time, curr_time) < timeDiff(time, best))
                 best = curr_time;
             return;
@@ -85,5 +67,31 @@ private:
     int timeDiff(int t1, int t2) {
         if (t1 == t2) return INT_MAX;
         return ((t2 - t1) + 24 * 60) % (24 * 60);
+    }
+};
+
+
+
+
+
+
+//Alexander
+//WEll this runs 1440 * x times, but is a brilliant solution. 
+// There is a optimised soln that can run only 256 times.
+class Solution {
+    int mins[4] = { 600, 60, 10, 1 };
+public:
+    string nextClosestTime(string time) {
+        size_t colon = time.find(':');
+        int cur = stoi(time.substr(0, colon)) * 60 + stoi(time.substr(colon + 1));
+        string next = "0000";
+        for (int i = 1, d = 0; i <= 1440 && d < 4; i++) {
+            int m = (cur + i) % 1440;
+            for (d = 0; d < 4; d++) {
+                next[d] = '0' + m / mins[d]; m %= mins[d];
+                if (time.find(next[d]) == string::npos) break;
+            }
+        }
+        return next.substr(0, 2) + ':' + next.substr(2, 2);
     }
 };
