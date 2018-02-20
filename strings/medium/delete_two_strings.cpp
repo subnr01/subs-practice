@@ -27,23 +27,26 @@ public:
         size_t m = word1.size();
         size_t n = word2.size();
         
-        vector<vector<int>> matrix (m+1, vector<int>(n+1, 0));
+        vector<vector<int>> dp (m+1, vector<int>(n+1, 0));
         
-        for ( int i = m; i >= 0; i--) {
-            for (int j = n; j >= 0; j--) {
-                 //DO NOT FORGET THE OR CONDITION BUT WHY
-                if (i < m || j < n) {
-                    matrix[i][j] = (word1[i] == word2[j])?
-                                matrix[i+1][j+1]:
-                                //DO NOT FORGET INT_MAX BUT WHY
-                                1 + min(i < m ? matrix[i+1][j]: INT_MAX, 
-                                        j < n? matrix[i][j+1]: INT_MAX); 
-            
+        for (int i = 1; i <= m; i++)
+        {
+            for (int j = 1; j <= n; j++)
+            {
+                if(i == 0 || j == 0) {
+                    dp[i][j] = 0;
+                }
+                else {
+                    if (word1[i - 1] == word2[j - 1]) {
+                        dp[i][j] = dp[i-1][j-1] + 1;
+                    } else {
+                        dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                    }
                 }
             }
         }
         
-        return matrix[0][0];
-        
+        int val = dp[m][n];
+        return (m + n) - 2 * val;        
     }
 };
