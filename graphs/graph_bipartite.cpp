@@ -35,7 +35,7 @@ We cannot find a way to divide the set of nodes into two independent ubsets.
 https://leetcode.com/articles/is-graph-bipartite/
 
 
-//BFS approach
+//DFS approach
 bool isBipartite(vector<vector<int>>& graph) {
     // vector subset indicates the subset node is in: 0 for unvisited, 1 for set A, -1 for set B
     vector<int> subset(graph.size(), 0);
@@ -69,3 +69,54 @@ bool isBipartite(vector<vector<int>>& graph) {
     // if every connection passes, graph is bipartite
     return true;
 }
+
+//BFS approach
+class Solution {
+public:
+    // BFS coloring (can also use DFS using stack)
+    bool colorComponent(int node, auto& graph, auto& colors){    
+        queue<int> q;    
+        q.push(node);
+            
+        while(!q.empty()){
+            int current = q.front(); q.pop();
+            
+            vector<int> neighbours = graph[current];
+            
+            // for each neighbour, if colored verify that it's not the same as current node color
+            // else color it with the other color. 
+            for(int neighbour : neighbours){
+                if(colors[neighbour] == -1){
+                    colors[neighbour] = (1 - colors[current]);
+                    q.push(neighbour);
+                }
+                else{
+                    if(colors[neighbour] == colors[current]) return false;
+                }
+                
+            }    
+        }
+        
+        return true;
+    }
+    
+    // bipartite = 2 coloring problem of graph
+    bool isBipartite(vector<vector<int>>& graph) {
+        vector<int> colors(graph.size(), -1);   // 0 - red, 1 - blue , -1 - uncolored
+        
+        for(int i = 0; i < graph.size(); i++){
+            
+            // find a component that is uncolored
+            if(colors[i] == -1 && graph[i].size() > 0){
+            
+                // color starting vertex as red, and proceed to color neighbours with blue and red alternatively if possible
+                colors[i] = 0;
+                bool possible = colorComponent(i, graph, colors);
+                
+                if(!possible) return false;
+            }
+        }
+        
+        return true;
+    }
+};
