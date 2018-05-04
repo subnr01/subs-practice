@@ -10,6 +10,7 @@ class Solution {
 public:
     string mostCommonWord(string paragraph, vector<string>& banned) {
         unordered_map<string, int>m;
+        //Notice "i" is not incremented here
         for(int i = 0; i < paragraph.size();){
             string s;
             while(i < paragraph.size() && isalpha(paragraph[i])) {
