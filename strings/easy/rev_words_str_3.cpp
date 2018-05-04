@@ -16,18 +16,22 @@ In the string, each word is separated by single space and there will not be any 
 class Solution {
 public:
     string reverseWords(string s) {
-        size_t front = 0;
-        for(int i = 0; i <= s.length(); ++i){
-            //we need to check for s.length() as 
-            // if we do not do that, then we cannot 
-            // reverse the last word
-            if(i == s.length() || s[i] == ' '){
-                reverse(&s[front], &s[i]);
-                // to move beyond the space
+        
+        int front = 0;
+        
+        for (int i = 0; i <= s.size(); i++)
+        {
+            //Notice we are comparing i to length,
+            // as we want the last word too.
+            if (i == s.size() || s[i] == ' ')
+            {
+                reverse(s.begin() + front, s.begin() + i);
                 front = i + 1;
             }
+            
         }
         
         return s;
+        
     }
 };
