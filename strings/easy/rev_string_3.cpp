@@ -13,6 +13,7 @@ public:
         if(i + k < s.size()) {
             reverse(s.begin() + i, s.begin()+i+k);
         } else {
+            //Note the i below
             reverse(s.begin() + i, s.end());
         }
     }
