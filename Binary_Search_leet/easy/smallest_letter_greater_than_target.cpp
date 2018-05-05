@@ -61,11 +61,13 @@ public:
             
             if (letters[mid] > target)
             {
+                //high is equal to mid here
                 high = mid ;
             } 
             // we cannot have a seperate block for
             // "=" as mid + 1 can be the same number.
             
+            // do not forget the equal to sign here
             else if (letters[mid] <= target) { 
                 low = mid + 1;
             } 
