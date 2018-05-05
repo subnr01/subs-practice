@@ -32,6 +32,8 @@ public:
         int low = 1, high = x;
         int ans;
         
+        
+        //Remember the equal to sign here
         while(low <= high)
         {
             //low = 1, high = 6, mid = 3
