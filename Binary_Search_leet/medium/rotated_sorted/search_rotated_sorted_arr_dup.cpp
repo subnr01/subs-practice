@@ -37,7 +37,9 @@ public:
                     low = mid + 1;
                 }
                 
-            } else if (a[mid] < a[high]) {
+            } 
+            //Notice the difference of comparison with the other problem.
+            else if (a[mid] < a[high]) {
                 if (a[mid] < target && target <= a[high]) {
                     low = mid + 1;
                 } else {
