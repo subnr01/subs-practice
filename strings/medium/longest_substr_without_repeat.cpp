@@ -17,6 +17,30 @@ Trace
 abba and pwwkew as good examples
 */
 
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxcount = 0;
+        int i = 0;
+        int j = 0;
+        set<char> myset;
+        
+        while (j < s.size())
+        {
+            if (myset.find(s[j]) == myset.end())
+            {
+                myset.insert(s[j++]);
+                maxcount = max(maxcount, (int)myset.size());
+            } else {
+                myset.erase(s[i++]);
+            }
+        }
+        return maxcount;
+        
+    }
+};
+
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
