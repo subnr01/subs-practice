@@ -35,6 +35,10 @@ public:
                     result.push_back(ans);
                     j++; k--;
                     
+                    //Note how duplicates are removed in this block
+                    // The variables j and k do not go out of
+                    // bounds, as j and k are modified in the earlier 
+                    // statements above.
                     while (j< k && a[j]==a[j-1]) {
                         j++;
                     }
