@@ -31,6 +31,9 @@ Space complexity : O(n)O(n). HashSet size can go upto nn.
 
 */
 
+
+//TOO AMBIGIOUS, REFER GEEKS and GEEKS
+
 class Solution {
 public:
     bool splitArray(vector<int>& nums) {
