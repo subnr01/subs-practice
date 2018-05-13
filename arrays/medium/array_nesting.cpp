@@ -29,18 +29,22 @@ C++
 class Solution {
 public:
     int arrayNesting(vector<int>& a) {
-        size_t maxsize = 0;
-        for (int i = 0; i < a.size(); i++) {
-            size_t size = 0;
-            //Do not forget the equals to 0 comparison here
-            for (int k = i; a[k] >= 0; size++) {
+        int len = a.size();
+        int maxsize = INT_MIN;
+        for (int i = 0; i < len; i++)
+        {
+            int k = i;
+            int size = 0;
+            while (a[k] >= 0)
+            {
                 int ak = a[k];
-                a[k] = -1; // mark a[k] as visited;
+                a[k] = -1;
                 k = ak;
+                size++;
             }
+            
             maxsize = max(maxsize, size);
         }
-
         return maxsize;
     }
 };
