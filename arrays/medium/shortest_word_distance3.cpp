@@ -33,3 +33,33 @@ int shortestWordDistance(vector<string>& words, string word1, string word2) {
     }
     return res;
 }
+
+
+/*
+Using hashmap
+THIS SOLN MAKES MORE SENSE FOR THE QUESTION
+*/
+
+class Solution {
+public:
+    int shortestWordDistance(vector<string>& words, string word1, string word2) {
+        unordered_map<string,vector<int>> indexOf;
+        int N=(int)words.size();
+        int mini=N;
+        
+        for (int i=0; i<N; ++i) {
+            indexOf[words[i]].push_back(i);
+        }
+        for (auto i: indexOf[word1]) 
+        {
+            for (auto j: indexOf[word2])
+            {
+                if (i!=j) {
+                    mini=min(mini,abs(i-j));
+                }
+            }
+        }
+    
+        return mini<N ? mini : 0;
+    }
+};
