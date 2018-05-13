@@ -17,6 +17,7 @@ class Solution {
 public:
     int minimumTotal(vector<vector<int> > &triangle) 
     {
+        // mini contains the last row of the triangle (4,1,8,3)
         vector<int> mini = triangle[triangle.size()-1];
         for ( int i = triangle.size() - 2; i>= 0 ; --i )
             for ( int j = 0; j < triangle[i].size() ; ++ j )
@@ -24,3 +25,15 @@ public:
         return mini[0];
     }
 };
+
+/*
+The flow is like this:
+
+First iteration:
+4 1 8 3
+7 6 10 3
+9 10  10 3
+2 10 10 3
+11 ....
+
+*/
