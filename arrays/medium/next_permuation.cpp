@@ -30,6 +30,10 @@ swap p and q.
 reverse(p+1, end)
 */
 
+// For example
+/// 1432 --> 2134 because p = 1 and q = 2 in 1432 which on swapping gives 2431. and numbers
+/// are descending after 2, so reverse gives 2134.
+
 class Solution {
 public:
 
