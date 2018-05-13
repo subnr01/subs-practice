@@ -35,6 +35,7 @@ public:
             int value = nums[k];
             while ( i < j ) {
                 if ( nums[i] + nums[j] > value ) {
+                    // it is not j's distance, but i's distance
                     count += j - i;
                     --j;
                 
