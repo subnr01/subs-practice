@@ -12,69 +12,30 @@ For example, in array [1, 2, 3, 1], 3 is a peak element and your function should
 
 */
  
-//7 ms
-class Solution {
-public:
-    int findPeakElement(const vector<int> &num) 
-    {
-        int low = 0;
-        int high = num.size()-1;
-        
-        while(low < high)
-        {
-            int mid1 = (low+high)/2;
-            int mid2 = mid1+1;
-            if(num[mid1] < num[mid2])
-                low = mid2;
+//Linear scan
+public class Solution {
+    public int findPeakElement(int[] nums) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i + 1])
+                return i;
+        }
+        return nums.length - 1;
+    }
+}
+
+
+
+//Using binary search
+public class Solution {
+    public int findPeakElement(int[] nums) {
+        int l = 0, r = nums.length - 1;
+        while (l < r) {
+            int mid = (l + r) / 2;
+            if (nums[mid] > nums[mid + 1])
+                r = mid;
             else
-                high = mid1;
+                l = mid + 1;
         }
-        return low;
+        return l;
     }
-};
-
-//6 ms
-class Solution {
-public:
-    int findPeakElement(vector<int>& nums) {
-        
-        
-        int n = nums.size();
-        
-        if(nums.size()<2) return 0; //index 
-        
-        
-        if(nums[0]>nums[1]) return 0;
-        
-        if(nums[n-1]>nums[n-2]) return n-1;
-        
-        for(int i=1; i<nums.size()-1; i++) {
-            
-            if(nums[i]>nums[i-1] && nums[i]>nums[i+1])
-                return i;
-        }
-        
-    }
-};
-
-  
-//3 ms
-class Solution {
-public:
-    int findPeakElement(vector<int>& nums) {
-        if (nums.size()==1)
-            return 0;
-        vector<int> diff;
-        for(int i=0; i<nums.size()-1;i++){
-            diff.push_back(nums[i]-nums[i+1]);
-        }
-        if (diff[0] > 0)
-            return 0;
-        for (int i=1; i<diff.size(); i++)
-            if (diff[i-1]<0 && diff[i]>0)
-                return i;
-        if (diff.back()<0)
-            return diff.size();
-        return -1;
-    }
-};
+}
