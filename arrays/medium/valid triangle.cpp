@@ -21,6 +21,8 @@ The integers in the given array are in the range of [0, 1000].
 */
 
 
+// how to check for a triangle
+// sum of two sides must be greater than the third side
 //my soln
 
 class Solution {
