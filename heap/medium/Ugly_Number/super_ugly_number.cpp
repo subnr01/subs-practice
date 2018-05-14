@@ -13,6 +13,51 @@ Note:
 
 */
 
+
+//Below is heap soln that is complex and ineffeicient, if there are duplicates.
+//Take a look at this soln
+class Solution {
+public:
+    
+    int minCandidateIndex(vector<int>& input) {
+        int min = INT_MAX;
+        int minIndex = 0;
+        for (int i = 0; i < input.size(); ++i) {
+            if (input[i] < min) {
+                min = input[i];
+                minIndex = i;
+            }
+        }
+        return minIndex;
+    }
+
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+        int size = primes.size();
+        vector<int> mults(size, 1);
+        vector<int> candidates(primes);
+        int *dp = new int[n];
+        int nUgly = 1;
+        dp[0] = 1;
+        
+        for (int i = 1; i < n; ++i) {
+            int mdx = minCandidateIndex(candidates);
+            nUgly = candidates[mdx];
+            dp[i] = nUgly;
+            
+            for (int j = 0; j < candidates.size(); ++j) {
+                if (nUgly == candidates[j]) {
+                    candidates[j] = dp[mults[j]++] * primes[j];
+                }
+            }
+            
+        }
+        return nUgly;
+    }
+};
+
+
+
+
 //https://discuss.leetcode.com/topic/31005/my-priority_queue-based-c-code-276ms
 
 class Solution {
