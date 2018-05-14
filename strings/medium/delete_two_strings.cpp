@@ -33,6 +33,7 @@ public:
         {
             for (int j = 1; j <= n; j++)
             {
+                //THIS STEP IS VERY IMP, needed here
                 if(i == 0 || j == 0) {
                     dp[i][j] = 0;
                 }
