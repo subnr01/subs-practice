@@ -26,6 +26,9 @@ The length of the input is in range of [1, 10000]
 
 */
 
+
+//THIS IS MORE A GREEDY QUESTION AND NOT A HEAP QUESTION.
+// WILL BE INEFFEICEINT TO DO USING HEAP, REFER OTHER SOLNs.
 //Is this O(nlogn) or O(n)
 bool isPossible(vector<int>& nums) {
         priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> seqs;
