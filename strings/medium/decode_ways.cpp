@@ -15,7 +15,8 @@ The number of ways decoding "12" is 2.
 
 */
 
-//TAKE A LOOK AT OTHER SOLNs
+//TAKE A LOOK AT OTHER SOLNs, Need to understand how 
+// this is mapped to Fibonacci series
 //related topics: dynamic programming
 
 Fibonacci
