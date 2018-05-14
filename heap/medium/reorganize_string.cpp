@@ -18,29 +18,32 @@ Output: ""
 
 //Related topics: heap and sort.
 
-
-//Using heap
+//USing heap
 class Solution {
 public:
-    string reorganizeString(string s) {
-        vector<int> mp(26);
-        int n = s.size();
-        for (char c: s) {
-            ++mp[c-'a'];
-        }
-            
-        priority_queue<pair<int, char>> pq;
-        for (int i = 0; i < 26; ++i) {
-            if (mp[i] > (n+1)/2) { 
-                return "";
-            }
-            
-            if (mp[i]) {
-                pq.push({mp[i], i+'a'});
-            }
+    string reorganizeString(string S) {
+        
+        unordered_map<char, int> m;
+        int len = S.size();
+        string res;
+        
+        for (auto elem: S)
+        {
+            m[elem]++;
         }
         
-        string ans;
+        
+        priority_queue<pair<int, char>> pq;
+        
+        for (auto elem: m)
+        {
+            if (elem.second > (len + 1)/2) {
+                return res;
+            }
+            
+            pq.push(make_pair(elem.second, elem.first));
+            
+        }
         //We take the top 2 and put it inside the string and
         //keep on doing that until we reach one.
         // We have to take 2 at a time, as they have to be the top
@@ -48,26 +51,36 @@ public:
         // be inserting the same element mulutple times
         while (pq.size() >= 2)
         {
-                auto one = pq.top();
-                pq.pop();
-                ans += one.second;
-                auto two = pq.top();
-                pq.pop();
-                ans += two.second;
-                
-                if (--one.first > 0) pq.push(one);
-                if (--two.first > 0) pq.push(two);
+            auto one = pq.top();
+            res += one.second;
+            pq.pop();
+            auto two = pq.top();
+            res += two.second;
+            pq.pop();
+            
+            one.first--;
+            two.first--;
+            if (one.first) {
+                pq.push(one);
+            }
+            if (two.first) {
+                pq.push(two);
+            }
             
         }
         
-        if (pq.size() == 1) {
-            ans += pq.top().second;
-            pq.pop();
+        if (pq.size())
+        {
+            res += pq.top().second;
         }
-            
-        return ans;
+        
+        return res;
+        
+        
     }
 };
+
+
 
 
 //Using sort ( Leetcode soln was in java, I 
