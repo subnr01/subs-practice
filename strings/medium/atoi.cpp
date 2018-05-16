@@ -11,6 +11,16 @@ You are responsible to gather all the input requirements up front.
 
 */
 
+/*
+Logic
+-- Get rid of the spaces first
+-- Decide the sign (1 -2 * sign)
+-- Run a loop to convert the number into numerical value.
+-- Check for overflow ( INT_MAX and INT_MAX/10, and sign to return INT_MAX/INT_MIN)
+-- Multiply the number with the sign and return
+*/
+
+
 class Solution {
 public:
     int myAtoi(string str) {
