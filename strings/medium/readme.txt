@@ -7,9 +7,5 @@
 6. Longest palindromic substring IS A GOOD PROBLEM, take multiple looks.
 
 Things left:
-1. Longest uncommon subsequence 2
-2. Multiply strings
-3. Optimal division
-4. Remove comments
-5. zigzag conversion
-6. integer to roman
+
+1. Multiply strings (search in google for the algorithm, this question has been asked in facebook)
