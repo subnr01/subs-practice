@@ -21,7 +21,7 @@ It may be assumed that the returned time is next day's time since it is smaller 
 */
 
 
-
+//HOW WOULD YOU DO THIS IF DUPLICATES WERE NOT ALLOWED
 
 
 class Solution {
