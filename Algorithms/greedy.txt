@@ -1,0 +1,47 @@
+
+Greedy is an algorithmic paradigm that follows the problem solving heuristic of making the 
+LOCALLY OPTIMAL CHOICE at each stage.
+
+For example, a greedy strategy for the traveling salesman problem is to visit
+the nearest univisited city, which may not find the best solution, but needless
+it will terminate into the solution in a reasonable number of steps.
+
+Greedy algorithms produce good solutions on some mathematical problems, but not on others. 
+Most problems for which they work will have two properties:
+
+Greedy choice property
+------------------------
+ whatever choice seems best at the moment and then solve the subproblems that arise later. 
+ The choice made by a greedy algorithm may depend on choices made so far, 
+ but not on future choices or all the solutions to the subproblem.
+ It iteratively makes one greedy choice after another, reducing each given problem into a smaller one. 
+ In other words, a greedy algorithm never reconsiders its choices. This is the main difference from 
+ dynamic programming, which is exhaustive and is guaranteed to find the solution.
+ After every stage, dynamic programming makes decisions based on all the decisions made in the
+ previous stage, and may reconsider the previous stage's algorithmic path to solution.
+ 
+ Optimal substructure
+ -----------------------
+ A problem exhibits optimal substructure, if an optimal solution to the problem
+ contains optimal solutions to the sub-problems.
+ 
+ Sometimes greedy algorithms fail to produce the optimal solution, and may even produce the
+ unique worst possible solution.
+ 
+ If a greedy algorithm can be proven to yield the global optimum for a given problem class, 
+ it typically becomes the method of choice because it is faster than other optimization methods 
+ like dynamic programming. Examples of such greedy algorithms are Kruskal's algorithm and
+ Prim's algorithm for finding minimum spanning trees, and the algorithm for finding 
+ optimum Huffman trees.
+ 
+ 
+ 
+ https://www.geeksforgeeks.org/greedy-algorithms/
+ 
+ https://www.hackerearth.com/practice/algorithms/greedy/basics-of-greedy-algorithms/tutorial/
+ 
+ https://brilliant.org/wiki/greedy-algorithm/
+ 
+ https://en.wikibooks.org/wiki/Algorithms/Greedy_Algorithms
+ 
+ 
