@@ -8,6 +8,8 @@ path = "/a/./b/../../c/", => "/c"
 
 */
 
+Related topics: stack
+
 Points to remember:
 1. How stack is used to push and pop items. pop when ".." and push when not ".."
 2. How new sytnax is used to traverse elements of a stack.
