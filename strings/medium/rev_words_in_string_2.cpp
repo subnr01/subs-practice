@@ -1,33 +1,28 @@
 /*
-Given an input string, reverse the string word by word. A word is defined as a sequence of non-space characters.
+Given an input string , reverse the string word by word. 
 
-The input string does not contain leading or trailing spaces and the words are always separated by a single space.
+Example:
 
-For example,
-Given s = "the sky is blue",
-return "blue is sky the".
+Input:  ["t","h","e"," ","s","k","y"," ","i","s"," ","b","l","u","e"]
+Output: ["b","l","u","e"," ","i","s"," ","s","k","y"," ","t","h","e"]
+Note: 
 
-Could you do it in-place without allocating extra space?
-
-*/
-
-
-/*
-
-The idea is simple: reverse the full string s first and then reverse each word in it in place. 
-For reversing each word, we just need to locate the left and right boundaries of the word. The code is as follows.
+A word is defined as a sequence of non-space characters.
+The input string does not contain leading or trailing spaces.
+The words are always separated by a single space.
 
 */
 
-class Solution { 
+class Solution {
 public:
-    void reverseWords(string &s) {
-        reverse(s.begin(), s.end());
-        int n = s.length(), l = 0, r = 0;
-        while (r < n) {
-            while (r < n && !isspace(s[r])) r++;
-            reverse(s.begin() + l, s.begin() + r); 
-            l = ++r;
+    void reverseWords(vector<char>& str) {
+        for(int i = 0; i < str.size(); i++){
+            int j = i + 1;
+            while(j < str.size() && str[j] != ' ') j++;
+            int a = i, b = j - 1;
+            while(a < b) swap(str[a++], str[b--]);
+            i = j;
         }
-    } 
+        reverse(str.begin(), str.end());
+    }
 };
