@@ -51,3 +51,18 @@ public:
         
     }
 };
+
+
+//Another version where there is no space in the string
+class Solution { 
+public:
+    void reverseWords(string &s) {
+        reverse(s.begin(), s.end());
+        int n = s.length(), l = 0, r = 0;
+        while (r < n) {
+            while (r < n && !isspace(s[r])) r++;
+            reverse(s.begin() + l, s.begin() + r); 
+            l = ++r;
+        }
+    } 
+}
