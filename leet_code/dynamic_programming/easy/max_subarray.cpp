@@ -15,11 +15,14 @@ public:
         
         vector<int> sum;
         int maxi = nums[0];
+        //we are pushing and not assigning
         sum.push_back(nums[0]);
         
         for (int i = 1; i < sz; i++) {
             int temp = max(nums[i],sum[i-1] + nums[i]);
             sum.push_back(temp);
+            //because we pushed above, we can
+            // access sum[i]
             maxi = max(maxi, sum[i]);
         }
         
