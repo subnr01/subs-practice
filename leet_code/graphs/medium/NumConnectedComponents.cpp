@@ -18,22 +18,10 @@ You can assume that no duplicate edges will appear in edges. Since all edges are
 
 //https://discuss.leetcode.com/topic/32677/short-union-find-in-python-ruby-c/8
 
+
+
 C++ solution 1
-
-int countComponents(int n, vector<pair<int, int>>& edges) {
-    vector<int> p(n);
-    iota(begin(p), end(p), 0);
-    for (auto& edge : edges) {
-        int v = edge.first, w = edge.second;
-        while (p[v] != v) v = p[v] = p[p[v]];
-        while (p[w] != w) w = p[w] = p[p[w]];
-        p[v] = w;
-        n -= v != w;
-    }
-    return n;
-}
-C++ solution 2
-
+//10 ms     
 class Solution {
 public:
     vector<int> leader;
@@ -57,5 +45,32 @@ public:
         int rv = 0;
         for (int i = 0; i < n; i++) if (leader[i] == -1) rv++;
         return rv;
+    }
+};
+
+C++ solution 2
+//17 ms
+class Solution {
+public:
+    int countComponents(int n, vector<pair<int, int>>& edges) {
+        vector<int> id(n);
+        iota(begin(id), end(id), 0);
+        int count = n;
+        
+        for (auto e : edges) {
+            int i = e.first;
+            int j = e.second;
+            while (i != id[i]) {
+                i = id[i];
+            }
+            while (j != id[j]) {
+                j = id[j];
+            }
+            if (i != j) {
+                id[j] = i;
+                count--;
+            }
+        }
+        return count;
     }
 };
