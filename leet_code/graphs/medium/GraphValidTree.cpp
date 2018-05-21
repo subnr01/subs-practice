@@ -61,6 +61,8 @@ public:
                 //Graph is disconnected. 
                 // for example
                 // [[0, 1], [2, 3]]
+                // another very good example
+                // [[2, 3] , [1, 2], [1, 3]]
                 return false;
             }
         return true;
