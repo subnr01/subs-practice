@@ -33,6 +33,9 @@ public:
         //here. It all matters how
         // you insert the element
         // into the vector.
+        // it is about inserting the elements in
+        // this order of rows:
+        // 0, 1, 2, 1, 0, 1, 2, 1, 0 and so on
         str[row].push_back(s[i]);
 
         if (row == 0)
