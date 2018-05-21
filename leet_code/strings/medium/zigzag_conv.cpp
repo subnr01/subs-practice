@@ -18,27 +18,37 @@ convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
 
 class Solution {
 public:
-    string convert(string s, int numRows) {
-        if( numRows==1 ) return s;
-        vector<string> res(numRows);
-        int row=0;
-        int increase=-1;
-        for(int i=0; i<s.size(); ++i){
-            
-            // every time at turning point, we change the increase direction
-            if (i%(numRows-1)==0) {
-                increase *= -1;
-            }
-            
-            res[row].push_back(s[i]);
-            row += increase;
-        }
+    string convert(string s, int nRows) {
+    
+    if (nRows <= 1)
+        return s;
+
+    const int len = (int)s.length();
+    vector<string> str(nRows);
         
-        string ret;
-        for(const auto& str:res){
-            ret += str;
-        }
-        
-        return ret;
+    int row = 0, step = 1;
+    for (int i = 0; i < len; ++i)
+    {
+        //CRUX of the logic is
+        //here. It all matters how
+        // you insert the element
+        // into the vector.
+        str[row].push_back(s[i]);
+
+        if (row == 0)
+            step = 1;
+        else if (row == nRows - 1)
+            step = -1;
+
+        row += step;
     }
+
+    s.clear();
+    for (int j = 0; j < nRows; ++j)
+    {
+        s.append(str[j]);
+    }
+
+    return s;
+  }
 };
