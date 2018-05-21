@@ -35,6 +35,17 @@ Visually, the graph looks like the following:
  * };
  */
 
+//Does a DFS, but puts everything back to every level, and when it comes
+//back to the original call, it puts the neigbours for that particular node
+
+// 1 -> 2, 3 
+// 2 -> 4
+// 3 -> 1
+// 4 -> 2
+// recursively take 2 neighbor of 1, setup 2 and its neighbors and then return 2 back to 1 
+// so that it becomes neighbor of 1 and continue with 3.
+
+
 class Solution {
 public:
     unordered_map<UndirectedGraphNode*, UndirectedGraphNode*> hash;
