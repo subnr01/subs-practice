@@ -34,7 +34,7 @@ We cannot find a way to divide the set of nodes into two independent ubsets.
 
 https://leetcode.com/articles/is-graph-bipartite/
 
-
+//the Soln also contains DFS, is DFS preferred
 //DFS approach
 bool isBipartite(vector<vector<int>>& graph) {
     // vector subset indicates the subset node is in: 0 for unvisited, 1 for set A, -1 for set B
