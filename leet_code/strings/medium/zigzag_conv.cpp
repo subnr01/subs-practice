@@ -49,6 +49,9 @@ public:
     s.clear();
     for (int j = 0; j < nRows; ++j)
     {
+        //ANOTHER IMPORTANT OBSERVATION EASY TO MISS
+        // WE ARE APPENDING ROWS here and not single
+        // characters, so ...
         s.append(str[j]);
     }
 
