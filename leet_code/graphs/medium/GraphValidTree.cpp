@@ -57,7 +57,12 @@ public:
         if (hasCycle(neighbors, 0, -1, visited))
             return false;
         for (bool v : visited)
-            if (!v) return false; 
+            if (!v) {
+                //Graph is disconnected. 
+                // for example
+                // [[0, 1], [2, 3]]
+                return false;
+            }
         return true;
     } 
 private:
