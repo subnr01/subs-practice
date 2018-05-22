@@ -48,26 +48,86 @@ true
 
 
 https://discuss.leetcode.com/topic/65961/simple-solution-one-pass-using-only-array-c-92ms-java-16ms
-
- bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
-        if(seqs.empty()) return false;
-        vector<int> pos(org.size()+1);
-        for(int i=0;i<org.size();++i) pos[org[i]] = i;
+//68 ms
+class Solution {
+public:
+    bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
+        int n = org.size();
+        if(seqs.size() == 0) return false;
+        if(n == 1){
+            bool result = false;
+            for(auto x : seqs){
+                if(x.size() == 0) continue;
+                if(x == org) result = true;
+                else result = false;
+            }
+            return result;
+        }
+        vector<int> pos(n + 1, 0);
+        for(int i = 0; i < n; i++) pos[org[i]] = i;
+        vector<bool> flags(n + 1, false);
+        int toMatch = n - 1;
         
-        vector<char> flags(org.size()+1,0);
-        int toMatch = org.size()-1;
-        for(const auto& v : seqs) {
-            for(int i=0;i<v.size();++i) {
-                if(v[i] <=0 || v[i] >org.size())return false;
-                if(i==0)continue;
-                int x = v[i-1], y = v[i];
-                if(pos[x] >= pos[y]) return false;
-                if(flags[x] == 0 && pos[x]+1 == pos[y]) flags[x] = 1, --toMatch;
+        for(auto v : seqs){
+            for(int i = 0; i < v.size(); i++){
+                if(v[i] <= 0 || v[i] > n) return false;
+                if(i == 0) continue;
+                int x = v[i - 1];
+                int y = v[i];
+                if(pos[x] > pos[y]) return false;
+                if(pos[x] + 1 == pos[y] && flags[x] == false){
+                    flags[x] = true;
+                    --toMatch;
+                }
             }
         }
         return toMatch == 0;
     }
 
+};
+//64 ms
+class Solution {
+public:
+    bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
+        if (seqs.empty()) {
+            return false;
+        }
+        
+        int n = org.size(), cnt = n - 1;
+        vector<int> pos(n + 1, 0), flags(n + 1, 0);
+        bool existed = false;
+        for (int i = 0; i < n; ++i) {
+            pos[org[i]] = i;
+        }
+        
+        for (auto& seq : seqs) {
+            for (int i = 0; i < seq.size(); ++i) {
+                existed = true;
+                if (seq[i] <= 0 || seq[i] > n) {
+                    return false;
+                }
+                if (i == 0) {
+                    continue;
+                }
+                
+                int pre = seq[i - 1], cur = seq[i];
+                if (pos[pre] >= pos[cur]) {
+                    return false;
+                }
+                
+                // set the flag if they are the consequence pair
+                if (flags[cur] == 0 && pos[pre] + 1 == pos[cur]) {
+                    flags[cur] = 1; 
+                    --cnt;
+                }
+            }
+        }
+        return cnt == 0 && existed;
+    }
+};
+
+
+//87ms
 class Solution {
 public:
   bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
@@ -98,4 +158,28 @@ public:
     }
     return match == org.size() - 1 && hasElement;
   }
+};
+
+
+//Another soln
+// 147 ms
+class Solution {
+public:
+    bool sequenceReconstruction(vector<int>& org, vector<vector<int>>& seqs) {
+        int n = org.size();
+        unordered_map<int, unordered_set<int>>graph;
+        vector<int>indegree(n + 1, -1);
+        for(auto v: seqs)
+            for(int i = 0; i < v.size(); i++){
+                if(v[i] > n || v[i] < 0) return false;
+                if(indegree[v[i]] == -1) indegree[v[i]] = 0;
+                if(i + 1 < v.size() && graph[v[i]].insert(v[i + 1]).second)
+                    if(v[i + 1] > n || v[i + 1] < 0) return false;
+                    else indegree[v[i + 1]] += indegree[v[i + 1]] < 0 ? 2 : 1;
+            }
+        for(int i = 0; i < n - 1; i++)
+            if(indegree[org[i]] || !indegree[org[i + 1]]) return false;
+            else for(auto x: graph[org[i]]) indegree[x]--;
+        return indegree[org.back()] == 0;
+    }
 };
