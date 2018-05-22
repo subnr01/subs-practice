@@ -70,7 +70,8 @@ bool isBipartite(vector<vector<int>>& graph) {
                     // neighbor has the same color, 
                     // maybe -1.
                     return false;
-                // no subset: put into subset that node is not in
+                // check for 0 is imp, other infinite loop
+                // can you know why
                 if (subset[otherNode] == 0) {
                     subset[otherNode] = -subset[node];
                     connections.push(otherNode);
