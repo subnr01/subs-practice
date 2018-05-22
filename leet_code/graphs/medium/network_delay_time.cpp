@@ -41,6 +41,41 @@ All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
         }
         return cnt==N?res:-1; 
     }
+
+//68 ms
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int N, int K) {
+        vector<vector<int>> mp(N+1, vector<int>(N+1, -1));
+        for (const auto& time: times) {
+            mp[time[0]][time[1]] = time[2];
+        }
+
+        vector<int> dist(N+1, INT_MAX);
+        dist[K] = 0;
+        auto compare = [&dist](int a, int b) {
+            return dist[a] > dist[b];
+        };
+        priority_queue<int, vector<int>, decltype(compare)> q(compare);
+
+        q.push(K);
+        while (!q.empty()) {
+            int cur = q.top();
+            q.pop();
+            for (int i=1; i<=N; ++i) {
+                if (mp[cur][i]>=0 && dist[cur]+mp[cur][i] < dist[i]) {
+                    dist[i]=dist[cur]+mp[cur][i];
+                    q.push(i);
+                }
+            }
+        }
+        int ret =0;
+        for (int i=1; i<=N; ++i) {
+            ret = max(dist[i], ret);
+        }
+        return ret==INT_MAX?-1:ret;
+    }
+};
     
     //Alexander: level order BFS (109 ms) 
     class Solution {
@@ -74,6 +109,8 @@ public:
         return maxwait == INT_MAX ? -1 : maxwait;
     }
 };
+
+
 
 //bellman ford (308 ms)
 class Solution {
