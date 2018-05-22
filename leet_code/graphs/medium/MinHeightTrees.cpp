@@ -55,7 +55,8 @@ When they meet or they are one step away, (depends on the parity of n), we have 
 This gives us a lot of useful ideas to crack our real problem.
 
 For a tree we can do some thing similar. We start from every end, by end we mean vertex of degree 1 (aka leaves). 
-We let the pointers move the same speed. When two pointers meet, we keep only one of them, until the last two pointers meet or one step away we then find the roots.
+We let the pointers move the same speed. When two pointers meet, we keep only one of them, until the last two pointers meet 
+or one step away we then find the roots.
 
 It is easy to see that the last two pointers are from the two ends of the longest path in the graph.
 
