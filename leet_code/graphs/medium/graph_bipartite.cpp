@@ -50,8 +50,11 @@ bool isBipartite(vector<vector<int>>& graph) {
 
     for (int i = 0; i < graph.size(); i++) {
         // if not in any subset (start of new disjoint graph), arbitrarily put in set A (set 1)
-        if (subset[i] == 0)
+        //Disconnected example
+        //[[1],[0],[4],[4],[2,3]]
+        if (subset[i] == 0) {
             subset[i] = 1;
+        }
         // DFS queue to sort all connected edges
         queue<int> connections;
         connections.push(i);
