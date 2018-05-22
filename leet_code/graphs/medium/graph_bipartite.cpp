@@ -36,6 +36,14 @@ https://leetcode.com/articles/is-graph-bipartite/
 
 //the Soln also contains DFS, is DFS preferred
 //DFS approach
+
+
+//Logic
+// Every neighbor gets colored the opposite color from the current node. 
+// If we find a neighbor colored the same color as the current node, 
+// then our coloring was impossible.
+// if x is colored 1, then its neighbors must be colored -1. 
+// if we find two neighbors having the same color, then return false
 bool isBipartite(vector<vector<int>>& graph) {
     // vector subset indicates the subset node is in: 0 for unvisited, 1 for set A, -1 for set B
     vector<int> subset(graph.size(), 0);
@@ -56,6 +64,8 @@ bool isBipartite(vector<vector<int>>& graph) {
                 int otherNode = graph[node][j];
                 // same subset: violates bipartite
                 if (subset[otherNode] == subset[node])
+                    // neighbor has the same color, 
+                    // maybe -1.
                     return false;
                 // no subset: put into subset that node is not in
                 if (subset[otherNode] == 0) {
