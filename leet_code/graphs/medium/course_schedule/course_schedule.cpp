@@ -91,3 +91,33 @@ private:
         return degrees;
     }
 };
+
+
+
+//fastest
+class Solution {
+public:
+    bool canFinish(int N, vector<pair<int, int>>& pre) {
+        vector<vector<int>> graph(N,vector<int>());
+        vector<int> in(N,0),ans;
+        for(auto p:pre){
+            graph[p.second].push_back(p.first);
+            in[p.first]++;
+        }
+        queue<int> q;
+        for(int i=0;i<N;i++)
+            if(in[i]== 0)  q.push(i);
+        while(!q.empty()){
+            int tmp = q.front();
+            ans.push_back(tmp);
+            q.pop();
+            for(auto i:graph[tmp]){
+                in[i]--;
+                if(in[i]==0)    q.push(i);
+            }
+        }
+        if(ans.size()!=N) return false;
+        else return true;
+    }
+};
+
