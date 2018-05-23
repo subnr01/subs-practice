@@ -54,12 +54,13 @@ private:
         for (int neigh : graph[node])
             if (onpath[neigh] || dfs_cycle(graph, neigh, onpath, visited))
                 return true;
-        return onpath[node] = false;
+        
+        onpath[node] = false;
+        return false;
     }
 };
 
-
-Solution (BFS);
+Solution (BFS) ( uses topological sort);
 class Solution {
 public:
     bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
