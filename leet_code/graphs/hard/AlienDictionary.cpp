@@ -19,6 +19,7 @@ if any chars has not found and there is no dependence what then ?
 
 */
 
+//Related topics: topological sort
 //https://discuss.leetcode.com/topic/22476/16-18-lines-python-30-lines-c
 
 http://www.geeksforgeeks.org/given-sorted-dictionary-find-precedence-characters/
