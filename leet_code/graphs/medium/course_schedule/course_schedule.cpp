@@ -27,10 +27,14 @@ You may assume that there are no duplicate edges in the input prerequisites.
 https://discuss.leetcode.com/topic/17273/18-22-lines-c-bfs-dfs-solutions/3
 
 
+/*
 Solution (DFS)
 Since pair<int, int> is inconvenient for the implementation of graph algorithms, we first transform it to a graph.
     If course u is a prerequisite of course v, we will add a directed edge from node u to node v.
+vector<bool> visited to record all the visited nodes
+vector<bool> onpath to record the visited nodes of the current DFS visit
 
+*/
 class Solution {
 public:
     bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
