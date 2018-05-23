@@ -33,3 +33,48 @@ Explanation: The given directed graph will be like this:
      
      
 */
+
+
+//Related topics: DFS, Union Find, graph
+//look at https://leetcode.com/problems/redundant-connection-ii/discuss/108073/share-my-solution-c
+// 7ms
+class Solution {
+public:
+    int root(vector<int>& parent, int num){
+        while(parent[num] != num){
+            num = parent[num];
+        }
+        return num;
+    }
+    vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
+        vector<int> ret;
+        if(edges.size() == 0) return ret;
+        vector<int> parent(edges.size() + 1, 0);
+        vector<int> canA(0);
+        vector<int> canB(0);
+        for(auto it = edges.begin(); it != edges.end(); it++){
+            if(parent[(*it)[1]] != 0){
+                canA = {parent[(*it)[1]], (*it)[1]};
+                canB = (*it);
+                edges.erase(it);
+                break;
+            }
+            parent[(*it)[1]] = (*it)[0];
+        }
+        
+        for(int i = 1; i < parent.size(); i++){
+            parent[i] = i;
+        }
+        for(auto edge : edges){
+            if(root(parent, edge[0]) == root(parent, edge[1])){
+                if(canA.size() != 0) return canA;
+                return edge;
+            }
+            parent[edge[1]] = edge[0];
+        }
+        return canB;
+    }
+    
+    
+
+};
