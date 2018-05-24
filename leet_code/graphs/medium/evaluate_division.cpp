@@ -52,7 +52,9 @@ public:
     }
     
 private:
-    double dfs(string f, string s, unordered_map<string, unordered_map<string, double>> &mp, unordered_set<string> &visited, double val) {
+    double dfs(string f, string s, unordered_map<string, unordered_map<string, double>> &mp,
+               unordered_set<string> &visited, double val) {
+        
         if(mp[f].count(s)) return val * mp[f][s];
         
         for(pair<string, double> p : mp[f]) {
