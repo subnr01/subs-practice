@@ -19,20 +19,18 @@ Here is a diagram of the above graph.
 */
 
 
-
+//this is based on the famous grey, white, black of dfs
 //147ms
 class Solution {
 public:
     bool isSafe(int i, const vector<vector<int>> &graph, vector<int> &color) {
-        if(color[i] != 0) {
-            if(color[i] == 1) 
-                return false;
-            else 
-                return true;
+        if(color[i] > 0) {
+            return color[i] == 2;
         }
         color[i] = 1;
         for(const int ele : graph[i]) {
-            if(!isSafe(ele, graph, color)) {
+            
+            if (!isSafe(ele, graph, color)) {
                 return false;
             }
         }
@@ -57,69 +55,6 @@ public:
 };
 
 
-//146ms
-class Solution {
-public:
-   bool dfs(vector<vector<int>>& graph, vector<int> &dp, int src) {
-   if(dp[src])
-       return 1 == dp[src];
-
-    dp[src] = -1;
-    for(auto node : graph[src])
-        if(false == dfs(graph, dp, node))
-            return false;
-    return dp[src] = 1;
-}
-vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-    int total_nodes = graph.size();
-    vector<int> result, dp(total_nodes, 0);
-    for(int i = 0; i < total_nodes; i++)
-        if(dfs(graph, dp, i))
-            result.push_back(i);
-    
-    return result;
-}  
-};
+//There is also the reverse edge soln article. take a look
 
 
-
-//174ms ms
-#define GRAY 1
-#define WHITE 0
-#define BLACK 2
-class Solution {
-public:
-    vector<int> vis;
-    vector<vector<int>> g;
-    vector<int> f;
-    int n;
-    void dfs(int u) {
-        vis[u] = GRAY;
-        f[u] = 1;
-        for (int v : g[u]) {
-            if (vis[v] == GRAY)
-                f[u] = 0;
-            else {
-                if (vis[v] == WHITE)
-                    dfs(v);
-                f[u] &= f[v];
-            }
-        }
-        vis[u] = BLACK;
-    }
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        g = graph;
-        n = graph.size();
-        f = vector<int>(n, -1);
-        vis = vector<int>(n, WHITE);
-        for (int i = 0; i < n; i++) {
-            if (vis[i] == WHITE)
-                dfs(i);
-        }
-        vector<int> ans;
-        for (int i = 0; i < n; i++)
-            if (f[i] == 1)
-                ans.push_back(i);
-        return ans;
-    }
-};
