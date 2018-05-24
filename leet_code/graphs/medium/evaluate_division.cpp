@@ -18,7 +18,7 @@ The input is always valid. You may assume that evaluating the queries will resul
 */
 
 
-
+//4ms
 class Solution {
 public:
     vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
@@ -64,3 +64,56 @@ private:
         return -1.0;
     }
 };
+
+
+//3ms
+class Solution {
+public:
+    vector<double> calcEquation(vector<pair<string, string>> equations, vector<double>& values, vector<pair<string, string>> queries) {
+        unordered_map<string,unordered_map<string, double>> m;
+        vector<double> res;
+        for (int i = 0; i < values.size(); ++i)
+        {
+            string up = equations[i].first;
+            string down = equations[i].second;
+            m[up].insert(make_pair(down, values[i]));           // up --> down 
+            if(values[i]!=0)
+                m[down].insert(make_pair(up, 1/values[i]));     // down --> up
+        }
+
+        for (auto i : queries)
+        {
+            unordered_set<string> s;
+            string up = i.first;
+            string down = i.second;
+            double tmp = check(up, down, m, s);
+            if(tmp) res.push_back(tmp);
+            else res.push_back(-1);
+        }
+        return res;        
+    }
+    
+    double check(string up, string down, 
+                 unordered_map<string,unordered_map<string, double>> &m,
+                 unordered_set<string> &s)
+    {
+        if(m[up].find(down) != m[up].end()) return m[up][down];
+        
+        // for all outgoing edges from up
+        for (auto i : m[up])
+        {
+            // down is not in s
+            // i.first = tentative down
+            string tentative_down = i.first;
+            if(s.find(tentative_down) == s.end())
+            {
+                s.insert(tentative_down);
+                double tmp = check(tentative_down, down, m, s);
+                if(tmp) return i.second * tmp;
+            }
+        }
+        
+        return 0;
+    }
+};
+
