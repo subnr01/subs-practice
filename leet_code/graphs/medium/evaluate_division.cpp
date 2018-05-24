@@ -62,6 +62,7 @@ private:
             
             if(visited.count(str) == 0) {
                 visited.insert(str);
+                // val * p.second is the key
                 double cur = dfs(str, s, mp, visited, val * p.second);
                 if(cur != -1.0) return cur;
             }
