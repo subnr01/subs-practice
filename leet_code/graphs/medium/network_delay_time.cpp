@@ -17,33 +17,7 @@ All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
 //Related topics: heap, dfs, bfs, graph
 
 //Using heap (68 ms)
- int networkDelayTime(vector<vector<int>>& times, int N, int K) {
-        int n = times.size();
-        unordered_map<int,vector<pair<int,int>> > dic;
-        for(int i=0; i<n; i++){
-            dic[times[i][0]].push_back(make_pair(times[i][1], times[i][2]));
-        }
-        auto cmp = [](const pair<int,int>& p1, const pair<int,int>& p2){return p1.second > p2.second;};
-        priority_queue< pair<int,int>, vector<pair<int,int>>, decltype(cmp)> heap(cmp);
-        heap.push(make_pair(K,0));
-        vector<bool> visited(N+1,false);
-        int res = 0;
-        int cnt=0;
-        while(!heap.empty()&&cnt!=N){
-            auto node = heap.top();
-            heap.pop();
-            if(visited[node.first] == false)    cnt++;
-            visited[node.first]=true;
-            res = node.second;
-            if(dic.count(node.first)){
-                 for(auto& neighbor:dic[node.first]){
-                    if(!visited[neighbor.first]) heap.push(make_pair(neighbor.first, node.second+neighbor.second)); 
-                 }
-            }
-        }
-        return cnt==N?res:-1; 
-    }
-
+ 
 //68 ms
 class Solution {
 public:
@@ -55,6 +29,8 @@ public:
 
         vector<int> dist(N+1, INT_MAX);
         dist[K] = 0;
+        // elements in the priority queue are sorted in 
+        // the ascending order of the distances.
         auto compare = [&dist](int a, int b) {
             return dist[a] > dist[b];
         };
