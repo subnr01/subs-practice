@@ -14,6 +14,8 @@ The length of times will be in the range [1, 6000].
 All edges times[i] = (u, v, w) will have 1 <= u, v <= N and 1 <= w <= 100.
 */
 
+//Related topics: heap, dfs, bfs, graph
+
 //Using heap (68 ms)
  int networkDelayTime(vector<vector<int>>& times, int N, int K) {
         int n = times.size();
