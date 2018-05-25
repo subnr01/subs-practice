@@ -19,21 +19,68 @@ Input: sum("ap"), Output: 5
 
 
 //trie
+class TrieNode {
+public:
+    TrieNode(bool b = false) {
+        value = 0;
+        isWord = b;
+        memset(next, 0, sizeof(next));
+    }   
+    ~TrieNode() {
+      for (auto& node : next) {
+        if (node != nullptr) {
+          delete node;
+        }   
+      }   
+    }
+    TrieNode* next[26];
+    int value;
+    bool isWord;
+};
+
+
 class MapSum {
 public:
-    struct trie { trie* ch[26] = {}; int sum = 0; } root;
-unordered_map<string, int> pairs;
-void insert(string key, int val) {
-    auto p = &root;
-    for (auto i = 0; i < key.size(); p->sum += val - pairs[key], ++i) 
-        p = p->ch[key[i] - 'a'] = p->ch[key[i]  - 'a'] == nullptr ? new trie() : p->ch[key[i] - 'a'];
-    pairs[key] = val;
-}
-int sum(string prefix) {
-    auto p = &root;
-    for (auto i = 0; i < prefix.size() && p != nullptr; p = p->ch[prefix[i] - 'a'], ++i) ;
-    return p == nullptr ? 0 : p->sum;
-}
+    /** Initialize your data structure here. */
+    MapSum() {
+        root = new TrieNode;
+    }
+    
+    void insert(string key, int val) {
+        TrieNode* node = root;
+        for (char& c : key) {
+            if (node->next[c-'a'] == nullptr) {
+                node->next[c-'a'] = new TrieNode;
+            }
+            node = node->next[c-'a'];
+        }
+        node->isWord = true;
+        node->value = val;
+    }
+    
+    int sum(string prefix) {
+        TrieNode* node = root;
+        for (char& c : prefix) {
+            if (node->next[c-'a'] == nullptr) {
+                return 0;
+            }
+            node = node->next[c-'a'];
+        }
+        return dfs(node);
+    }
+    
+    int dfs(TrieNode* node) {
+        int sum = 0;
+        if (node == nullptr) {
+            return sum;
+        }
+        for (int i = 0; i < 26; i++) {
+            sum += dfs(node->next[i]);
+        }
+        return sum += node->value;
+    }
+private:
+    TrieNode* root;
 };
 
 
