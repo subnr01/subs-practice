@@ -74,6 +74,11 @@ public:
         if (node == nullptr) {
             return sum;
         }
+        // similar logic to what I thouhgt, however
+        // the important thing here and what I missed is
+        // that you have to go through all the 26 nodes
+        // because you do not know where the current roots
+        // are present along which branch.
         for (int i = 0; i < 26; i++) {
             sum += dfs(node->next[i]);
         }
