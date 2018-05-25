@@ -18,7 +18,8 @@ Implementation:
 8. This means that the node exists in the tree.
     
     
-//vector version
+//vector version faster
+//63 ms
     
 class TrieNode {
 public:
@@ -94,6 +95,9 @@ private:
     
     
 ======================================================================
+//slower
+//83 ms
+    
 class TrieNode
 {
 public:
