@@ -19,24 +19,37 @@ Output: "the cat was rat by the bat"
 
 /*
 
-The code could be shorter but I wanted to add two performance optimizations.
+Basically the logic is to take all the words in the dictionary and
+insert them into the trie and mark the end as root.
+The catch however is if we find a subroot inside the word, then we stop
+and do not add the full word.
 
-You do not need to build the entire trie for roots in the dictionary. You can stop at the shortest root.
-The optimized root function returns the root or the entire word (till the space).
-If it returns the root, the calling function need to skip to the next space. That way, we only go through the sentence once.
+Now when we go into the sentece, we add the space and then take the sentence
+and process it through the trie, until we found a root or we found a space.
+If there is no root, then leave the root in the as is, if
+we found a root, then we replace the word with the root in the sentence.
 
 */
+
+
 
 class trie {
     bool isRoot = false;
     trie* l[26] = {};
 public:
    void insert(string& word, int index, int sz) {
+       // We are able to insert the
+       // the root as we reached the word
+       // size, so let us mark the end to
+       // signify that this is a root.
         if (index == sz) {
             isRoot = true;
             return;
         }
        
+       // if the current word/root already has a root in it
+       // then stop at the shortest root and do not
+       // continue till the end of the root.
         if (!isRoot) { // stop at the shortest root.
             int ch = word[index] - 'a';
             if (l[ch] == nullptr) l[ch] = new trie();
@@ -44,6 +57,11 @@ public:
         }
     }
     int root(string& word, int st, int index, int sz) {
+        // if we are at the word length or if we found a space
+        // or if we found a root.
+        // if we found a space, but no root, then just return the size
+        // of the word, without reducing its size to say that
+        // we are just leaving the word as is.
         if (st + index == sz || word[st + index] == ' ' || this->isRoot) {
             return index;
         }
@@ -76,7 +94,8 @@ public:
         int i = 0;
         while (i < snt.size()) 
         {
-            
+            //If this is a space, take in
+            // the space.
             if (snt[i] == ' ') {
                 res += snt[i++];
             }
@@ -84,6 +103,9 @@ public:
             auto chars = t.root(snt, i, 0, snt.size());
             res += snt.substr(i, chars);
         
+            // Since we have omitted some part of the word, for its
+            // root, we will skip past the omitted parts until
+            // we find the next space.
             for (i += chars; i < snt.size() && snt[i] != ' '; ++i);
     
         }
