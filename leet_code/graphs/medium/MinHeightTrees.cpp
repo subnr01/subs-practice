@@ -69,6 +69,11 @@ The time complexity and space complexity are both O(n).
 Note that for a tree we always have V = n, E = n-1.
 */
 
+
+// So the basic idea, is to first remove all the leaves (degree = 1) and then 
+// update the existing vertices and obtain the new leaves and then perform the 
+// same action again, until we 
+// are left with two vertices. These vertices are the MHTS of the graph
 //35 ms
 class Solution {
 public:
