@@ -1,13 +1,21 @@
 /*
 
-Given a string, find the length of the longest substring T that contains at most 2 distinct characters.
+Given a string s , find the length of the longest substring t  that contains at most 2 distinct characters.
 
-For example, Given s = “eceba”,
+Example 1:
 
-T is "ece" which its length is 3.
+Input: "eceba"
+Output: 3
+Explanation: t is "ece" which its length is 3.
+Example 2:
+
+Input: "ccaabbb"
+Output: 5
+Explanation: t is "aabbb" which its length is 5.
 
 */
 
+//Related topics: hash table, 2 pointers, string
 int lengthOfLongestSubstringTwoDistinct(string s) {
     if(s.empty()) return 0;
     
@@ -30,7 +38,7 @@ int lengthOfLongestSubstringTwoDistinct(string s) {
 }
 
 
-//Another soln
+//Another soln ( 100%)
 
 class Solution {
 public:
