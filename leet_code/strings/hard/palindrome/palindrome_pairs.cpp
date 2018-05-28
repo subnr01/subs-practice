@@ -14,42 +14,100 @@ The palindromes are ["dcbaabcd", "abcddcba", "slls", "llssssll"]
 */
 
 
+//Related topics: hashtable, trie
+
 class Solution {
 public:
     vector<vector<int>> palindromePairs(vector<string>& words) {
-        vector<vector<int> > result;
-        unordered_map<string, int> dict;
-        int i, j, size = words.size();
-        string left, right, tmp;
-        for(i = 0; i < size; i++) {
-            tmp = words[i];
-            reverse(tmp.begin(), tmp.end());
-            dict[tmp] = i;
+        unordered_map<string, int> index;
+        for (int i = 0; i < words.size(); ++i) {
+            string w = words[i];
+            std::reverse(w.begin(), w.end());
+            index[w] = i;
         }
-        
-        for(i = 0; i < size; i++) {
-            for(j = 0; j < words[i].size(); j++) {
-                left = words[i].substr(0, j);
-                right = words[i].substr(j);
-                if(dict.find(left) != dict.end() && dict[left] != i && isPalindrome(right)) {
-                    result.push_back({i, dict[left]});
-                    if(left.empty())
-                        result.push_back({dict[left], i});
+        vector<vector<int>> res;
+        for (int i = 0; i < words.size(); ++i) {
+            const string& w = words[i];
+            if (w.empty()) continue;
+            if (index.count(w) && index[w] != i) {
+                res.push_back(vector<int>({index[w], i}));
+            }
+            for (int j = 0; j < w.size(); ++j) {
+                if (ispal(w, 0, j)) {
+                    string o = w.substr(j+1);
+                    if (index.count(o) && index[o] != i) {
+                        res.push_back(vector<int>({index[o], i}));
+                    }
                 }
-                if(dict.find(right) != dict.end() && dict[right] != i && isPalindrome(left))
-                    result.push_back({dict[right], i});
+                if (ispal(w, j, w.size()-1)) {
+                    string o = w.substr(0, j);
+                    if (index.count(o) && index[o] != i) {
+                        res.push_back(vector<int>({i, index[o]}));
+                    }
+                }
             }
         }
-        return result;
+        return res;
     }
-    
-private:
-    bool isPalindrome(string s) {
-        int start, end, size = s.size();
-        for(start = 0, end = size - 1; start < end; start++, end--) {
-            if(s[start] != s[end])
-                return false;
+    bool ispal(const string& s, int a, int b) {
+        while (a < b) {
+            if (s[a] != s[b]) return false;
+            a++; b--;
         }
         return true;
     }
 };
+
+
+
+//https://leetcode.com/problems/palindrome-pairs/discuss/79215/Easy-to-understand-AC-C++-solution-O(n*k2)-using-map
+
+class Solution {
+ public:
+     vector<vector<int>> palindromePairs(vector<string>& words) {
+         unordered_map<string, int> dict;
+         vector<vector<int>> ans;
+         // build dictionary
+         for(int i = 0; i < words.size(); i++) {
+             string key = words[i];
+             reverse(key.begin(), key.end());
+             dict[key] = i;
+         }
+         // edge case: if empty string "" exists, find all palindromes to become pairs ("", self)
+         if(dict.find("")!=dict.end()){
+             for(int i = 0; i < words.size(); i++){
+                 if(i == dict[""]) continue;
+                 if(isPalindrome(words[i])) ans.push_back({dict[""], i}); // 1) if self is palindrome, here ans covers concatenate("", self) 
+             }
+         }
+
+         for(int i = 0; i < words.size(); i++) {
+             for(int j = 0; j < words[i].size(); j++) {
+                 string left = words[i].substr(0, j);
+                 string right = words[i].substr(j, words[i].size() - j);
+
+                 if(dict.find(left) != dict.end() && isPalindrome(right) && dict[left] != i) {
+                     ans.push_back({i, dict[left]});     // 2) when j = 0, left = "", right = self, so here covers concatenate(self, "")
+                 }
+
+                 if(dict.find(right) != dict.end() && isPalindrome(left) && dict[right] != i) {
+                     ans.push_back({dict[right], i});
+                 }
+             }
+         }
+
+         return ans;        
+     }
+
+     bool isPalindrome(string str){
+         int i = 0;
+         int j = str.size() - 1; 
+
+         while(i < j) {
+             if(str[i++] != str[j--]) return false;
+         }
+
+         return true;
+     }
+
+ };
