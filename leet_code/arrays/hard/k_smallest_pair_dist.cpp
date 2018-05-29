@@ -1,3 +1,4 @@
+/*
 Given an integer array, return the k-th smallest distance among all the pairs. The distance of a pair (A, B)
 is defined as the absolute difference between A and B.
 
@@ -17,7 +18,9 @@ Note:
 2 <= len(nums) <= 10000.
 0 <= nums[i] < 1000000.
 1 <= k <= len(nums) * (len(nums) - 1) / 2.
+*/
 
+//Related topics: Binary search, heap
 
 class Solution {
 public:
