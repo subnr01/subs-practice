@@ -12,6 +12,10 @@ Thus return 12.75.
 
 */
 
+//Related topics: Array, binary search
+
+
+//https://leetcode.com/problems/maximum-average-subarray-ii/discuss/105477/C++-Clean-binary-search-solution-with-explanation
 class Solution {
 public:
     double findMaxAverage(vector<int>& nums, int k) {
@@ -46,3 +50,34 @@ public:
         return true;                                               
     }
 };
+
+
+//Using queue (very fast)
+class Solution {
+    double getDensity(vector<int>& nums, int i, int j){
+        return (double(nums[j+1])-double(nums[i]))/double(j-i+1);
+    }
+public:
+    double findMaxAverage(vector<int>& nums, int k) {
+        int N = nums.size();
+        nums.insert(nums.begin(), 0);
+        for (int i=1; i<nums.size(); i++){
+            nums[i] += nums[i-1];
+        }
+        deque<int> index;
+        double result = INT_MIN;
+        for (int j=k-1; j<N; j++){
+            while(index.size()>=2 && getDensity(nums, index.back(), j-k)<=getDensity(nums, index[index.size()-2], index.back()-1)){
+                index.pop_back();
+            }
+            index.push_back(j-k+1);
+            while(index.size()>=2 && getDensity(nums, index[0], j)<=getDensity(nums, index[1], j)){
+                index.pop_front();
+            }
+            double value = getDensity(nums, index[0], j);
+            result = max(result, value);
+        }
+        return result;
+    }
+};
+
