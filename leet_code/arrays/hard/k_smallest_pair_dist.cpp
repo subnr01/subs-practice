@@ -22,6 +22,55 @@ Note:
 
 //Related topics: Binary search, heap
 
+
+//binary search popular, read article for heap
+//sol1
+class Solution {
+public:
+    int smallestDistancePair(vector<int>& nums, int k) {
+        //PLAN 1
+        //traverse nums O(n^2) compute all dists
+        //find kth smallest O(k)
+        
+        //PLAN 2
+        //function pairNum(int k) : given a dist "d", return how many pairs dist smaller than "d" O(NlogN)
+        //binary search "d" from 0 to 1000000 log(1000000)
+        //store nums in map, search a+k, pos
+        
+        //how to implement pairNum(int k)
+        //find the first d == k
+        std::sort(nums.begin(), nums.end());
+        int left = 0, right = nums.back() - nums.front();
+        while(left <= right) {
+            int mid = left + (right - left) / 2;
+            int d = piarNum(nums, mid);
+            if(d >= k) {
+                right = mid - 1;
+            } else if (d < k) {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+private:
+    //two point
+    int piarNum(const vector<int>& nums, int d) {
+        //nums[j] - nums[i] < d
+        //nums[i+1]
+        int j = 0;
+        int l = nums.size();
+        int ret = 0;
+        for(int i = 0; i < l; ++i) {
+            //i,j the first valid pair
+            while(j < l && nums[j] - nums[i] <= d) j++;
+            ret += j - 1 - i;
+        }
+        return ret;
+    }
+};
+
+
+//sol2
 class Solution {
 public:
     int smallestDistancePair(vector<int>& nums, int k) {
