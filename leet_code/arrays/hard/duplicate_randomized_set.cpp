@@ -37,44 +37,46 @@ collection.getRandom();
 
 //Related topics: arry, hash table, design
 
-class RandomizedCollection {
+class RandomizedCollection 
+{
 public:
     /** Initialize your data structure here. */
-    RandomizedCollection() {
-        
-    }
+    RandomizedCollection() {}
     
     /** Inserts a value to the collection. Returns true if the collection did not already contain the specified element. */
-    bool insert(int val) {
-        auto result = m.find(val) == m.end();
+    bool insert(int val) 
+    {
+        auto ret = mp.find(val) == mp.end();
         
-        m[val].push_back(nums.size());
-        nums.push_back(pair<int, int>(val, m[val].size() - 1));
+        mp[val].push_back(nums.size());
+        nums.push_back(pair<int, int>(val, mp[val].size() - 1));
         
-        return result;
+        return ret;
     }
     
     /** Removes a value from the collection. Returns true if the collection contained the specified element. */
-    bool remove(int val) {
-        auto result = m.find(val) != m.end();
-        if(result)
-        {
-            auto last = nums.back();
-            m[last.first][last.second] = m[val].back();
-            nums[m[val].back()] = last;
-            m[val].pop_back();
-            if(m[val].empty()) m.erase(val);
-            nums.pop_back();
-        }
-        return result;
+    bool remove(int val) 
+    {
+        auto ret = mp.find(val) != mp.end();
+        if(!ret) return false;
+
+        auto last = nums.back();
+        mp[last.first][last.second] = mp[val].back();
+		swap(nums[nums.size()-1], nums[mp[val].back()]);
+        mp[val].pop_back();
+        if(mp[val].empty()) mp.erase(val);
+        nums.pop_back();
+
+        return true;
     }
     
     /** Get a random element from the collection. */
-    int getRandom() {
+    int getRandom() 
+    {
         return nums[rand() % nums.size()].first;
     }
 private:
-    vector<pair<int, int>> nums;
-    unordered_map<int, vector<int>> m;
+    vector<pair<int, int> > nums;
+    unordered_map<int, vector<int>> mp;
 };
  
