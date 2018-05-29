@@ -40,3 +40,60 @@ public:
     return res;
 }
 };
+
+
+//faster soln
+class Solution {
+public:
+    string get_space(int num) {
+        string now;
+        while (num--) {
+            now += ' ';
+        }
+        return now;
+    }
+    
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> ans;
+        if (words.size() == 0) return ans;
+        
+        int i = 0, j = 0, k;
+        while (i < words.size()) {
+            int now = words[i].size();
+            for (j = i + 1; j < words.size(); j++) {
+                if (now + 1 + words[j].size() > maxWidth)
+                    break;
+                now = now + 1 + words[j].size();
+            }
+            int space = 0, extra = 0;
+            string res;
+            
+            if (j == i + 1 || j == words.size()) {
+                res = words[i];
+                for (k = i + 1; k < j; k++) {
+                    res = res + " " + words[k];
+                }
+                space = maxWidth - now;
+                res += get_space(space);
+            } else {
+                int spaceSlot = j - i - 1;
+                space = (maxWidth - now) / spaceSlot + 1;
+                extra = (maxWidth - now) % spaceSlot;
+                
+                for (k = i; k < j - 1; k++) {
+                    res += words[k];
+                    res += get_space(space);
+                    if (extra > 0) {
+                        res += ' ';
+                        extra--;
+                    }
+                }
+                
+                res += words[k];
+            }
+            i = j;
+            ans.push_back(res);
+        }
+        return ans;
+    }
+};
