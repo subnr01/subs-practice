@@ -12,6 +12,32 @@ Given [1,2],[3,5],[6,7],[8,10],[12,16], insert and merge [4,9] in as [1,2],[3,10
 This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10].
 */
 
+//faster soln
+class Solution {
+public:
+    vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
+        vector<Interval> result;
+        int i = 0;
+        for(; i < intervals.size() && intervals[i].start <= newInterval.start; ++i) {
+            result.push_back(intervals[i]);
+        }
+        if (result.empty() || newInterval.start > result.back().end) {
+            result.push_back(newInterval);
+        } else if (newInterval.end > result.back().end) {
+            result.back().end = newInterval.end;
+        }
+        for(; i < intervals.size(); ++i) {
+            if (intervals[i].start > result.back().end) {
+                result.push_back(intervals[i]);
+            } else if (intervals[i].end > result.back().end) {
+                result.back().end = intervals[i].end;
+            }
+        }
+        return result;
+    }
+};
+
+
 
 class Solution {
 public:
