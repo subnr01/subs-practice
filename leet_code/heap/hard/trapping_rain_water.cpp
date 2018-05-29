@@ -42,3 +42,49 @@ public:
         return ans;
     }
 };
+
+//very fasst soln
+class Solution {
+public:
+    int trapRainWater(vector<vector<int>>& heightMap) {
+        if(heightMap.empty() || heightMap[0].empty()) return 0;
+        const int m = heightMap.size(), n=heightMap[0].size();
+        priority_queue<Cell> pq;
+        vector<vector<bool>> visited(m,vector<bool>(n,false));
+        for(int j=0; j<n; j++) {
+            pq.push(Cell(0,j,heightMap[0][j]));
+            pq.push(Cell(m-1,j,heightMap[m-1][j]));
+            visited[0][j]=true;
+            visited[m-1][j]=true;
+        }
+        for(int i=1; i<m-1; i++) {
+            pq.push(Cell(i,0,heightMap[i][0]));
+            pq.push(Cell(i,n-1,heightMap[i][n-1]));
+            visited[i][0]=true;
+            visited[i][n-1]=true;
+        }
+        vector<int> xi({1,-1,0,0}), yi({0,0,1,-1});
+        int water=0;
+        while(!pq.empty()) {
+            Cell cc = pq.top();
+            pq.pop();
+            for(int i=0; i<4; i++) {
+                int xx=cc.x+xi[i], yy=cc.y+yi[i];
+                if(xx<0 || xx>=m || yy<0 || yy>=n || visited[xx][yy]) continue;
+                visited[xx][yy]=true;
+                water+=max(0,cc.h-heightMap[xx][yy]);
+                pq.push(Cell(xx,yy,max(cc.h,heightMap[xx][yy])));
+            }
+        }
+        return water;
+    }
+    
+private:
+    struct Cell {
+        Cell(int xx, int yy, int hh):x(xx), y(yy), h(hh) {}
+        bool operator<(const Cell& rhs) const{
+            return this->h > rhs.h;
+        }
+        int x, y, h;
+    };
+};
