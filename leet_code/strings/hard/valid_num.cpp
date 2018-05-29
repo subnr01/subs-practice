@@ -12,7 +12,52 @@ Some examples:
 */
 
 
-//one Soln
+//faster Soln
+class Solution {
+public:
+    bool isNumber(string s) {
+        if (!s.size()) return false;
+        while (*s.begin()==' ') s.erase(s.begin());
+        while (*(s.end()-1)==' ') s.erase(s.end()-1);
+        
+        bool dotSeen = false;
+        bool eSeen = false;
+        bool numSeen = false;
+        bool numSeenAfterE = false;
+        for (int i=0; i<s.size(); i++)
+        {
+            if (s[i]>='0' && s[i]<='9')
+            {
+                numSeen = true;
+                numSeenAfterE = true;
+            }
+            else if (s[i]=='.')
+            {
+                if (dotSeen || eSeen) return false;
+                dotSeen = true;
+                // we do not require number after .
+            }
+            else if (s[i]=='e')
+            {
+                if (eSeen || !numSeen) return false;
+                eSeen = true;
+                numSeenAfterE = false;     // we need more number after e           
+            }
+            else if (s[i]=='-' || s[i]=='+')
+            {
+                if (i!=0 && s[i-1]!='e') return false;
+                numSeen = false;            // we need number after -/+
+                numSeenAfterE = false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+        return numSeen && numSeenAfterE; 
+    }
+};
 
 class Solution {
 public:
