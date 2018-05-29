@@ -1,13 +1,24 @@
 /*
-Given an unsorted integer array, find the first missing positive integer.
+Given an unsorted integer array, find the smallest missing positive integer.
 
-For example,
-Given [1,2,0] return 3,
-and [3,4,-1,1] return 2.
+Example 1:
+
+Input: [1,2,0]
+Output: 3
+Example 2:
+
+Input: [3,4,-1,1]
+Output: 2
+Example 3:
+
+Input: [7,8,9,11,12]
+Output: 1
 
 Your algorithm should run in O(n) time and uses constant space.
 */
 
+
+//Related topics: array
 class Solution {
 public:
     int firstMissingPositive(vector<int>&nums) {
@@ -58,3 +69,26 @@ public:
       
     }
 };
+
+
+//Another soln
+int firstMissingPositive(vector<int>& nums) {
+        if(nums.size()==0)
+            return 1;
+        int i=0;
+        while(i<nums.size()){            
+            if(nums[i]==i+1 || nums[i]<=0 || nums[i]>nums.size() || nums[i]==nums[nums[i]-1]){
+                i++;
+            }else if(nums[i]!=i+1){
+                int tmp = nums[nums[i]-1];
+                nums[nums[i]-1]=nums[i];
+                nums[i]=tmp;  
+            } 
+        }
+        for(i=0;i<nums.size();i++){
+            if(nums[i]!=i+1){
+                return i+1;
+            }
+        }
+        return nums.size()+1;
+    }
