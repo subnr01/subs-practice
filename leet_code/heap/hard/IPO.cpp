@@ -33,6 +33,7 @@ The answer is guaranteed to fit in a 32-bit signed integer.
 
 //2 priority queue  O(NlgN) solution
 //https://discuss.leetcode.com/topic/77768/very-simple-greedy-java-solution-using-two-priorityqueues/2
+// Can you rewrite this in C++.
 public class Solution {
     public int findMaximizedCapital(int k, int W, int[] Profits, int[] Capital) {
         PriorityQueue<int[]> pqCap = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
@@ -71,30 +72,7 @@ Note that the worst case time complexity is still O(NlogN), because we need to s
 */
 class Solution {
 public:
-    struct Node {int profit, capital;};
-
-    int findMaximizedCapital(int k, int W, vector<int>& Profits, vector<int>& Capital) {
-        if(Profits.empty() || Capital.empty()) return W;
-        vector<Node*> projects;
-        for(int i = 0; i < Profits.size(); i++) 
-            projects.push_back(new Node({Profits[i], Capital[i]}));
-        multiset<int> pq;
-        sort(projects.begin(), projects.end(), [&](Node* n1, Node* n2) {return n1->capital < n2->capital;});
-        for(auto start = projects.begin(); k > 0; k--) {
-            for(; start != projects.end() && (*start)->capital <= W; start++) {
-                pq.insert((*start)->profit);
-                if(pq.size() > k) pq.erase(pq.begin());
-            } 
-            if(pq.empty()) break;
-            W += *pq.rbegin();
-            pq.erase(prev(pq.end()));
-        }
-        return W;
-    }
-};
-
-//Priority queue and mutliset
-int findMaximizedCapital(int k, int W, vector<int>& P, vector<int>& C) {
+    int findMaximizedCapital(int k, int W, vector<int>& P, vector<int>& C) {
       priority_queue<int> low;      // P[i]'s within current W
       multiset<pair<int,int>> high; // (C[i],P[i])'s' outside current W
       
@@ -107,6 +85,8 @@ int findMaximizedCapital(int k, int W, vector<int>& P, vector<int>& C) {
       }
       return W;
 }
+
+};
 
 
 
