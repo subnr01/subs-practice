@@ -23,6 +23,11 @@ findMedian() -> 2
 
 */
 
+
+//Related topics: heap, design
+
+
+//The second soln seems to be more effecient
 class MedianFinder {
     priority_queue<long> small, large;
 public:
