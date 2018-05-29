@@ -1,22 +1,48 @@
 /*
-Implement wildcard pattern matching with support for '?' and '*'.
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.
 
 '?' Matches any single character.
 '*' Matches any sequence of characters (including the empty sequence).
-
 The matching should cover the entire input string (not partial).
 
-The function prototype should be:
-bool isMatch(const char *s, const char *p)
+Note:
 
-Some examples:
-isMatch("aa","a") → false
-isMatch("aa","aa") → true
-isMatch("aaa","aa") → false
-isMatch("aa", "*") → true
-isMatch("aa", "a*") → true
-isMatch("ab", "?*") → true
-isMatch("aab", "c*a*b") → false
+s could be empty and contains only lowercase letters a-z.
+p could be empty and contains only lowercase letters a-z, and characters like ? or *.
+Example 1:
+
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+Example 2:
+
+Input:
+s = "aa"
+p = "*"
+Output: true
+Explanation: '*' matches any sequence.
+Example 3:
+
+Input:
+s = "cb"
+p = "?a"
+Output: false
+Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+Example 4:
+
+Input:
+s = "adceb"
+p = "*a*b"
+Output: true
+Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
+Example 5:
+
+Input:
+s = "acdcb"
+p = "a*c?b"
+Output: false
 
 
 
@@ -25,6 +51,33 @@ isMatch("aab", "c*a*b") → false
 
 https://discuss.leetcode.com/topic/21577/my-three-c-solutions-iterative-16ms-dp-180ms-modified-recursion-88ms
 
+
+//Related topics: DP, backtracking, Greedy
+
+//popular soln
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int n=s.length(), m=p.length();
+        int pid=0, sid=0;
+        int pidp=-1, sidp=-1;
+        while(sid<n){
+            if(p[pid]==s[sid] || p[pid]=='?'){
+                pid++; sid++;
+            }else if(p[pid]=='*'){
+                pidp=pid++; sidp=sid;
+            }else{
+                if(pidp>-1){
+                    pid=pidp+1; sid=++sidp;
+                }else{
+                    return false;
+                }
+            }
+        }
+        while(p[pid]=='*') pid++;
+        return pid==m;
+    }
+};
 
 
 //DP
@@ -49,37 +102,7 @@ public:
 };
 
 
-//Another soln
-class Solution {
-public:
-    bool isMatch(string s, string p) {
-        int  slen = s.size(), plen = p.size(), i, j, iStar=-1, jStar=-1;
 
-        for(i=0,j=0 ; i<slen; ++i, ++j)
-        {
-            if(p[j]=='*')
-            { //meet a new '*', update traceback i/j info
-                iStar = i;
-                jStar = j;
-                --i;
-            }
-            else
-            { 
-                if(p[j]!=s[i] && p[j]!='?')
-                {  // mismatch happens
-                    if(iStar >=0)
-                    { // met a '*' before, then do traceback
-                        i = iStar++;
-                        j = jStar;
-                    }
-                    else return false; // otherwise fail
-                }
-            }
-        }
-        while(p[j]=='*') ++j;
-        return j==plen;
-    }
-};
 
 
 
