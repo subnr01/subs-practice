@@ -18,7 +18,10 @@ k will be between 1 and floor(nums.length / 3).
 
 */
 
+//Related topics: array, DP
 
+
+//DP
 class Solution {
 public:
     vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
