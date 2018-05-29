@@ -9,42 +9,56 @@ For example, given the following matrix:
 Return 6.
 */
 
+//Related topics: array, hash, DP
 
-//Using stack O(n*2)
-int maximalRectangle(vector<vector<char> > &matrix) {
-    if(matrix.empty()){
-        return 0;
-    }
-    int maxRec = 0;
-    vector<int> height(matrix[0].size(), 0);
-    for(int i = 0; i < matrix.size(); i++){
-        for(int j = 0; j < matrix[0].size(); j++){
-            if(matrix[i][j] == '0'){
-                height[j] = 0;
+//34%
+class Solution {
+public:
+    int maximalRectangle(vector<vector<char> > &matrix) {
+         if(matrix.empty()){
+            return 0;
+         }
+        int max_area = 0;
+        vector<int> temp(matrix[0].size(), 0);
+        size_t sz = matrix[0].size();
+        
+        for(int i = 0; i < matrix.size(); ++i) {
+            for(int j = 0; j < sz; ++j) {
+                if(matrix[i][j] == '0') {
+                    temp[j] = 0;
+                } else {
+                    temp[j]++;
+                }
             }
-            else{
-                height[j]++;
+            max_area = max(max_area,largestRectangleArea(temp));
+        }
+        return max_area;
+    }
+    
+    
+    //brute force, O(n^2)
+    int largestRectangleArea(vector<int> &height) {
+        height.push_back(0);
+        size_t n = height.size();
+        
+        int max_area = 0;
+        int i = 0;
+        stack<int> mystack;
+        
+        while(i < n) {
+            if(mystack.empty() || height[i] >= height[mystack.top()]) {
+                mystack.push(i);
+                i++;
+            } else {
+                int h = height[mystack.top()];
+                mystack.pop();
+                int w = mystack.empty()? i: i - mystack.top() - 1;
+                max_area = max(max_area, h * w);
             }
+            
+            
         }
-        maxRec = max(maxRec, largestRectangleArea(height));
+        return max_area;
     }
-    return maxRec;
-}
-
-int largestRectangleArea(vector<int> &height) {
-    stack<int> s;
-    height.push_back(0);
-    int maxSize = 0;
-    for(int i = 0; i < height.size(); i++){
-        if(s.empty() || height[i] >= height[s.top()]){
-            s.push(i);
-        }
-        else{
-            int temp = height[s.top()];
-            s.pop();
-            maxSize = max(maxSize, temp * (s.empty() ? i : i - 1 - s.top()));
-            i--;
-        }
-    }
-    return maxSize;
-}
+    
+};
