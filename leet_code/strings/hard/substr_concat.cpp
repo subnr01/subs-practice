@@ -26,6 +26,10 @@ public:
 
   vector<int> findSubstring(string s, vector<string>& words) {
     int wordCount = 0;
+    vector<int> sol;
+    if (s.size() == 0 || words.size() == 0) {
+        return sol;
+    }
     for (int i = 0; i < words.size(); ++i) {
       if (dict.count(words[i])) 
         ++dict[words[i]].second;
@@ -49,7 +53,7 @@ public:
         wordIndex[i] = dict[next].first;
     }
 
-    vector<int> sol;
+    
     vector<int> target(wordCount);
     for (int i = 0; i < wordCount; ++i) {
       target[i] = dict[nwords[i]].second;
