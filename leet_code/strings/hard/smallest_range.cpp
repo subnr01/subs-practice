@@ -15,6 +15,8 @@ List 3: [5, 18, 22, 30], 22 is in range [20,24].
 */
 
 
+//related topics: hash table, string, 2 pointers
+
 //Check out the brute force solns
 
 class Solution {
