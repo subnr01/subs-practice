@@ -28,6 +28,8 @@ However, splitting into [2, 1], [3], [4], [4] is the highest number of chunks po
 
 Related topics: sliding window, array
 
+
+//sort version, see the other version for the faster one
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {
