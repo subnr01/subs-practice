@@ -59,3 +59,50 @@ ListNode* mergeKLists(vector<ListNode*>& lists) { //make_heap
     }
     return head.next;
 }
+
+
+//using recursion
+class Solution {
+private:
+    static ListNode* mergeTwoLists(ListNode *l1, ListNode *l2) {
+        if (l1 == nullptr) {
+            return l2;
+        }
+
+        if (l2 == nullptr) {
+            return l1;
+        }
+
+        if (l2->val < l1->val) {
+            swap(l2, l1);
+        }
+
+        for (auto n = l1;;) {
+            while (n->next != nullptr && n->next->val <= l2->val) {
+                n = n->next;
+            }
+
+            if (n->next == nullptr) {
+                n->next = l2;
+                return l1;
+            }
+
+            swap(n->next, l2);
+        }
+    }
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        if (lists.empty()) {
+            return nullptr;
+        }
+        
+        while (lists.size() > 1) {
+            auto len = lists.size();
+            for (size_t i = 0; i < len/2; ++i) {
+                lists[i] = mergeTwoLists(lists[i], lists[len - i - 1]);
+            }
+            lists.resize((len + 1)/2);
+        }
+        return lists[0];
+    }
+};
