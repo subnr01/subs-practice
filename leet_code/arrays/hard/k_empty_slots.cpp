@@ -30,6 +30,63 @@ Output: -1
 //Related topics
 //array, binary search tree
 
+//faster solns
+class Solution {
+  public:
+    int kEmptySlots(vector<int>& flowers, int k) {
+      int size = flowers.size();
+      vector<int> bloomed(size+1, 0);
+      for (int i = 0; i < size; i++) {
+          bloomed[flowers[i]] = 1;
+          if (flowers[i]-k-1 >= 1 && bloomed[flowers[i]-k-1] == 1) {
+            bool found = true;
+            for (int j = flowers[i]-k; j >= 1 && j < flowers[i]; j++) {
+                if (bloomed[j] == 1) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found == true) return i+1;
+          }
+          if (flowers[i]+k+1 <= size && bloomed[flowers[i]+k+1] == 1) {
+              bool found = true;
+              for (int j = flowers[i]+k; j > flowers[i]; j--) {
+                  if (bloomed[j] == 1) {
+                      found = false;
+                      break;
+                  }
+              }
+              if (found == true) return i+1;
+          }
+      }
+      return -1;
+    }
+};
+
+
+class Solution {
+public:
+    int kEmptySlots(vector<int>& flowers, int k) {
+        int n = flowers.size();
+        if (n == 0 || k >= n) return -1;
+        ++k;
+        int bs = (k + n - 1) / k;
+        vector<int> low(bs, INT_MAX), high(bs, INT_MIN);
+        for (int i = 0; i < n; i++) {
+            int x = flowers[i];
+            int p = x / k;
+            if (x < low[p]) {
+                low[p] = x;
+                if (p > 0 && high[p - 1] == x - k) return i + 1;
+            }
+            if (x > high[p]) {
+                high[p] = x;
+                if (p < bs - 1 && low[p + 1] == x + k) return i + 1;
+            }
+        }
+        return -1;
+    }
+};
 
 //nlogn
 class Solution {
