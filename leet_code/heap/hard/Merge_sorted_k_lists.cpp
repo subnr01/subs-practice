@@ -106,3 +106,43 @@ public:
         return lists[0];
     }
 };
+
+
+//mergeSort
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+
+        if(lists.empty()) return NULL;
+        ListNode * result;
+        result = mergeKLists_divide_and_conqer(lists,0,lists.size()-1);
+        return result;
+    }
+    
+    ListNode * mergeKLists_divide_and_conqer(vector<ListNode *> &lists,int left, int right) {
+
+        if(left==right) return lists[left];
+        int mid = ( left + right) >> 1;
+        ListNode * left_list = mergeKLists_divide_and_conqer(lists,left,mid);
+        ListNode * right_list = mergeKLists_divide_and_conqer(lists,mid+1,right);
+        return mergeTwoLists(left_list,right_list);
+    }
+    
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
+        ListNode l3(INT_MIN);
+        ListNode * l4 = &l3;
+        
+        while(l1 && l2) {
+            if(l1->val<l2->val) {
+                l4->next = l1;
+                l1 = l1->next;
+            }else {
+                l4->next = l2;
+                l2 = l2->next;
+            }
+            l4 = l4->next;
+        }
+        l4->next = l1 ? l1 : l2;
+        return l3.next;
+    }
+};
