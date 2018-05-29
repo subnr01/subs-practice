@@ -21,6 +21,7 @@ isMatch("aab", "c*a*b") → true
 */
 
 
+// related topics: dp, string, backtracking
 //https://xiaohuiliucuriosity.blogspot.com/2014/12/regular-expression-matching.html
 
 
