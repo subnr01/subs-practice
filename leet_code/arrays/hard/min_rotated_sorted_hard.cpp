@@ -13,6 +13,42 @@ Find the minimum element.
 
 */
 
+
+//Related topics: array, binary search
+
+//faster
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        if(nums.size() == 0)
+            return -1;
+
+        //Binary Search in Sorted Rotated Array
+        //Implemented using following idea: One half has to be sorted
+        int left = 0;
+        int right = nums.size() - 1;
+
+        while(left <= right){
+            while(nums[left]==nums[right] && left != right){
+                left++;
+            }
+            
+            int mid = (left + right) / 2;
+
+            if(nums[left] <= nums[right])
+                return nums[left];
+
+            if(nums[left] <= nums[mid])
+                left = mid + 1;
+            else
+                right = mid;
+        }
+
+        return -1;
+    }
+};
+
+
 class Solution {
 public:
     int findMin(vector<int>& nums) {
