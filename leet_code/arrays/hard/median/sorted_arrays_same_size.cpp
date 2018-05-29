@@ -24,6 +24,7 @@ https://discuss.leetcode.com/topic/4996/share-my-o-log-min-m-n-solution-with-exp
    Assumptions in this function:
    Both ar1[] and ar2[] are sorted arrays
    Both have n elements */
+//REWRITE THIS USING VECTOR
 int getMedian(int ar1[], int ar2[], int n)
 {
     /* return -1  for invalid input */
@@ -65,3 +66,52 @@ int median(int arr[], int n)
     else
         return arr[n/2];
 }
+
+
+//Using findKth
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        int m = nums1.size();
+        int n = nums2.size();
+        
+        int total = (m + n);
+        
+        if (total % 2 == 0) {
+            return (findkth(nums1, nums2, 0, 0, total/2) + findkth(nums1, nums2, 0, 0, total/2 + 1) )/2.0; 
+        } else { 
+            return findkth(nums1, nums2, 0, 0, total/2 + 1);
+        }
+    }
+    
+    int findkth (vector<int>& nums1, vector<int>& nums2, int s1, int s2, int k) 
+    {
+        if (s1 >= nums1.size()) {
+            return nums2[s2 + k -1];
+        }
+        
+        if (s2 >= nums2.size()) {
+            return nums1[s1 + k -1];
+        }
+        
+        if (k == 1) {
+            return min(nums1[s1], nums2[s2]);
+        }
+        
+        int m1 = s1 + k/2 - 1;
+        int m2 = s2 + k/2 - 1;
+        
+        int mid1 = m1 < nums1.size()? nums1[m1]: INT_MAX;
+        int mid2 = m2 < nums2.size()? nums2[m2]: INT_MAX;
+        
+        if (mid1 < mid2) {
+            return findkth(nums1, nums2, m1 + 1, s2, k - k/2);
+        } else {
+            return findkth(nums1, nums2, s1, m2 + 1, k - k/2);
+        }
+        
+        
+    }
+    
+};
+
