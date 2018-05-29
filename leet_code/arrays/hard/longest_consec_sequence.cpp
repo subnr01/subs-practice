@@ -8,9 +8,16 @@ The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
 
 Your algorithm should run in O(n) complexity.
 
+Example:
+
+Input: [100, 4, 200, 1, 3, 2]
+Output: 4
+Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
 
 */
 
+
+//Related topics: array, union find
 
 class Solution {
 public:
@@ -34,16 +41,26 @@ public:
 
 
 //Another similar soln (if you do not like erase)
-int longestConsecutive(const vector<int> &num) {
-    unordered_set<int> s(num.begin(), num.end()), searched;
-    int longest = 0;
-    for (int i: num) {
-        if (searched.find(i) != searched.end()) continue;
-        searched.insert(i);
-        int j = i - 1, k = i + 1;
-        while (s.find(j) != s.end()) searched.insert(j--);
-        while (s.find(k) != s.end()) searched.insert(k++);
-        longest = max(longest, k - 1 - j);
+//very fast solution
+class Solution {
+public:
+    //可以把问题拆解为以nums[i]为起点的有序序列，如果有比nums[i]小的，则直接跳过
+    int longestConsecutive(vector<int>& nums) {
+        unordered_set<int> dict(nums.begin(), nums.end());
+        int n = nums.size();
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            int x = nums[i];
+            if (dict.count(x - 1)) continue;
+            int y = x + 1;
+            while (dict.count(y)) {
+                ++y;
+            }
+            
+            if (y - x > ans) {
+                ans = y - x;
+            }
+        }
+        return ans;
     }
-    return longest;
-}
+};
