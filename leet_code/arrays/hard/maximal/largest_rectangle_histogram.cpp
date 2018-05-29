@@ -69,6 +69,29 @@ height and will be mulitplied finally with the entire stretch
 */
 
 //O(n) solution
+//aster
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int ans = 0;
+        stack<int> index;
+        for (int i = 0; i <= heights.size(); i++) {
+            while (!index.empty() && (heights[index.top()] > heights[i] || i == heights.size())) {
+                int h = heights[index.top()];
+                index.pop();
+                if (index.empty()) {
+                    ans = max(ans, h * i);
+                } else {
+                    ans = max(ans, h * (i - index.top() - 1));
+                }
+            }
+            index.push(i);
+        }
+        return ans;
+    }
+};
+
+
 int largestRectangleArea(vector<int>& height) {
     height.push_back(0);
     const int size_h = height.size();
