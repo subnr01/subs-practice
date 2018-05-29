@@ -21,7 +21,7 @@ Note:
 
 */
 
-
+//This is a binary search question and heap is not effeicient
 
 \\x`Bucket sort, O(n^2)
 class Solution {
