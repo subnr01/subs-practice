@@ -46,7 +46,8 @@ solved within 35ms on average.
 */
 
 
-
+//Look at discussion tab
+//contest winner, nut slow
 class Solution {
 public:
     int minStickers(vector<string>& stickers, string target) {
@@ -72,6 +73,93 @@ public:
 };
 
 
+//100%
+class Solution {
+    
+public:
+    int minStickers(vector<string>& stickers, string target) {
+        vector<vector<int>> dict(stickers.size(), vector<int>(26, 0));
+        for (int i = 0; i < stickers.size(); ++i) {
+            for (char c: stickers[i]) {
+                ++dict[i][c-'a'];
+            }
+        }        
+        
+        unordered_set<string> visited;
+        queue<string> q;
+        q.push(target);
+        visited.insert(target);
+        
+        int qSize = q.size();
+        int len = 1;
+        while (!q.empty()) {
+            string s = q.front();
+            q.pop();
+            --qSize;
+            
+            vector<int> targetCount(26, 0);
+            for (char c: s) {
+                ++targetCount[c-'a'];
+            }
+            
+            for (int i = 0; i < stickers.size(); ++i) {
+                if(!dict[i][s[0]-'a']) continue;
+                vector<int> count(targetCount.begin(), targetCount.end());
+                string newStr;
+                for (int j = 0; j < 26; ++j) {
+                    count[j] -= dict[i][j];
+                    if (count[j] > 0) {
+                        newStr.append(count[j], 'a'+j);
+                    }
+                }
+                if (newStr.size() == 0) return len;
+                else if (!visited.count(newStr)) {
+                    q.push(newStr);
+                    visited.insert(newStr);
+                }
+            }
+            
+            if (qSize == 0) {
+                qSize = q.size();
+                ++len;
+            }
+        }
+        return -1;
+    }
+};
+
+//Another soln 98%
+class Solution {
+public:
+    int minStickers(vector<string>& stickers, string target) {
+        unordered_map<string, int> dp;
+        vector<string> v = stickers;
+        sort(target.begin(), target.end());
+        for (auto& a : v) {
+            sort(a.begin(), a.end());
+        }
+        dp[""] = 0;
+        getNum(target, v, dp);
+        return dp[target] >= 1e6 ? -1 : dp[target];
+    }
+
+private:
+    int getNum(const string& t, const vector<string>& v, unordered_map<string, int>& dp) {
+        auto it = dp.find(t);
+        if (it != dp.end()) {
+            return it->second;
+        }
+        int num = 1e6;
+        for (const auto& s : v) {
+            if (s.find(t[0]) != -1) {
+                string n;
+                set_difference(t.begin(), t.end(), s.begin(), s.end(), back_inserter(n));
+                num = min(num, getNum(n, v, dp));
+            }
+        }
+        return dp[t] = ++num;
+    }
+};
 
 
 
