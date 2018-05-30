@@ -20,3 +20,6 @@ Output: "00110"
 Note: "01100", "10011", "11001" will be accepted too.
 
 */
+
+
+//THERE ARE SPECIFIC ALGORITHMS, CHECK THEM OUT...
