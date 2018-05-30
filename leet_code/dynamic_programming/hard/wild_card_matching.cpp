@@ -1,100 +1,86 @@
 /*
-Implement wildcard pattern matching with support for '?' and '*'.
+Given an input string (s) and a pattern (p), implement wildcard pattern matching with support for '?' and '*'.
 
 '?' Matches any single character.
 '*' Matches any sequence of characters (including the empty sequence).
-
 The matching should cover the entire input string (not partial).
 
-The function prototype should be:
-bool isMatch(const char *s, const char *p)
+Note:
 
-Some examples:
-isMatch("aa","a") → false
-isMatch("aa","aa") → true
-isMatch("aaa","aa") → false
-isMatch("aa", "*") → true
-isMatch("aa", "a*") → true
-isMatch("ab", "?*") → true
-isMatch("aab", "c*a*b") → false
+s could be empty and contains only lowercase letters a-z.
+p could be empty and contains only lowercase letters a-z, and characters like ? or *.
+Example 1:
+
+Input:
+s = "aa"
+p = "a"
+Output: false
+Explanation: "a" does not match the entire string "aa".
+Example 2:
+
+Input:
+s = "aa"
+p = "*"
+Output: true
+Explanation: '*' matches any sequence.
+Example 3:
+
+Input:
+s = "cb"
+p = "?a"
+Output: false
+Explanation: '?' matches 'c', but the second letter is 'a', which does not match 'b'.
+Example 4:
+
+Input:
+s = "adceb"
+p = "*a*b"
+Output: true
+Explanation: The first '*' matches the empty sequence, while the second '*' matches the substring "dce".
+Example 5:
+
+Input:
+s = "acdcb"
+p = "a*c?b"
+Output: false
+
+
 
 */
 
 
-//This is tagged
-//Dynamic programming, backtracking, greedy
+https://discuss.leetcode.com/topic/21577/my-three-c-solutions-iterative-16ms-dp-180ms-modified-recursion-88ms
 
 
+//Related topics: DP, backtracking, Greedy
 
-
-
-
-//backtracking/recursive
-
-class Solution {
-    // return value:
-    // 0: reach the end of s but unmatched
-    // 1: unmatched without reaching the end of s
-    // 2: matched
-    int dfs(string& s, string& p, int si, int pi) {
-        if (si == s.size() and pi == p.size()) return 2;
-        if (si == s.size() and p[pi] != '*') return 0;
-        if (pi == p.size()) return 1;
-        if (p[pi] == '*') {
-            if (pi+1 < p.size() and p[pi+1] == '*') 
-                return dfs(s, p, si, pi+1); // skip duplicate '*'
-            for(int i = 0; i <= s.size()-si; ++i) {
-                int ret = dfs(s, p, si+i, pi+1);
-                if (ret == 0 or ret == 2) return ret; 
-            }
-        }
-        if (p[pi] == '?' or s[si] == p[pi])
-            return dfs(s, p, si+1, pi+1);
-        return 1;
-    }    
-    
-public:
-    bool isMatch(string s, string p) {
-        return dfs(s, p, 0, 0) > 1;
-    }
-};
-
-
-//Iterative solution (linear time and constant space)
+//popular soln
 class Solution {
 public:
     bool isMatch(string s, string p) {
-        int  slen = s.size(), plen = p.size(), i, j, iStar=-1, jStar=-1;
-
-        for(i=0,j=0 ; i<slen; ++i, ++j)
-        {
-            if(p[j]=='*')
-            { //meet a new '*', update traceback i/j info
-                iStar = i;
-                jStar = j;
-                --i;
-            }
-            else
-            { 
-                if(p[j]!=s[i] && p[j]!='?')
-                {  // mismatch happens
-                    if(iStar >=0)
-                    { // met a '*' before, then do traceback
-                        i = iStar++;
-                        j = jStar;
-                    }
-                    else return false; // otherwise fail
+        int n=s.length(), m=p.length();
+        int pid=0, sid=0;
+        int pidp=-1, sidp=-1;
+        while(sid<n){
+            if(p[pid]==s[sid] || p[pid]=='?'){
+                pid++; sid++;
+            }else if(p[pid]=='*'){
+                pidp=pid++; sidp=sid;
+            }else{
+                if(pidp>-1){
+                    pid=pidp+1; sid=++sidp;
+                }else{
+                    return false;
                 }
             }
         }
-        while(p[j]=='*') ++j;
-        return j==plen;
+        while(p[pid]=='*') pid++;
+        return pid==m;
     }
 };
 
 
-//A DP solution is also given here. It has O(N^2) time complexity and O(N) space
-
+//DP
 class Solution {
 public:
     bool isMatch(string s, string p) {
@@ -108,16 +94,45 @@ public:
         {
             cur = i%2, prev= 1-cur;
             matched[cur][0]= matched[prev][0] && p[i-1]=='*';
-            if(p[i-1]=='*') for(j=1; j<=sLen; ++j) {
-                matched[cur][j] = matched[cur][j-1] || matched[prev][j];
-            }
-            else 
-            { 
-                for(j=1; j<=sLen; ++j)   {
-                     matched[cur][j] =  matched[prev][j-1] && (p[i-1]=='?' || p[i-1]==s[j-1]) ;
-                }
-            }    
+            if(p[i-1]=='*') for(j=1; j<=sLen; ++j) matched[cur][j] = matched[cur][j-1] || matched[prev][j];
+            else for(j=1; j<=sLen; ++j)            matched[cur][j] =  matched[prev][j-1] && (p[i-1]=='?' || p[i-1]==s[j-1]) ;
         }
             return matched[cur][sLen];
     }
 };
+
+
+
+
+
+
+//recursive
+class Solution {
+private:
+    bool helper(const string &s, const string &p, int si, int pi, int &recLevel)
+    {
+        int sSize = s.size(), pSize = p.size(), i, curLevel = recLevel;
+        bool first=true;
+        while(si<sSize && (p[pi]==s[si] || p[pi]=='?')) {++pi; ++si;} //match as many as possible
+        if(pi == pSize) return si == sSize; // if p reaches the end, return
+        if(p[pi]=='*')
+        { // if a star is met
+            while(p[++pi]=='*'); //skip all the following stars
+            if(pi>=pSize) return true; // if the rest of p are all star, return true
+            for(i=si; i<sSize; ++i)
+            {   // then do recursion
+                if(p[pi]!= '?' && p[pi]!=s[i]) continue;
+                if(first) {++recLevel; first = false;}
+                if(helper(s, p, i, pi, recLevel)) return true;
+                if(recLevel>curLevel+1) return false; // if the currently processed star is not the last one, return
+            }
+        }
+        return false;
+    }
+public:
+    bool isMatch(string s, string p) {
+        int recLevel = 0;
+        return helper(s, p, 0, 0, recLevel);
+    }
+};
+
