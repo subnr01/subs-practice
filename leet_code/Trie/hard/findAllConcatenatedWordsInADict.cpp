@@ -18,6 +18,7 @@ Explanation: "catsdogcats" can be concatenated by "cats", "dog" and "cats";
 
 */
 
+//Related topics:  dfs, trie
 
 class Solution {
 public:
