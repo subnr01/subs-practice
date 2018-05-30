@@ -48,3 +48,112 @@ Each grid[i][j] will be either 0 or 1.
 Throughout the described process, there is always a contiguous viral region that will infect strictly more uncontaminated squares in the next round.
 
 */
+
+
+//Check other solns also, this is a DFS solition
+class Solution {
+public:
+	int containVirus(vector<vector<int>>& grid) {
+		m = grid.size();
+		if (m == 0)
+			return 0;
+		n = grid[0].size();
+		if (n == 0)
+			return 0;
+
+		int walls = 0;
+		while (true)
+		{
+			vector<vector<int> > flags(m, vector<int>(n, 0));
+			vector<vector<int> > affectedAreas;
+			int affected = 0;
+			int f = 1;
+			int wall = 0;
+			int maxf = 0;
+			int maxi = 0, maxj = 0;
+			for (int i = 0; i < m; i++)
+			{
+				for (int j = 0; j < n; j++)
+				{
+					if (grid[i][j] == 0 || flags[i][j] != 0)
+						continue;
+					int w = 0;
+					vector<int> oneArea;
+					int a = helper(grid, i, j, flags, oneArea, w, f);
+					if (oneArea.size() > affected)
+					{
+						affected = oneArea.size();
+						wall = w;
+						maxf = f;
+						maxi = i;
+						maxj = j;
+					}
+					f++;
+					affectedAreas.push_back(oneArea);
+				}
+			}
+			if (wall == 0)
+				break;
+			walls += wall;
+			setInActive(grid, maxi, maxj);
+			for (int k = 0; k < affectedAreas.size(); k++)
+			{
+				//if (k == maxf - 1)
+				//	continue;
+				vector<int>& b = affectedAreas[k];
+                if(b.size() == affected)
+                    continue;
+				for (int p : b)
+				{
+					int x = p / n;
+					int y = p%n;
+					grid[x][y] = 1;
+				}
+			}
+			
+
+		}
+		return walls;
+	}
+
+private:
+	int m, n;
+	int helper(vector<vector<int>>& grid, int i, int j,
+		vector<vector<int>>& flags, vector<int>& areas, int& wall, int f) {
+		if (i < 0 || i >= m || j < 0 || j >= n || flags[i][j] == f)
+			return 0;
+		if (grid[i][j] == -1)
+		{
+			return 0;
+		}
+		int area = 0;
+		if (grid[i][j] == 0)
+		{
+			if (flags[i][j] != -1*f)
+			{
+				flags[i][j] = -1 * f;
+				area++;
+				areas.push_back(i*n + j);
+			}
+			wall++;
+			return area;
+		}
+		flags[i][j] = f;
+		area += helper(grid, i - 1, j, flags, areas, wall, f);
+		area += helper(grid, i + 1, j, flags, areas, wall, f);
+		area += helper(grid, i, j + 1, flags, areas, wall, f);
+		area += helper(grid, i, j - 1, flags, areas, wall, f);
+		return area;
+	}
+
+	void setInActive(vector<vector<int>>& grid, int i, int j) {
+		if (i < 0 || j < 0 || i >= m || j >= n || grid[i][j] != 1)
+			return;
+		grid[i][j] = -1;
+		setInActive(grid, i + 1, j);
+		setInActive(grid, i - 1, j);
+		setInActive(grid, i, j + 1);
+		setInActive(grid, i, j - 1);
+	}
+};
+
