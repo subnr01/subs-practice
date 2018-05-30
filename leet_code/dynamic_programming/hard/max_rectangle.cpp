@@ -62,3 +62,50 @@ public:
     }
     
 };
+
+
+//88%
+class Solution {
+public:
+int maximalRectangle(vector<vector<char> > &mat) {
+    int max_A = 0,  nrow = mat.size();
+    if(nrow==0) return 0;
+    int ncol = mat[0].size();
+    int left[ncol], right[ncol], height[ncol]; // left[j] mean the left border of the j col
+    for(int i=0; i<ncol; left[i] = -1, right[i] = ncol, height[i] = 0, i++);
+    
+    //start dp
+    for(int i=0; i<nrow; i++){
+        vector<char> cur_row = mat[i];
+        int cur_left = -1, cur_right = ncol;  // ***** this is very important to do max(left[j], cur_left);
+        //for each row to update the left[j] and right[j] and height[j]
+        for(int j=0; j<ncol; j++){
+            if(cur_row[j] == '1'){
+                left[j] = max(left[j], cur_left);   height[j] += 1;
+            }
+            else{
+                left[j] = -1; // *** this step is necessary to do max(left[j], cur_left); don't worry it because the height[j] =0 to make area =0;
+                cur_left = j;   height[j] = 0;
+            }
+        }
+        // update the right[j]
+        for(int j=ncol-1; j>=0; j--){
+            if(cur_row[j]=='1'){
+                right[j] = min(right[j], cur_right);
+            }
+            else{
+                right[j]  = ncol; //*** this step is necessary to do min(right[j], cur_right);  don't worry it because the height[j] =0 to make area =0;
+                cur_right = j;
+            }
+        }
+        
+        // update max_A
+        for(int j=0; j<ncol; j++){
+            //cout<<"right["<<j<<"], left["<<j<<"],  height["<<j<<"] = "<<right[j]<<","<<left[j]<<","<<height[j]<<endl;
+            max_A = max(max_A, (right[j] - left[j] - 1) * height[j]);
+            //cout << " max_A = "<<max_A<<endl;
+        }
+    }
+    return max_A;
+}
+};
