@@ -28,7 +28,7 @@ return [9, 8, 9]
 
 
 
-//solution 1
+//solution 1 (99.2)
 class Solution {
 public:
     #define MIN(a,b) (a<b?a:b)
