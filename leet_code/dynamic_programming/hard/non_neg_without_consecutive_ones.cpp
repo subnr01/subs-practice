@@ -19,29 +19,7 @@ Among them, only integer 3 disobeys the rule (two consecutive ones) and the othe
 */
 
 
-//Java original solution
-public class Solution {
-    public int findIntegers(int num) {
-        StringBuilder sb = new StringBuilder(Integer.toBinaryString(num)).reverse();
-        int n = sb.length();
-        
-        int a[] = new int[n];
-        int b[] = new int[n];
-        a[0] = b[0] = 1;
-        for (int i = 1; i < n; i++) {
-            a[i] = a[i - 1] + b[i - 1];
-            b[i] = a[i - 1];
-        }
-        
-        int result = a[n - 1] + b[n - 1];
-        for (int i = n - 2; i >= 0; i--) {
-            if (sb.charAt(i) == '1' && sb.charAt(i + 1) == '1') break;
-            if (sb.charAt(i) == '0' && sb.charAt(i + 1) == '0') result -= b[i];
-        }
-        
-        return result;
-    }
-}
+
 
 
 
@@ -65,5 +43,40 @@ public:
             if (((num>>(i+1))&1)==0 && ((num>>i)&1)==0) res-=b[i];
         }
         return res;
+    }
+};
+
+
+//Another soln
+class Solution {
+public:
+    int findIntegers(int num) {
+         
+        int ans[32];
+        ans[0] = 1, ans[1] = 2;
+        
+        for(int i = 2; i < 32; i++){
+            ans[i] = ans[i-1] + ans[i-2];
+        }
+        
+        int i = 30, lastBit = 0, sum = 0;
+        
+        while(i >= 0){
+            if((num & (1<<i)) != 0){
+                sum += ans[i];
+                
+                if(lastBit){
+                    sum--;
+                    break;
+                }
+                
+                lastBit = 1;
+            }
+            else lastBit = 0;
+            
+            i--;
+        }
+        
+        return sum+1;
     }
 };
