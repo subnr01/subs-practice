@@ -1,5 +1,4 @@
 /*
-
 In a given array nums of positive integers, find three non-overlapping subarrays with maximum sum.
 
 Each subarray will be of size k, and we want to maximize the sum of all 3*k entries.
@@ -19,10 +18,10 @@ k will be between 1 and floor(nums.length / 3).
 
 */
 
+//Related topics: array, DP
 
-//https://discuss.leetcode.com/topic/105577/c-java-dp-with-explanation-o-n
 
-
+//DP
 class Solution {
 public:
     vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
