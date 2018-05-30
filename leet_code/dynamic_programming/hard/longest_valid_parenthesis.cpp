@@ -1,14 +1,25 @@
 /*
-Given a string containing just the characters '(' and ')', find the length of the longest valid 
-(well-formed) parentheses substring.
+Given a string containing just the characters '(' and ')', find the length of the 
+longest valid (well-formed) parentheses substring.
 
-For "(()", the longest valid parentheses substring is "()", which has length = 2.
+Example 1:
 
-Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
+Input: "(()"
+Output: 2
+Explanation: The longest valid parentheses substring is "()"
+Example 2:
+
+Input: ")()())"
+Output: 4
+Explanation: The longest valid parentheses substring is "()()"
+
 
 */
 
-//Solution using a stack
+
+//Related topics: string, dynamic programming
+
+//using stack
 class Solution {
 public:
     int longestValidParentheses(string s) {
@@ -30,25 +41,46 @@ public:
     }
 };
 
-//Dp solution
-   int longestValidParentheses(string s) {
-            if(s.length() <= 1) return 0;
-            int curMax = 0;
-            vector<int> longest(s.size(),0);
-            for(int i=1; i < s.length(); i++){
-                if(s[i] == ')'){
-                    if(s[i-1] == '('){
-                        longest[i] = (i-2) >= 0 ? (longest[i-2] + 2) : 2;
-                        curMax = max(longest[i],curMax);
-                    }
-                    else{ // if s[i-1] == ')', combine the previous length.
-                        if(i-longest[i-1]-1 >= 0 && s[i-longest[i-1]-1] == '('){
-                            longest[i] = longest[i-1] + 2 + ((i-longest[i-1]-2 >= 0)?longest[i-longest[i-1]-2]:0);
-                            curMax = max(longest[i],curMax);
-                        }
-                    }
-                }
-                //else if s[i] == '(', skip it, because longest[i] must be 0
-            }
-            return curMax;
+//using dnyamic protramming
+class Solution {
+public:
+int longestValidParentheses(string s) {
+int len = s.size(), i, res=0, left;
+vector<int> dp(len+1,0);
+
+     for(i=1;i<len;++i)
+     {
+         if(s[i]==')')
+         {
+             left = i-dp[i]-1;
+             if(left>=0 && s[left]=='(') dp[i+1] = dp[i]+2+dp[left];
+             res = max(res, dp[i+1]);
+         }
+     }
+     return res;
+     
+ }
+};
+
+
+//one more soln
+class Solution {
+public:
+int longestValidParentheses(string s) {
+        int l = 0, r = 0, res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s[i] == '(') l++;
+            else r++;
+            if (l == r) res = max(res, 2 * r);
+            else if (r > l) l = r = 0;
         }
+        l = r = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s[i] == '(') l++;
+            else r++;
+            if (l == r) res = max(res, 2 * l);
+            else if (l > r) l = r = 0;
+        }
+        return res;
+    }
+};
