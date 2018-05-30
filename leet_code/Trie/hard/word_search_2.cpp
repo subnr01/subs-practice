@@ -99,3 +99,78 @@ public:
     }
 };
 
+
+
+//compact and slightly faaster
+class Solution
+{
+    public:
+    
+    struct TrieNode
+    {
+        TrieNode* next[26];
+        string word = "";
+    };
+    
+    vector<string> findWords( vector< vector<char> > &board, vector<string> &words )
+    {
+        TrieNode* root = buildTrie( words );
+        vector<string> result;
+        
+        for( int i = 0; i < board.size(); i++ )
+            for( int j = 0; j < board[i].size(); j++ )
+                wordSearch( board, i, j, root, result );
+        
+        return result;
+    }
+    
+    void wordSearch( vector< vector<char> > &board, int i, int j, TrieNode* root, vector<string> &result )
+    {
+        char c = board[i][j];
+        if( c == ' ' || !root )
+            return;
+        
+        root = root->next[c - 'a'];
+        if( root && !root->word.empty() )
+        {
+            result.push_back( root->word );
+            root->word = "";
+        }
+        else if( !root )
+            return;
+        
+        board[i][j] = ' ';
+        
+        if( i > 0 ) wordSearch( board, i - 1, j, root, result );
+        if( j > 0 ) wordSearch( board, i, j - 1, root, result );
+        
+        if( i < board.size() - 1 ) wordSearch( board, i + 1, j, root, result );
+        if( j < board[i].size() - 1 ) wordSearch( board, i, j + 1, root, result );
+        
+        board[i][j] = c;
+    }
+    
+    TrieNode* buildTrie( vector<string> words )
+    {
+        TrieNode* root = new TrieNode();
+        
+        for( int i = 0; i < words.size(); i++ )
+        {
+            TrieNode* temp = root;
+            
+            for( int j = 0; j < words[i].size(); j++ )
+            {
+                char c = words[i][j] - 'a';
+                
+                if( !temp->next[c] )
+                    temp->next[c] = new TrieNode();
+                
+                temp = temp->next[c];
+            }
+            
+            temp->word = words[i];
+        }
+        
+        return root;
+    }
+};
