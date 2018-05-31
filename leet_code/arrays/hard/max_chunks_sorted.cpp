@@ -71,12 +71,23 @@ public:
         
         int mx = INT_MIN;
         int mn = INT_MAX;
+	/*
+	Get all the left maxes, 
+	for example [2,1,3,4,4]
+	lmax becomes [2,2,3,4,4]
+	*/
         for(int i = 0 ; i < arr.size() ; i++)
         {
             mx = std::max(mx , arr[i]);
             lmax[i] = mx;
         }
         
+	/*
+	Get all the right min
+	for example [2,1,3,4,4]
+	rmin becomes [1,1,3,4,4]
+	
+	*/
         for(int i = arr.size()-1 ; i>=0 ; i--)
         {
             mn = std::min(mn , arr[i]);
@@ -86,6 +97,10 @@ public:
         int res = 1;
         for(int i = 0 ; i < arr.size()-1; i++)
         {
+	     /*
+	     if the left max is less or equal to the right min
+	     at index + 1, then this is a chunk
+	     */
             if(lmax[i] <= rmin[i+1])
             {
                 res++;
