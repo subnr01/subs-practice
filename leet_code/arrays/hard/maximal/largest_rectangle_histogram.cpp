@@ -67,32 +67,10 @@ is height * 1 unit ( this is constant and is calculated by (s.pop(); i - s.top()
 height of the small building into the stack. The last element in the stack will probably be the smallest
 height and will be mulitplied finally with the entire stretch
 */
-
-//O(n) solution
-//aster
+//slower soln, but not modifying the input
 class Solution {
 public:
-    int largestRectangleArea(vector<int>& heights) {
-        int ans = 0;
-        stack<int> index;
-        for (int i = 0; i <= heights.size(); i++) {
-            while (!index.empty() && (heights[index.top()] > heights[i] || i == heights.size())) {
-                int h = heights[index.top()];
-                index.pop();
-                if (index.empty()) {
-                    ans = max(ans, h * i);
-                } else {
-                    ans = max(ans, h * (i - index.top() - 1));
-                }
-            }
-            index.push(i);
-        }
-        return ans;
-    }
-};
-
-
-int largestRectangleArea(vector<int>& height) {
+    int largestRectangleArea(vector<int>& height) {
     height.push_back(0);
     const int size_h = height.size();
     stack<int> stk;
@@ -109,48 +87,44 @@ int largestRectangleArea(vector<int>& height) {
             max_a = max(max_a, H * W);
         }
     }
+        
+    if (!stk.empty())
+    {
+        int p = stk.top();
+        int H = height[p];
+        int W = i - stk.top() - 1;
+        max_a = max(max_a, H * W);
+        stk.pop();
+        
+    }
     return max_a;
-}
+ }
+};
 
-//Without modifying the vector
-public int largestRectangleArea(int[] height) {
-	if (height == null || height.length == 0) {
-		return 0;
-	}
- 
-	Stack<Integer> stack = new Stack<Integer>();
- 
-	int max = 0;
-	int i = 0;
- 
-	while (i < height.length) {
-		//push index to stack when the current height is larger than the previous one
-		if (stack.isEmpty() || height[i] >= height[stack.peek()]) {
-			stack.push(i);
-			i++;
-		} else {
-		//calculate max value when the current height is less than the previous one
-			int p = stack.pop();
-			int h = height[p];
-			int w = stack.isEmpty() ? i : i - stack.peek() - 1;
-			max = Math.max(h * w, max);
-		}
- 
-	}
-	/*
-	Since we do not have an extra element at the end, 
-	we may have to do two more iterations to
-	get the smallest height * the largest stretch 
-	and compare against the greatest area that 
-	we have till now
-	*/
- 
-	while (!stack.isEmpty()) {
-		int p = stack.pop();
-		int h = height[p];
-		int w = stack.isEmpty() ? i : i - stack.peek() - 1;
-		max = Math.max(h * w, max);
-	}
- 
-	return max;
-}
+
+
+//O(n) solution
+//aster
+class Solution {
+public:
+    int largestRectangleArea(vector<int>& heights) {
+        int ans = 0;
+        stack<int> index;
+	//MODIYFING THE VECTOR HERE
+	heights.push(0);
+        for (int i = 0; i <= heights.size(); i++) {
+            while (!index.empty() && (heights[index.top()] > heights[i] || i == heights.size())) {
+                int h = heights[index.top()];
+                index.pop();
+                if (index.empty()) {
+                    ans = max(ans, h * i);
+                } else {
+                    ans = max(ans, h * (i - index.top() - 1));
+                }
+            }
+            index.push(i);
+        }
+        return ans;
+    }
+};
+
