@@ -25,7 +25,7 @@ what we are trying to do is to see
 --> if it is not case with the above two conditions, then we swap a[i] and a[a[i] - 1]
 --> when we find the first element where a[i] != i+1, then we return i+1;
 --> but if we find everything is inorder, then we return a.size() + 1;
-
+*/
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
@@ -44,6 +44,7 @@ public:
         }
         for(i=0;i<nums.size();i++){
             if(nums[i]!=i+1){
+                // we have to return i+1
                 return i+1;
             }
         }
