@@ -26,11 +26,19 @@ However, splitting into [2, 1], [3], [4], [4] is the highest number of chunks po
 
 */
 
-Related topics: sliding window, array
+//Related topics: sliding window, array
 
 
 //sort version, see the other version for the faster one
 //Soln seems to be O(nlogn)
+/*
+This uses the logic of sort.
+The original array and its sorted substititute cumulative
+sum will equal at some points where they can be broken
+into chunks.
+Wherever the sum is found equal, we will increment the
+chunk num
+*/
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {
@@ -40,7 +48,12 @@ public:
         for(int i = 0; i < arr.size(); i++) {
             sum1 += t[i];
             sum2 += arr[i];
-            if(sum1 == sum2) ans++;
+            if(sum1 == sum2) {
+	    	//END of one chunk
+                ans++;
+                sum1 = 0;
+                sum2 = 0;
+            }
         }
 	return ans;
     }
