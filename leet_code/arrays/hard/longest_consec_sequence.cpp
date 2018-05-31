@@ -19,29 +19,10 @@ Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefor
 
 //Related topics: array, union find
 
-class Solution {
-public:
-    int longestConsecutive(vector<int> &num) {
-        if (num.size() == 0) {
-            return 0;
-        }
-        unordered_set<int> record(num.begin(),num.end());
-        int res = 1;
-        for(int n : num){
-            if(record.find(n)==record.end()) continue;
-            record.erase(n);
-            int prev = n-1,next = n+1;
-            while(record.find(prev)!=record.end()) record.erase(prev--);
-            while(record.find(next)!=record.end()) record.erase(next++);
-            res = max(res,next-prev-1);
-        }
-        return res;
-    }
-};
 
 
-//Another similar soln (if you do not like erase)
-//very fast solution
+
+//very fast solution O(n)
 class Solution {
 public:
     //可以把问题拆解为以nums[i]为起点的有序序列，如果有比nums[i]小的，则直接跳过
