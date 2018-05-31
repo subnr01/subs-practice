@@ -35,7 +35,9 @@ Another option is to use map (ordered map). And the runtime is still O(logn) for
 for addRange and deleteRange, where k is number of overlapping ranges.
 
 For a single operation, it is hard to tell whether vector or map is better, because k is unknown. However, 
-the k overlapping ranges will be erased after either add or remove ranges. Let’s assume m is the total operations of add or delete ranges. Then total number of possible ranges is O(m) because add or delete may increase ranges by 1. So both n and k is O(m).
+the k overlapping ranges will be erased after either add or remove ranges. Let’s assume m is the total
+operations of add or delete ranges. Then total number of possible ranges is O(m) because add or 
+delete may increase ranges by 1. So both n and k is O(m).
 
 In summary, the run time for query is the same. However, the total run time for add and delete using vector 
 is O(m^2), and that using map is O(mlogm). So amortized cost for delete and add is O(m) for vector, and O(logm) for map.
