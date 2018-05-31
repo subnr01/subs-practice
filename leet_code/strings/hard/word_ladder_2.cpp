@@ -36,6 +36,121 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 */
 
 //Related topics: Array, string, backtracking, Breadfirstsearch, array
+
+
+
+
+//SOln 1 slightly faster  (70%)
+class Solution {
+private:
+    vector<vector<string>> ans;
+public:
+    vector<vector<string>> findLadders(string start, string end, vector<string>& words) {
+        unordered_set<string> dict;
+        for (auto word : words) {
+            dict.insert(word);
+        }
+        //dict.insert(end);
+        int len = start.length();
+        unordered_map<string, vector<string> > next;
+        // mark distance
+        unordered_map<string, int> vis;
+        queue<string> q;
+        vector<string> path;
+        ans.clear();
+        q.push(start);
+        vis[start] = 0;
+        while (!q.empty()) {
+            string s = q.front(); q.pop();
+            if (s == end) break;
+            int step = vis[s];
+            vector<string> snext;
+            // make modification
+            for (int i = 0; i < len; i++) {
+                string news = s;
+                for (char c = 'a'; c <= 'z'; c++) {
+                    news[i] = c;
+                    // if dict doesn't have this word, skip
+                    if (c == s[i] || dict.count(news) == 0) continue;
+                    // set distance for new point
+                    if (vis.count(news) == 0) {
+                        q.push(news);
+                        vis[news] = step + 1;
+                        //snext.push_back(news);
+                    } //else {
+                        if (step + 1 == vis[news]) {
+                            snext.push_back(news);
+                        }
+                    //}
+                    
+                }
+            }
+            next[s] = snext;
+        }
+        path.push_back(start);
+        dfspath(path, next, vis, start, end);
+        return ans;
+    }
+    void dfspath(vector<string> &path,  unordered_map<string, vector<string> > &next,
+                 unordered_map<string, int> &vis, string now, string end){
+        if (now == end) ans.push_back(path);
+        else {
+            auto vec = next[now];
+            int visn = vis[now];
+            for (int i = 0; i < vec.size(); i++) {
+                // search based on distance
+                if (vis[vec[i]] != visn + 1) continue;
+                path.push_back(vec[i]);
+                dfspath(path, next, vis, vec[i], end);
+                path.pop_back();
+            }
+        }
+    }
+};
+
+
+
+
+
+//Standard bfs (41%)
+vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
+        vector<vector<string>> ans;
+        unordered_set<string> dict(wordList.begin(), wordList.end());
+        if(!dict.count(endWord)) return ans;
+        vector<string> visited; //record visited words  
+        queue<vector<string>> q;  q.push({beginWord});
+        while(!q.empty()){
+           int n = q.size();
+           for(int i = 0 ; i < n; ++i){
+               auto cur=q.front(); q.pop();
+               auto s = cur.back();
+              
+               for(auto& c : s){
+                   const char origin = c;                  
+                   for(c='a'; c<='z'; ++c){  
+                       if(!dict.count(s)) continue;
+                       auto path = cur; 
+                       path.push_back(s); 
+                       visited.push_back(s); 
+                       if(s==endWord) ans.push_back(path);
+                       else q.push(path);
+                   }
+                
+                   c = origin;
+               }
+               
+           }
+            
+           for(auto& w : visited) dict.erase(w);//erase visited
+           visited.clear();
+            
+        }
+        return ans; 
+      
+    }
+
+---------------------------------------------------------------------------------------------------------------
+//Solution 2 (98%) ( too long solution, see when you have time)
 class Node;
 
 typedef vector<string> Ladder;
@@ -173,41 +288,6 @@ public:
     }
 };
 
-
-//Standard bfs
-vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
-        vector<vector<string>> ans;
-        unordered_set<string> dict(wordList.begin(), wordList.end());
-        if(!dict.count(endWord)) return ans;
-        vector<string> visited; //record visited words  
-        queue<vector<string>> q;  q.push({beginWord});
-        while(!q.empty()){
-           int n = q.size();
-           for(int i = 0 ; i < n; ++i){
-               auto cur=q.front(); q.pop();
-               auto s = cur.back();
-              
-               for(auto& c : s){
-                   const char origin = c;                  
-                   for(c='a'; c<='z'; ++c){  
-                       if(!dict.count(s)) continue;
-                       auto path = cur; 
-                       path.push_back(s); 
-                       visited.push_back(s); 
-                       if(s==endWord) ans.push_back(path);
-                       else q.push(path);
-                   }
-                
-                   c = origin;
-               }
-               
-           }
-            
-           for(auto& w : visited) dict.erase(w);//erase visited
-           visited.clear();
-            
-        }
-        return ans; 
-      
-    }
+--------------------------------------------------------------------------------------------------------------
+  
     
