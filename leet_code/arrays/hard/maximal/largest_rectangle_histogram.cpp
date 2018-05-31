@@ -67,7 +67,7 @@ is height * 1 unit ( this is constant and is calculated by (s.pop(); i - s.top()
 height of the small building into the stack. The last element in the stack will probably be the smallest
 height and will be mulitplied finally with the entire stretch
 */
-////O(n) solution , but not modifying the input hence slightly slower.
+////O(n) solution , but not modifying the input
 class Solution {
 public:
     int largestRectangleArea(vector<int>& height) {
@@ -87,7 +87,7 @@ public:
             max_a = max(max_a, H * W);
         }
     }
-        
+    /*    
     if (!stk.empty())
     {
         int p = stk.top();
@@ -97,6 +97,7 @@ public:
         stk.pop();
         
     }
+    */
     return max_a;
  }
 };
