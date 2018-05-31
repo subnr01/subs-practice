@@ -62,7 +62,11 @@ public:
 
         auto last = nums.back();
         mp[last.first][last.second] = mp[val].back();
-		swap(nums[nums.size()-1], nums[mp[val].back()]);
+	swap(nums[nums.size()-1], nums[mp[val].back()]);
+	    
+	/* Remove the element from the map
+	   and the vector
+        */
         mp[val].pop_back();
         if(mp[val].empty()) mp.erase(val);
         nums.pop_back();
