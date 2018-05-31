@@ -28,7 +28,7 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 //Related topics: DP, array
 
-
+Complexity: O(k(d-1)) = O(n2) solution
 //dp sol
 class Solution {
 public:
@@ -37,6 +37,8 @@ public:
             return 0;
         
         int d = prices.size();
+        
+        //dp[i][j] denotes profit till price j.
         vector<vector<int>> dp(k+1, vector<int>(d, 0));
         
         for(int r = 1; r <= k; r++)
@@ -44,7 +46,9 @@ public:
             int tempMax = INT_MIN;
             for(int c = 1; c < d; c++)
             {
+                //profit from the last transaction and the current price
                 tempMax = max(tempMax, dp[r-1][c - 1] - prices[c - 1]);
+                //profit in the last transaction vs the current transaction
                 dp[r][c] = max(dp[r][c-1], tempMax + prices[c]);
             }
         }
