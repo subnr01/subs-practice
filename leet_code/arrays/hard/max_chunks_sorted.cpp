@@ -30,6 +30,7 @@ Related topics: sliding window, array
 
 
 //sort version, see the other version for the faster one
+//Soln seems to be O(nlogn)
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {
@@ -46,7 +47,8 @@ public:
 };
 
 
-//another soln
+//another soln (88%)
+// Soln seems to be O(n)
 class Solution {
 public:
     int maxChunksToSorted(vector<int>& arr) {
