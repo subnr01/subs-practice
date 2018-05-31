@@ -95,7 +95,9 @@ public:
             }
             
         }
-        
+        //For inputs like (0, -1) where longst is
+        // not updated, we need the max in
+        // the return statement.
         return max(longst, currst);
     }
 };
