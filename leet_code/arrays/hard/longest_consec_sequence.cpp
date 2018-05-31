@@ -67,6 +67,8 @@ public:
 
 
 //using sort, easier and interesting and intuitive.
+//Time complexity: O (nlogn)
+//Space complexity: O(1) because we sort the array in place.
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) 
