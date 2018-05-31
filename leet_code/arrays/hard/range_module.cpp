@@ -45,6 +45,10 @@ is O(m^2), and that using map is O(mlogm). So amortized cost for delete and add 
 */
 
 
+//GOOD TO LEARN BOTH APPROACHES
+// WHILE VECTOR IS SIMPLE, MAP IS MORE FASTER. NEED TO UNDERSTAND LOWER and UPPER 
+// bound for set operations
+
 //Using vector
 
 class RangeModule {
