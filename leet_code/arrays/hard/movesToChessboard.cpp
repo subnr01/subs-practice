@@ -39,32 +39,142 @@ No matter what sequence of moves you make, you cannot end with a valid chessboar
 
 //https://leetcode.com/problems/transform-to-chessboard/discuss/114847/Easy-and-Concise-Solution-with-Explanation-C++JavaPython
 
- class Solution {
+//slower but unlike complex the other sol
+class Solution {
+public:
+   void swap_cols(vector<vector<int>> &board, int c1, int c2){
+        int n = board.size();
+        for(int i=0;i<n;i++){
+            swap(board[i][c1], board[i][c2]);
+        }
+    }
+    
+    void swap_rows(vector<vector<int>> &board, int r1, int r2){
+        int n = board.size();
+        for(int i=0;i<n;i++){
+            swap(board[r1][i], board[r2][i]);
+        }
+    }
+    
+    bool verify(vector<vector<int>> &board){
+        int n = board.size();
+        int b = board[0][0];
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if((i+j)%2 == 0 && board[i][j] != b) return false;
+                if((i+j)%2 != 0 && board[i][j] == b) return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    int can_cols_swap(vector<vector<int>> board, int black){
+        int n = board.size();
+        vector<int> blks, whites;
+        int moves = 0;
+        for(int i=0;i<n;i++){
+            if(board[0][i] == black && i%2 != 0) blks.push_back(i);
+            if(board[0][i] != black && i%2 == 0) whites.push_back(i);
+        }
+
+        if(blks.size() == whites.size()){
+            moves += blks.size();
+
+            for(int i=0;i<blks.size();i++){
+                swap_cols(board, blks[i], whites[i]);
+            }
+            if(!verify(board)) moves = INT_MAX;
+        }else moves = INT_MAX;
+        
+        return moves;
+    }
+    
+    int can_rows_swap(vector<vector<int>> board, int black){
+        int moves = 0, n=board.size();
+        vector<int> blks, whites;
+        for(int i=0;i<n;i++){
+            if(board[i][0]==black && i%2 != 0) blks.push_back(i);
+            if(board[i][0] != black && i%2 == 0) whites.push_back(i);
+        }
+        
+        if(blks.size() == whites.size()){
+            moves += blks.size();
+
+            for(int i=0;i<blks.size();i++){
+                swap_rows(board, blks[i], whites[i]);
+            }
+
+            int col_moves = min(can_cols_swap(board, 0), can_cols_swap(board, 1));
+            if(col_moves == INT_MAX) moves = INT_MAX;
+            else moves += col_moves;
+        }else moves = INT_MAX;
+        
+        return moves;
+    }
+    
+    int movesToChessboard(vector<vector<int>>& board) {
+        int ans = min(can_rows_swap(board, 0), can_rows_swap(board, 1));
+        return ans == INT_MAX ? -1 : ans;
+    }
+
+};
+
+
+
+//94%
+class Solution {
 public:
     int movesToChessboard(vector<vector<int>>& b) {
-        int N = b.size(), rowSum = 0, colSum = 0, rowSwap = 0, colSwap = 0;
-        for (int i = 0; i < N; ++i) for (int j = 0; j < N; ++j)
-                if (b[0][0]^b[i][0]^b[0][j]^b[i][j]) return -1;
+        int N = b.size(); 
+        int rowSum = 0; 
+        int colSum = 0; 
+        int rowSwap = 0; 
+        int colSwap = 0;
+        
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                if (b[0][0]^b[i][0]^b[0][j]^b[i][j]) {
+                    return -1;
+                }
+            }
+        }
+        
         for (int i = 0; i < N; ++i) {
             rowSum += b[0][i];
             colSum += b[i][0];
             rowSwap += b[i][0] == i % 2;
             colSwap += b[0][i] == i % 2;
         }
-        if (N / 2 > rowSum || rowSum > (N + 1) / 2) return -1;
-        if (N / 2 > colSum || colSum > (N + 1) / 2) return -1;
-        if (N % 2) {
-            if (colSwap % 2) colSwap = N - colSwap;
-            if (rowSwap % 2) rowSwap = N - rowSwap;
+        
+        if (N / 2 > rowSum || rowSum > (N + 1) / 2) {
+            return -1;
         }
-        else {
+        
+        if (N / 2 > colSum || colSum > (N + 1) / 2) {
+            return -1;
+        }
+        
+        if (N % 2) 
+        {
+            if (colSwap % 2) {
+                colSwap = N - colSwap;
+            }
+            if (rowSwap % 2) {
+                rowSwap = N - rowSwap;
+            } 
+        } else {
             colSwap = min(N - colSwap, colSwap);
             rowSwap = min(N - rowSwap, rowSwap);
         }
+        
         return (colSwap + rowSwap) / 2;
     }
 
 };
+
+
 
 
 
