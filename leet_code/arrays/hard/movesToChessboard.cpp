@@ -39,6 +39,11 @@ No matter what sequence of moves you make, you cannot end with a valid chessboar
 
 //https://leetcode.com/problems/transform-to-chessboard/discuss/114847/Easy-and-Concise-Solution-with-Explanation-C++JavaPython
 
+// THE GOAL IS TO FIND THE MINIMUM NUMBER OF MOVES TO TRANSFORM INTO CHESS BOARD.
+// SINCE WE DO NOT KNOW THE FIRST CELL IS BLACK OR WHITE, WE start with both
+// black and then we start with white and then compare
+
+
 //slower but unlike complex the other sol
 class Solution {
 public:
@@ -93,6 +98,9 @@ public:
     
     int can_rows_swap(vector<vector<int>> board, int black){
         int moves = 0, n=board.size();
+        // the below two vector contains row numbers
+        // we do not want to swap two rows with the same color cell
+        // as the first cell
         vector<int> blks, whites;
         for(int i=0;i<n;i++){
             if(board[i][0]==black && i%2 != 0) blks.push_back(i);
