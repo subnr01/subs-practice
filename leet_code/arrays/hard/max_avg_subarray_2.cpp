@@ -26,8 +26,11 @@ public:
         }
         while(left + 0.00001 < right){
             mid = left + (right - left)/2;
-            if(islarger(nums, mid, k))right = mid;
-            else left = mid;
+            if(islarger(nums, mid, k)){
+                right = mid;
+            } else {
+                left = mid;
+            }
         }
         return left;
     }
