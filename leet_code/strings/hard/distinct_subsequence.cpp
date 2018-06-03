@@ -65,7 +65,17 @@ Putting these together, we will have the following simple codes (just like trans
 
 */
 
+/*
+dp[i][j] to be the number of distinct subsequences of t[0..i - 1] in s[0..j - 1].
 
+dp[i][j] means the number of distinct subsequences of t.substr(0, i) in s.substr(0,j).
+if i = 0, t.substr(0,0) = "", we can say there are 1 instance of that for "". So, 
+initialize dp[0][j] = 1, and other dp[i][j] = 0.
+
+*/
+
+//Refer this
+//https://leetcode.com/problems/distinct-subsequences/discuss/37387/A-DP-solution-with-clarification-and-explanation
 class Solution {
 public:
     int numDistinct(string s, string t) {
@@ -82,8 +92,12 @@ public:
         {
             for (int i = 1; i <= m; i++) 
             {
-                int res = (t[i - 1] == s[j - 1]) ? dp[i - 1][j - 1] : 0;
-                dp[i][j] = dp[i][j - 1] + res;
+                if (t[i - 1] == s[j - 1]) {
+                    dp[i][j] = dp[i][j - 1] + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = dp[i][j - 1];
+                }
+
             }
         }
         return dp[m][n];
