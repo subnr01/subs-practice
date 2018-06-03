@@ -93,6 +93,11 @@ public:
             for (int i = 1; i <= m; i++) 
             {
                 if (t[i - 1] == s[j - 1]) {
+                    // the point is if two characters are equal, then
+                    // we can skip the character in S, but not T and see if 
+                    // subsequnces exist in S without the current character, but
+                    // including the character in T. We then add this result, 
+                    // to   
                     dp[i][j] = dp[i][j - 1] + dp[i - 1][j - 1];
                 } else {
                     dp[i][j] = dp[i][j - 1];
