@@ -19,6 +19,36 @@ Explanation: The longest valid parentheses substring is "()()"
 
 //Related topics: string, dynamic programming
 
+
+//using dnyamic protramming
+class Solution {
+public:
+int longestValidParentheses(string s) {
+    int len = s.size(); 
+    int res=0;
+    int lindex;
+    vector<int> dp(len+1,0);
+
+     for(int i=1;i<len;++i)
+     {
+         if(s[i]==')')
+         {
+             // lindex skips over past valid parenthesis pair and 
+             // goes back into the array so that we can compare
+             // whether s[lindex] == '('
+             lindex = i - dp[i] - 1;
+             if(lindex >= 0 && s[lindex] =='(') {
+                 //we need dp[lindex] for example: ")()())"
+                 dp[i+1] = dp[i] + 2 + dp[lindex];
+             }
+             res = max(res, dp[i+1]);
+         }
+     }
+     return res;
+}
+};
+
+
 //using stack
 class Solution {
 public:
@@ -41,26 +71,7 @@ public:
     }
 };
 
-//using dnyamic protramming
-class Solution {
-public:
-int longestValidParentheses(string s) {
-int len = s.size(), i, res=0, left;
-vector<int> dp(len+1,0);
 
-     for(i=1;i<len;++i)
-     {
-         if(s[i]==')')
-         {
-             left = i-dp[i]-1;
-             if(left>=0 && s[left]=='(') dp[i+1] = dp[i]+2+dp[left];
-             res = max(res, dp[i+1]);
-         }
-     }
-     return res;
-     
- }
-};
 
 
 //one more soln
