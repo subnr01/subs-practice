@@ -16,29 +16,41 @@ Output: false
 //Related topics: dynamic programming, string
 
 //2d array
- bool isInterleave(string s1, string s2, string s3) {
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) 
+    {
+        if(s3.length() != s1.length() + s2.length()) 
+        {
+            return false;
+        }
     
-    if(s3.length() != s1.length() + s2.length())
-        return false;
+        int m = s1.length();
+        int n = s2.length();
+        bool table[m+1][n+1];
     
-    bool table[s1.length()+1][s2.length()+1];
-    
-    for(int i=0; i<s1.length()+1; i++)
-        for(int j=0; j< s2.length()+1; j++){
-            if(i==0 && j==0)
-                table[i][j] = true;
-            else if(i == 0)
-                table[i][j] = ( table[i][j-1] && s2[j-1] == s3[i+j-1]);
-            else if(j == 0)
-                table[i][j] = ( table[i-1][j] && s1[i-1] == s3[i+j-1]);
-            else
-                table[i][j] = (table[i-1][j] && s1[i-1] == s3[i+j-1] ) || (table[i][j-1] && s2[j-1] == s3[i+j-1] );
+        for(int i = 0; i <= m; i++) 
+        {
+            for(int j = 0; j <= n; j++)
+            {
+                if(i == 0 && j == 0)
+                    table[i][j] = true;
+                else if(i == 0)
+                    table[i][j] = ( table[i][j-1] && s2[j-1] == s3[i+j-1]);
+                else if(j == 0)
+                    table[i][j] = ( table[i-1][j] && s1[i-1] == s3[i+j-1]);
+                else {
+                    int res1 = (table[i-1][j] && s1[i-1] == s3[i+j-1]);
+                    int res2 = (table[i][j-1] && s2[j-1] == s3[i+j-1]);
+                    table[i][j] = res1 || res2 ;
+                }
+            }
         }
         
-    return table[s1.length()][s2.length()];
-}
-
-
+        return table[m][n];
+        
+    }
+};
 //1d array
 class Solution { 
 public:
