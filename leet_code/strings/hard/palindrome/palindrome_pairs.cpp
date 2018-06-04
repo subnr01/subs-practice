@@ -30,16 +30,37 @@ public:
             const string& w = words[i];
             if (w.empty()) continue;
             if (index.count(w) && index[w] != i) {
+                /*
+                If there is the reverse of the existing word,
+                in the list of input words, then 
+                add it to the list. It is identified by
+                index[w] != i.
+                */
                 res.push_back(vector<int>({index[w], i}));
             }
             for (int j = 0; j < w.size(); ++j) {
+                /*
+                Check whether 0 to j is a palindrome
+                */
                 if (ispal(w, 0, j)) {
+                    /*
+                    Check whether the non-palindrome part
+                    of the string is part of the input words
+                    */
                     string o = w.substr(j+1);
                     if (index.count(o) && index[o] != i) {
                         res.push_back(vector<int>({index[o], i}));
                     }
                 }
-                if (ispal(w, j, w.size()-1)) {
+                /*
+                Check whether j to size() - 1 is a palindrome
+                */
+                if (ispal(w, j, w.size()-1)) 
+                {
+                    /*
+                    Check whether the non-palindrome part
+                    of the string is part of the input words   
+                    */
                     string o = w.substr(0, j);
                     if (index.count(o) && index[o] != i) {
                         res.push_back(vector<int>({i, index[o]}));
