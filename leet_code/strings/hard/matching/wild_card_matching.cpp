@@ -53,6 +53,39 @@ https://discuss.leetcode.com/topic/21577/my-three-c-solutions-iterative-16ms-dp-
 
 
 //Related topics: DP, backtracking, Greedy
+
+//DP 2D array
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+    int n1 = s.size(), n2 = p.size();
+    vector<vector<bool>> res(n1 + 1, vector<bool>(n2 + 1));
+    res[0][0] = true;
+    /*
+    Why is this step needed
+    */
+    for(int i=1; i<=n2; i++){
+        if(p[i-1] == '*')
+            res[0][i] = res[0][i-1];
+    }
+    for(int i=1; i<=n1; i++){
+        for(int j=1; j<=n2; j++){
+            if(p[j-1] != '*'){
+                res[i][j] = (s[i-1] == p[j-1] || p[j-1] == '?') && res[i-1][j-1]; 
+            }
+            else{
+                /* 
+                what is the signigicance of this step
+                */
+                res[i][j] = res[i-1][j] || res[i][j-1];
+            }
+        }
+    }
+    return res[n1][n2];
+}
+};
+
+
 //DP (Jancou fighter)
 class Solution {
 public:
