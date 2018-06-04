@@ -17,7 +17,8 @@ List 3: [5, 18, 22, 30], 22 is in range [20,24].
 
 //related topics: hash table, string, 2 pointers
 
-//Check out the other solution which is better complexity
+//Check out the other solution which is slower complexity
+// but does not use the priority queue, which is an optimisation
 // Solution is O(n * log m), space complexity is O(m)
 class Solution {
 public:
