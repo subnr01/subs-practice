@@ -15,34 +15,23 @@ https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-tim
 int read4(char *buf);
 
 class Solution {
+private:
+    int bp = 0;
+    int len = 0;
+    char buffer[5];
 public:
-    /**
-     * @param buf Destination buffer
-     * @param n   Maximum number of characters to read
-     * @return    The number of characters read
-     */
-    queue<int> left;
     int read(char *buf, int n) {
-        int len = 0;
-        int c;
-        while (left.size() > 0) {
-            buf[len++] = left.front();
-            left.pop();
-            if (len == n) return len;
+        int i = 0;
+        while (i < n) {
+            if (bp == len) {
+                bp = 0;
+                len = read4(buffer);
+                if (len == 0)
+                    break;
+            }
+            buf[i++] = buffer[bp++];
         }
-        
-        while (len < n) {
-            c = read4(buf+len);
-            len += c;
-            if (c < 4) break;
-        }
-        
-        for (int i=n; i<len; i++) {
-            left.push(buf[i]);
-        }
-        int e = min(len, n);
-        buf[e] = '\0';
-        return e;
+
+        return i;
     }
 };
-
