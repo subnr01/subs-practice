@@ -53,8 +53,32 @@ https://discuss.leetcode.com/topic/21577/my-three-c-solutions-iterative-16ms-dp-
 
 
 //Related topics: DP, backtracking, Greedy
+//DP (Jancou fighter)
+class Solution {
+public:
+    bool isMatch(string s, string p) { 
+        int m = s.length(), n = p.length();
+        //if (n > 30000) return false; // the trick
+        vector<bool> cur(m + 1, false); 
+        cur[0] = true;
+        for (int j = 1; j <= n; j++) {
+            bool pre = cur[0]; // use the value before update
+            cur[0] = cur[0] && p[j - 1] == '*'; 
+            for (int i = 1; i <= m; i++) {
+                bool temp = cur[i]; // record the value before update
+                if (p[j - 1] != '*')
+                    cur[i] = pre && (s[i - 1] == p[j - 1] || p[j - 1] == '?');
+                else cur[i] = cur[i - 1] || cur[i];
+                pre = temp;
+            }
+        }
+        return cur[m]; 
+    }
+};
 
-//popular soln
+
+// this seems faster than DP
+//this is not a linear solution, can you prove why
 class Solution {
 public:
     bool isMatch(string s, string p) {
@@ -78,32 +102,6 @@ public:
         return pid==m;
     }
 };
-
-
-//DP
-class Solution {
-public:
-    bool isMatch(string s, string p) {
-        int pLen = p.size(), sLen = s.size(), i, j, k, cur, prev;
-        if(!pLen) return sLen == 0;
-        bool matched[2][sLen+1];
-        fill_n(&matched[0][0], 2*(sLen+1), false);
-        
-        matched[0][0] = true;
-        for(i=1; i<=pLen; ++i)
-        {
-            cur = i%2, prev= 1-cur;
-            matched[cur][0]= matched[prev][0] && p[i-1]=='*';
-            if(p[i-1]=='*') for(j=1; j<=sLen; ++j) matched[cur][j] = matched[cur][j-1] || matched[prev][j];
-            else for(j=1; j<=sLen; ++j)            matched[cur][j] =  matched[prev][j-1] && (p[i-1]=='?' || p[i-1]==s[j-1]) ;
-        }
-            return matched[cur][sLen];
-    }
-};
-
-
-
-
 
 
 //recursive
