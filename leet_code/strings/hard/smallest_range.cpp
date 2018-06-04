@@ -20,6 +20,26 @@ List 3: [5, 18, 22, 30], 22 is in range [20,24].
 //Check out the other solution which is slower complexity
 // but does not use the priority queue, which is an optimisation
 // Solution is O(n * log m), space complexity is O(m)
+
+/*
+the solution is interesting because it uses a priority qeue which makes
+things simpler.
+
+.At any point in time, the priority qeueu contains 3 elements from
+all the lists whet are the lowest and the highest element give the 
+common interval.
+The challenge is to udpate the queue, such that at one point we
+have the min difference between the lowest and the highest element
+in the queue.
+
+The elements in the queue are in ascending order, that means
+the first element of the queue is the smallest one.
+
+We pick the smallest one and get the next greater element in the list where it 
+belongs, so that our interval cahnges depending on the value of the new lement 
+that is inserted.
+
+*/
 class Solution {
 public:
     vector<int> smallestRange(vector<vector<int>>& nums) {
