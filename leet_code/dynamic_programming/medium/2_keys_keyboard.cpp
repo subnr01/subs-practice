@@ -22,19 +22,30 @@ The n will be in the range [1, 1000].
 //java solution, check out other solutions for C++
 
 class Solution {
-     public int minSteps(int n) {
-        int[] dp = new int[n+1];
-
-        for (int i = 2; i <= n; i++) {
+public:
+    int minSteps(int n) {
+        vector<int> dp(n + 1, INT_MAX);
+        dp[1] = 0;
+        for (int i = 2; i <= n; ++i) {
             dp[i] = i;
-            for (int j = i-1; j > 1; j--) {
-                if (i % j == 0) {
-                    dp[i] = dp[j] + (i/j);
-                    break;
-                }
-                
+        }
+        for (int i = 2; i <= n; ++i) {
+            for (int j = 2; i * j <= n; ++j) {
+                dp[i * j] = min(dp[i * j], dp[i] + j);
             }
         }
         return dp[n];
     }
-}
+};
+
+//non-DP, Alexander
+class Solution {
+public:
+    int minSteps(int n) {
+        if (n == 1) return 0;
+        for (int i = 2; i < n; i++)
+            if (n % i == 0) return i + minSteps(n / i);
+        return n;
+    }
+};
+
