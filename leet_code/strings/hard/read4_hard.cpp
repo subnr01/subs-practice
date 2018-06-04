@@ -9,6 +9,9 @@ By using the read4 API, implement the function int read(char *buf, int n) that r
 */
 
 
+//look at below, the question is ambiqgious.
+https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/discuss/49607/The-missing-clarification-you-wish-the-question-provided
+
 int read4(char *buf);
 
 class Solution {
