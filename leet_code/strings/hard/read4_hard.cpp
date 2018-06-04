@@ -24,11 +24,20 @@ public:
         int i = 0;
         while (i < n) {
             if (bp == len) {
+                // bp is reset, such that
+                // when we read again, 
+                // we will run it till len
                 bp = 0;
                 len = read4(buffer);
+                // This is the exit condition
+                // of the loop, do not forget.
                 if (len == 0)
                     break;
             }
+            // increment i and bp
+            // if i > n, then bp is still valid
+            // so the next call will start from
+            // where it left off.
             buf[i++] = buffer[bp++];
         }
 
