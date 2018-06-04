@@ -18,7 +18,7 @@ class Solution {
 private:
     int bp = 0;
     int len = 0;
-    char buffer[5];
+    char buffer[4];
 public:
     int read(char *buf, int n) {
         int i = 0;
