@@ -28,9 +28,7 @@ public:
     vector<int> leader;
     
     int getParent(int child) {
-        if (leader[child] == -1) return child;
-        leader[child] = getParent(leader[child]);
-        return leader[child];
+        return leader[child] == -1 ? child: getParent(leader[child]);
     }
     
     int countComponents(int n, vector<pair<int, int>>& edges) {
