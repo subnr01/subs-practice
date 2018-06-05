@@ -22,25 +22,57 @@ You should return the indices: [0,9].
 //2 map solution
 class Solution {
 public:
-    vector<int> findSubstring(string s, vector<string>& words) {
-        unordered_map<string, int> counts;
-        for (string word : words)
-            counts[word]++;
-        int n = s.length(), num = words.size(), len = words[0].length();
+    vector<int> findSubstring(string s, vector<string>& words) 
+    {
         vector<int> indexes;
-        for (int i = 0; i < n - num * len + 1; i++) {
+        if (s.size() == 0 || words.size() == 0) {
+            return indexes;
+        }
+    
+        unordered_map<string, int> counts;
+        /*
+        Record the instances of each word
+        */
+        for (string word : words) {
+            counts[word]++;
+        }
+        
+        int n = s.length();
+        int num = words.size();
+        int len = words[0].length();
+        int j = 0;
+        
+        for (int i = 0; i < (n - num * len + 1); i++) 
+        {
             unordered_map<string, int> seen;
-            int j = 0;
-            for (; j < num; j++) {
+            for (j = 0; j < num; j++) 
+            {
+                /* 
+                Get word by word
+                */
                 string word = s.substr(i + j * len, len);
-                if (counts.find(word) != counts.end()) {
-                    seen[word]++;
-                    if (seen[word] > counts[word])
-                        break;
-                } 
-                else break;
+                /* 
+                If the word does not exist, then break
+                */
+                if (counts.find(word) == counts.end()) {
+                    break;
+                }
+                seen[word]++;
+                /*
+                If the word is seen more than the expected instance, then break
+                */
+                if (seen[word] > counts[word]) {
+                    break;
+                }
             }
-            if (j == num) indexes.push_back(i);
+            /*
+            If we successfully covered all the words
+            then add the index
+            */
+            if (j == num) 
+            {
+                indexes.push_back(i);
+            }
         }
         return indexes;
     }
