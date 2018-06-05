@@ -24,6 +24,7 @@ public:
         vector<bool> dp(s.size()+1,false);
         dp[0]=true;
         
+        // i is equal to or lesser than
         for(int i=1;i<=s.size();i++)
         {
             for(int j=i-1;j>=0;j--)
@@ -33,6 +34,7 @@ public:
                     string word = s.substr(j,i-j);
                     if(dict.find(word)!= dict.end())
                     {
+                        //Remember it is dp[i]
                         dp[i]=true;
                         break; //next i
                     }
