@@ -23,8 +23,8 @@ public:
     bool validTree(int n, vector<pair<int, int>>& edges) {
         if(edges.size() != n-1) return false;
 
-        parent.resize(n);
-        iota(parent.begin(), parent.end(), 0);
+        parent.resize(n, -1);
+        
         
         for(auto e : edges)
         {
@@ -39,7 +39,7 @@ private:
     vector<int> parent;
     int find(int x)
     {
-        return parent[x] == x ? x : find(parent[x]);
+        return parent[x] == -1 ? x : find(parent[x]);
     }
 };
 
