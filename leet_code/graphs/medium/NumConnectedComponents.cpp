@@ -23,6 +23,20 @@ You can assume that no duplicate edges will appear in edges. Since all edges are
 
 C++ solution 1
 //10 ms     
+     
+/*
+Union find example
+(lldb) p leader
+(std::__1::vector<int, std::__1::allocator<int> >) $0 = size=4 {
+  [0] = 1
+  [1] = 2
+  [2] = 3
+  [3] = -1
+}
+
+for input
+vector<pair<int, int>> edges ={{0,1}, {1,2}, {2,3}, {3,0}};
+*/
 class Solution {
 public:
     vector<int> leader;
