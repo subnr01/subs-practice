@@ -45,6 +45,24 @@ Visually, the graph looks like the following:
 // recursively take 2 neighbor of 1, setup 2 and its neighbors and then return 2 back to 1 
 // so that it becomes neighbor of 1 and continue with 3.
 
+/*
+LOGIC:
+We perform a DFS here.
+
+We take a hash table that has a node as the key and its clone as the value.
+The function will be called recursively like in any DFS function.
+In the function, we try to find whether the input node is already part of
+the hash, if node we create a new node and assign the node value to the
+hash with input node as key. Now we got a clone node, but we still have
+to initliase its neighbors. 
+
+So we take a loop and get the neighbors of the input node one by one
+and and invoke the clone function on each of the neighbors and 
+obtain the returned cloned nodes of the neighbors and push
+it into the vector of neighbors of the orignial clone node one by one.
+This is DFS because, we call the function recursively on each neighbor which
+inturn recursviely calls the function on the neighbors of the niebors.
+*/
 
 class Solution {
 public:
