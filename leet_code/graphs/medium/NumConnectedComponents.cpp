@@ -34,15 +34,20 @@ public:
     int countComponents(int n, vector<pair<int, int>>& edges) {
         leader.resize(n, -1);
         for (auto& pr : edges) {
-            int small = min(pr.first, pr.second);
-            int large = max(pr.first, pr.second);
-            int sp = getParent(small);
-            int lp = getParent(large);
-            if (sp != lp) leader[lp] = sp;  // effectively decrease roots by one
+            int x = getParent(pr.first);
+            int y = getParent(pr.second);
+            if (x != y) {
+                leader[x] = y;  
+            }
         }
         
         int rv = 0;
-        for (int i = 0; i < n; i++) if (leader[i] == -1) rv++;
+        for (int i = 0; i < n; i++) {
+            if (leader[i] == -1) {
+                rv++;
+            }
+        }
+            
         return rv;
     }
 };
