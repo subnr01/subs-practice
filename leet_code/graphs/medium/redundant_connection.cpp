@@ -45,56 +45,62 @@ We apologize for any inconvenience caused.
 class Solution {
 public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        vector<int> parent(1001, 0);
-        for (int i = 1; i!=parent.size();++i){
-            parent[i] = i;
-        }
-        for (auto e : edges){
-            if (unionFind(parent, e[0]) == unionFind(parent, e[1])) return e;
-            parent[unionFind(parent,e[1])] = unionFind(parent,e[0]);
+        vector<int> parent(1001, -1);
+        
+        
+        for (auto e : edges)
+        {
+            auto x = find(parent, e[0]), y = find(parent, e[1]);
+            if(x == y) return e;
+            parent[x] = y;
         }
         return {0,0};
     }
     
-    int unionFind(vector<int> & p, int t){
-        if (t!=p[t])
-            p[t] = unionFind(p,p[t]);
-        return p[t];
+    int find(vector<int> & parent, int x){
+        return parent[x] == -1 ? x : find(parent, parent[x]);
     }
 };
 
 
 //DFS Soln: O(n^2), space complexity 0(n)
 class Solution {
-    Set<Integer> seen = new HashSet();
-    int MAX_EDGE_VAL = 1000;
-
-    public int[] findRedundantConnection(int[][] edges) {
-        ArrayList<Integer>[] graph = new ArrayList[MAX_EDGE_VAL + 1];
-        for (int i = 0; i <= MAX_EDGE_VAL; i++) {
-            graph[i] = new ArrayList();
+public:
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        unordered_map<int, unordered_set<int>> m;
+        for (auto edge : edges) {
+            if (hasCycle(edge[0], edge[1], m, -1)) return edge;
+            m[edge[0]].insert(edge[1]);
+            m[edge[1]].insert(edge[0]);
         }
-
-        for (int[] edge: edges) {
-            seen.clear();
-            if (!graph[edge[0]].isEmpty() && !graph[edge[1]].isEmpty() &&
-                    dfs(graph, edge[0], edge[1])) {
-                return edge;
-            }
-            graph[edge[0]].add(edge[1]);
-            graph[edge[1]].add(edge[0]);
-        }
-        throw new AssertionError();
+        return {};
     }
-    public boolean dfs(ArrayList<Integer>[] graph, int source, int target) {
-        if (!seen.contains(source)) {
-            seen.add(source);
-            if (source == target) return true;
-            for (int nei: graph[source]) {
-                if (dfs(graph, nei, target)) return true;
+    bool hasCycle(int cur, int target, unordered_map<int, unordered_set<int>>& m, int parent) {
+        if (m[cur].count(target)) {
+          /*
+          target is already connected to cur.
+          so this must be a loop.
+          */
+          return true;
+        }
+        for (int neigh : m[cur]) {
+            if (neigh == parent) {
+              /* 
+              if neigh is same as the parent
+              then continue
+              */
+      
+              continue;
+            }
+            if (hasCycle(neigh, target, m, cur)) {
+              /*
+              If neigh and the target are connected, then
+              there is a cycle, as cur and target were assumed
+              to be connected, when we entered this function
+              */
+              return true;
             }
         }
         return false;
     }
-}
-
+};
