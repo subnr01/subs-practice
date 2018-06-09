@@ -30,30 +30,8 @@ Explanation: All couples are already seated side by side.
 
 //4 ms
 
-int minSwapsCouples(vector<int>& row) {
-    int res = 0, N = row.size();
-        
-    vector<int> ptn(N, 0);
-    vector<int> pos(N, 0);
-        
-    for (int i = 0; i < N; i++) {
-        ptn[i] = (i % 2 == 0 ? i + 1 : i - 1);
-        pos[row[i]] = i;
-    }
-    
-    for (int i = 0; i < N; i++) {
-        for (int j = ptn[pos[ptn[row[i]]]]; i != j; j = ptn[pos[ptn[row[i]]]]) {
-	    swap(row[i], row[j]);
-            swap(pos[row[i]], pos[row[j]]);
-	    res++;
-	}
-    }
-        
-    return res;
-}
-
-
-//Greedy soln ( 6 ms)
+//using cyclic swap 
+// complexity is O(n) and space complexity is O(n)
 class Solution {
 public:
     int minSwapsCouples(vector<int>& row) {
@@ -69,7 +47,7 @@ public:
         
         int count = 0;
         for(size_t i = 0; i < row.size(); i+=2){
-            int &me = row[i];
+            int me = row[i];
             int myCouple = (me & 1) ? me - 1: me + 1;
             if(row[i+1] != myCouple){
                 count++;
@@ -85,3 +63,29 @@ public:
         return count;
     }
 };
+
+
+//using graph methodology
+
+
+
+//Greedy soln ( 6 ms)
+// complexity is O(n2) and space complexity is O(1)
+class Solution {
+    public int minSwapsCouples(int[] row) {
+        int ans = 0;
+        for (int i = 0; i < row.length; i += 2) {
+            int x = row[i];
+            if (row[i+1] == (x ^ 1)) continue;
+            ans++;
+            for (int j = i+1; j < row.length; ++j) {
+                if (row[j] == (x^1)) {
+                    row[j] = row[i+1];
+                    row[i+1] = x^1;
+                    break;
+                }
+            }
+        }
+        return ans;
+    }
+}
