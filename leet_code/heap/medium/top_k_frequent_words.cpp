@@ -22,6 +22,33 @@ Try to solve it in O(n log k) time and O(n) extra space.
 
 */
 
+/***************************************
+
+LOGIC:
+Problem statement:
+We have been given a list of words and we have to find out
+the words that are occurring k times.
+
+Solution:
+We have to keep a count of the words to find the number of occcurences.
+So we use a map to keep count.
+
+We will setup the priority queue such that the topmost
+element is the min, and we keep inserting elements one by
+one and stop when it exceeds k and pop the top.
+
+Since the elements are inserted in ascending order, the top
+has always the smallest number of occurrences and hence will 
+get removed and at the end, we will left with k elements
+that we will put in a vector and return back.
+
+We will always have two elements in the priority queue at the end.
+
+
+Time complexity: O(NLogK), N elements K at a time in the heap.
+Space complexity: O(N) for the map
+*************************************/
+
 
 
 //C++
@@ -49,7 +76,11 @@ public:
         }
         
         vector<string> output;
-        while(!pq.empty()){
+        while(!pq.empty())
+        {
+            // we are not using push_back
+            // because we do not want 
+            // the vector to be in reverse order
             output.insert(output.begin(), pq.top().first);
             pq.pop();
         }
