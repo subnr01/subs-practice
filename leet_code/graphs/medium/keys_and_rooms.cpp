@@ -57,7 +57,6 @@ class Solution {
 public:
     
     unordered_set<int> visited;
-    unordered_set<int> keys;
     
     bool canVisitAllRooms(vector<vector<int>>& rooms) 
     {
@@ -70,12 +69,8 @@ public:
     void dfs(int curr, vector<vector<int>>& rooms)
     {
         visited.insert(curr);
-        for (int k: rooms[curr])
-        {
-            keys.insert(k);
-        }
-        
-        for (int k : keys)
+       
+        for (int k : rooms[curr])
         {
             if (visited.find(k) == visited.end())
                 dfs(k, rooms);
