@@ -41,7 +41,11 @@ public:
             int curr = to_visit.front();
             to_visit.pop();
             visited.insert(curr);
-            for (int k : rooms[curr]) if (visited.find(k) == visited.end()) to_visit.push(k);
+            for (int k : rooms[curr]) {
+                if (visited.find(k) == visited.end()) {
+                    to_visit.push(k);
+                }
+            }
         }
         return visited.size() == rooms.size();
     }
