@@ -102,3 +102,107 @@ public:
         return ans;
     }
 };
+
+
+//Long soln
+struct Edge
+{
+    int to, next;
+};
+
+const int MAXN = 26;
+
+class Solution
+{
+public:
+
+    int total;
+    int head[26];
+    vector<Edge> edge;
+    bool hashEdge[1000];
+    bool alpbet[26];
+    int indegree[26];
+
+    void addEdge(int u, int v)
+    {
+        edge.push_back(Edge{v, head[u]});
+        head[u] = total++;
+        indegree[v]++;
+    }
+
+    void init()
+    {
+        total = 0;
+        memset(head, -1, sizeof head);
+        memset(alpbet, false, sizeof alpbet);
+        memset(indegree, 0, sizeof indegree);
+    }
+
+    string alienOrder(vector<string>& words){
+        init();
+
+        for(auto w: words)
+        {
+            for(int j = 0; j < w.size(); j++)
+            {
+                alpbet[w[j] - 'a'] = true;
+            }
+        }
+
+        int absize = 0;
+        for(int i = 0; i < MAXN; i++)
+        {
+            if(alpbet[i]) absize++;
+        }
+
+        for(int i = 0; i < words.size() - 1; i++)
+        {
+            string w1 = words[i];
+            string w2 = words[i + 1];
+            int minL = w1.size() < w2.size() ? w1.size() : w2.size();
+            for(int j = 0; j < minL; j++)
+            {
+                if(w1[j] != w2[j])
+                {
+                    if(hashEdge[(w1[j] - 'a') * 30 + (w2[j] - 'a')]) break;
+                    addEdge(w1[j] - 'a', w2[j] - 'a');
+                    hashEdge[(w1[j] - 'a') * 30 + (w2[j] - 'a')] = true;
+                    break;
+                }
+            }
+        }
+
+        int cnt = 0;
+        queue<int> q1;
+        for(int i = 0; i < MAXN; i++)
+        {
+            if(!indegree[i] && alpbet[i])
+            {
+                q1.push(i);
+                cnt++;
+            }
+        }
+
+        string res = "";
+        while(!q1.empty())
+        {
+            int u = q1.front();
+            q1.pop();
+            res += (u + 'a');
+            for(int i = head[u]; ~i; i = edge[i].next)
+            {
+                int v = edge[i].to;
+                indegree[v]--;
+                if(!indegree[v])
+                {
+                    q1.push(v);
+                    cnt++;
+                }
+            }
+        }
+
+        if(cnt == absize) return res;
+        else return "";
+
+    }
+};
