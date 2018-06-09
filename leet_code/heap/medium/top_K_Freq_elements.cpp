@@ -15,27 +15,6 @@ Your algorithm's time complexity must be better than O(n log n), where n is the 
 //O(n log(n-k)
 
 
-//Using heap
-class Solution {
-public:
-    vector<int> topKFrequent(vector<int>& nums, int k) {
-        if (nums.empty()) return {};
-        unordered_map<int, int> m;
-        for (auto &n : nums) m[n]++;
-    
-        vector<pair<int, int>> heap;
-        for (auto &i : m) heap.push_back({i.second, i.first});
-    
-        vector<int> result; 
-        make_heap(heap.begin(), heap.end());
-        while (k--) {
-            result.push_back(heap.front().second);
-            pop_heap(heap.begin(), heap.end());
-            heap.pop_back();
-        }
-        return result;
-}
-};
 
 
 
@@ -63,3 +42,28 @@ public:
         return res;
     }
 };
+
+//Using heap
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        if (nums.empty()) return {};
+        unordered_map<int, int> m;
+        for (auto &n : nums) m[n]++;
+    
+        vector<pair<int, int>> heap;
+        for (auto &i : m) heap.push_back({i.second, i.first});
+    
+        vector<int> result; 
+        make_heap(heap.begin(), heap.end());
+        while (k--) {
+            result.push_back(heap.front().second);
+            pop_heap(heap.begin(), heap.end());
+            heap.pop_back();
+        }
+        return result;
+}
+};
+
+
+
