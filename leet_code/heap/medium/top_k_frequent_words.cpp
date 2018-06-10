@@ -60,36 +60,26 @@ public:
             freq[w]++;
         }
         
-        //ascending order
         auto comp = [&](const pair<string,int>& a, const pair<string,int>& b) {
-            return a.second > b.second || (a.second == b.second && a.first < b.first);
+            return a.second < b.second || (a.second == b.second && a.first > b.first);
         };
         typedef priority_queue< pair<string,int>, vector<pair<string,int>>, decltype(comp) > my_priority_queue_t;
         my_priority_queue_t  pq(comp);
         
-        
         for(auto w : freq ){
             pq.emplace(w.first, w.second); //what does emplace do
-            if(pq.size()>k) {
-                pq.pop(); //check the pop function
-            }
+            
         }
         
         vector<string> output;
-        while(!pq.empty())
+        for (int i = 0; i < k; i++)
         {
-            // we are not using push_back
-            // because we do not want 
-            // the vector to be in reverse order
-            output.insert(output.begin(), pq.top().first);
+            output.push_back(pq.top().first);
             pq.pop();
         }
         return output;
     }
 };
-
-
-
 
 /*
 The size of the priority queue is k. Each insertion takes logk time and 
