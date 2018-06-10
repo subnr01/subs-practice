@@ -55,6 +55,7 @@ public:
             }
         }
         
+        //Do not forget pq.size()
         while(k-- && pq.size()) 
         {
             res.push_back(pq.top());
