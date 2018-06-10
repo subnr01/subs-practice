@@ -22,13 +22,21 @@ public:
         
         sort(intervals.begin(), intervals.end(), cmp);
         
-        /* Notice how vector<int> is necessary here . */
+        /* 
+        Notice how vector<int> is necessary here.
+        Since we want the vector to be in ascending order, 
+        we use greater and use the vector keyword here.
+        Otherwise, the default priority<int> will sort in
+        ascending order
+        */
         priority_queue<int, vector<int>, greater<int>> q;
         
         for (auto interval : intervals) {
             // when the next start is greater than the previous end,
             // then they can share the same room obviously.
             if (!q.empty() && interval.start >= q.top()) {
+                //pq = (10, 20) and (15 > 10) so we can share the same room
+                // for input {{0, 30}, {5,10}, {15,20}}
                 q.pop();
             }
             
