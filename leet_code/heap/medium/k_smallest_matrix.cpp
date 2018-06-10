@@ -37,15 +37,16 @@ public:
             
         }
         
-        int i = 0;
-        while(i < k - 1)
+        
+        int res = 0;
+        while(k--)
         {
+            res = pq.top();
             pq.pop();
-            i++;
             
         }
         
-        return pq.top();
+        return res;
         
     }
 };
