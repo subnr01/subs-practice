@@ -19,25 +19,28 @@ Your algorithm's time complexity must be better than O(n log n), where n is the 
 
 
 //Using priority_queue
+
+/*
+C++ priority queue by default puts the highest prorirty element
+at the top of the queue. ( means that the elements are sorted in descending
+order).
+*/
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        unordered_map<int,int> map;
-        for(int num : nums){
-            map[num]++;
-        }
-
+        if(!nums.size()) return vector<int>();
         vector<int> res;
-        /** use the priority queue, like the max-heap , we will keep (size-k) smallest elements in the queue**/
-        /** pair<first, second>: first is frequency,  second is number **/
-        priority_queue<pair<int,int>> pq; 
-        for(auto it = map.begin(); it != map.end(); it++){
-            pq.push(make_pair(it->second, it->first));
-            /** onece the size bigger than size-k, we will pop the value, which is the top k frequent element value **/
-            if(pq.size() > (int)map.size() - k){
-                res.push_back(pq.top().second);
-                pq.pop();
-            }
+        unordered_map<int,int> table;
+        for(int e :nums) {
+        	++table[e];
+        }
+        priority_queue<pair<int,int>> heap;
+        for(auto e : table) {
+        	heap.push(make_pair(e.second,e.first));
+        }
+        for(int i=0;i<k;++i) {
+        	res.push_back(heap.top().second);
+        	heap.pop();
         }
         return res;
     }
