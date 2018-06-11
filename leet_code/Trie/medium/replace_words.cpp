@@ -33,82 +33,132 @@ we found a root, then we replace the word with the root in the sentence.
 
 
 
-class trie {
-    bool isRoot = false;
-    trie* l[26] = {};
+class TrieNode {
 public:
-   void insert(string& word, int index, int sz) {
-       // We are able to insert the
-       // the root as we reached the word
-       // size, so let us mark the end to
-       // signify that this is a root.
-        if (index == sz) {
-            isRoot = true;
-            return;
-        }
-       
-       // if the current word/root already has a root in it
-       // then stop at the shortest root and do not
-       // continue till the end of the root.
-        if (!isRoot) { // stop at the shortest root.
-            int ch = word[index] - 'a';
-            if (l[ch] == nullptr) l[ch] = new trie();
-            l[ch]->insert(word, index + 1, sz);
+    bool m_is_end;
+    vector<TrieNode*> children;
+    
+    TrieNode() {
+        m_is_end = false;
+        children.resize(26, NULL);
+    }
+    
+    ~TrieNode()
+    {
+        for (auto child: children)
+        {
+            delete child;
         }
     }
-    int root(string& word, int st, int index, int sz) {
-        // if we are at the word length or if we found a space
-        // or if we found a root.
-        // if we found a space, but no root, then just return the size
-        // of the word, without reducing its size to say that
-        // we are just leaving the word as is.
-        if (st + index == sz || word[st + index] == ' ' || this->isRoot) {
+    
+    
+};
+
+class Trie
+{
+public:
+    TrieNode *root;
+    
+    Trie()
+    {
+        root = new TrieNode();
+    }
+    ~Trie()
+    {
+        delete root;
+    }
+    
+    void insert(string word)
+    {
+        insert(word, 0, root);
+    }
+    
+    void insert(string str, int index, TrieNode *curr)
+    {
+        if (index == str.size()) {
+            curr->m_is_end = true;
+            return;
+        }
+        
+        if (curr->m_is_end) {
+            return;
+        }
+        
+        int ch = str[index] - 'a';
+        TrieNode *node = curr->children[ch];
+        if (!node)
+        {
+            curr->children[ch] = new TrieNode();
+        }
+        curr = curr->children[ch];
+        insert(str, index + 1, curr);
+    }
+    
+    int replaceRoot(string sentence, int start)
+    {
+        int index = 0;
+        return numChars(sentence, start, index, root);
+    }
+    
+    int numChars(string sentence, int start, int index, TrieNode *curr)
+    {
+        /*
+         3 conditions:
+         1. Reached end of string'
+         2. Reached root
+         3. Reached space
+         */
+        
+        if (start + index == sentence.size() || curr->m_is_end || sentence[start + index] == ' ')
+        {
             return index;
         }
         
-        int ch = word[st + index] - 'a';
-        
-        if (l[ch] == nullptr) { 
-            // root was not found
-            while (st + index < sz && word[st + index] != ' ') 
+        int ch = sentence[start + index] - 'a';
+        TrieNode *node = curr->children[ch];
+        if (!node)
+        {
+            
+            while(start + index < sentence.size() && sentence[start + index] != ' ')
             {
-                ++index; // skipping the entire word
+                index++;
             }
             return index;
         }
-        return l[ch]->root(word, st, index + 1, sz);
+        
+        curr = curr->children[ch];
+        return numChars(sentence, start, index + 1, curr);
+        
     }
+    
 };
-
 
 class Solution {
 public:
-    string replaceWords(vector<string>& dict, string snt) 
+    string replaceWords(vector<string>& dict, string sentence)
     {
-        trie t;
-        string res;
-        for (auto s : dict) {
-            t.insert(s, 0, s.size());
-        }
-    
-        int i = 0;
-        while (i < snt.size()) 
+        Trie t;
+        
+        for (auto word : dict)
         {
-            //If this is a space, take in
-            // the space.
-            if (snt[i] == ' ') {
-                res += snt[i++];
+            t.insert(word);
+        }
+        
+        string res;
+        int i = 0;
+        while(i < sentence.size())
+        {
+            if (sentence[i] == ' ') {
+                res += sentence[i++];
             }
             
-            auto chars = t.root(snt, i, 0, snt.size());
-            res += snt.substr(i, chars);
-        
-            // Since we have omitted some part of the word, for its
-            // root, we will skip past the omitted parts until
-            // we find the next space.
-            for (i += chars; i < snt.size() && snt[i] != ' '; ++i);
-    
+            int chars = t.replaceRoot(sentence, i);
+            res += sentence.substr(i, chars);
+            
+            for (i += chars; i < sentence.size() && sentence[i] != ' ';i++);
         }
+        //cout<<"hello";
+        //cout<<res;
         return res;
     }
 };
