@@ -50,7 +50,8 @@ public:
 class Solution {
 public:
     vector<double> averageOfLevels(TreeNode* root) {
-        
+        //important that sum is double or long for cases of overflow
+	//example input : [2147483647,2147483647,2147483647]
         std::vector<double> sum;
         std::vector<int> counts;
 
