@@ -31,6 +31,7 @@ public:
             long temp=0;
             int s=q.size();
             for(int i=0;i<s;i++) {
+		//queue is popped in the inner loop
                 TreeNode* t=q.front();
                 q.pop();
                 if(t->left) q.push(t->left);
