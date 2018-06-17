@@ -45,4 +45,44 @@ public:
 
 //DFS Solution
 
+// Time compexity is O(N)
+// Spce complexity is . O(h) : hieght of the tree
+class Solution {
+public:
+    vector<double> averageOfLevels(TreeNode* root) {
+        
+        std::vector<double> sum;
+        std::vector<int> counts;
+
+        helper(root, sum, counts, 0);
+
+        std::vector<double> result;
+
+        for (int i = 0; i < sum.size(); ++i) {
+            result.push_back(sum[i] / counts[i]);
+        }
+
+        return result;
+
+    }
+
+    void helper(TreeNode* root, std::vector<double>& sum, std::vector<int>& counts, int level) {
+
+        if (root == nullptr) {
+            return;
+        }
+
+        if (level == sum.size() && level == counts.size()) {
+            sum.push_back(root->val);
+            counts.push_back(1);
+        } else {
+            sum[level] += root->val;
+            counts[level] += 1;
+        }
+				
+        helper(root->left, sum, counts, level + 1);
+        helper(root->right, sum, counts, level + 1);
+    }
+};
+
 
