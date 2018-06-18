@@ -27,24 +27,34 @@ recursion does not count).
 class Solution {
 public:
     vector<int> findMode(TreeNode* root) {
-        unordered_map<int,int> counts;
-        int max = 0;
-        utill(root, counts, max);
+        unordered_map<int, int> hashM;
+        int maxE = 0;
+        findCount(root, hashM, maxE);
         
-        vector<int> modes;
-        for(auto& y : counts){
-            if(y.second == max) modes.push_back(y.first);
+        vector<int> res;
+        
+        for (auto elem: hashM)
+        {
+            if (elem.second == maxE)
+            {
+                res.push_back(elem.first);
+            }
         }
-        return modes;
-    }
-    
-    void utill(TreeNode* r, unordered_map<int,int> &counts, int &max){
-        if(r == nullptr) return;
         
-        ++counts[r->val];
-        max = std::max(max, counts[r->val]);
-        utill(r->left, counts, max);
-        utill(r->right, counts, max);
+        return res;
+        
     }
     
+    void findCount(TreeNode *root, unordered_map<int, int> &hashM, int &maxE)
+    {
+        if (!root) {
+            return;
+        }
+        
+        hashM[root->val]++;
+        maxE = max(maxE, hashM[root->val]);
+        
+        findCount(root->left, hashM, maxE);
+        findCount(root->right, hashM, maxE);
+    }
 };
