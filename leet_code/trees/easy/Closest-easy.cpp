@@ -36,22 +36,71 @@ public:
 //RECURSIVE (BUT SLOWER)
 class Solution {
 public:
-    void helper(TreeNode* root, double target, int& val)
-    {
-        if (root == nullptr) return;
-        if (abs(root->val - target) < abs(val - target)) val = root->val;
-        
-        if (root->val > target) helper(root->left, target, val);
-        else helper(root->right, target, val);
+    int closestValue(TreeNode* root, double target) {
+        int closest = root->val;
+        findClosest(root, target, closest);
+        return closest;
     }
     
-    
+    void findClosest(TreeNode *root, double target, int &closest)
+    {
+        if (!root) {
+            return;
+        }
+        
+        if (target == root->val) {
+            closest = root->val;
+            return;
+        }
+        
+        
+        if (abs (target - root->val) < abs(target - closest))
+        {
+            closest = root->val;
+        }
+        
+        if (target > root->val)
+        {
+            findClosest(root->right, target, closest);
+        } else {
+            findClosest(root->left, target, closest);
+        }
+    }
+};class Solution {
+public:
     int closestValue(TreeNode* root, double target) {
+        int closest = root->val;
+        findClosest(root, target, closest);
+        return closest;
+    }
+    
+    void findClosest(TreeNode *root, double target, int &closest)
+    {
+        if (!root) {
+            return;
+        }
         
-        int val = root->val;
-        helper(root, target, val);
+        /*
+        Target is compared against root->val
+        and then closest is updated
+        */
+        if (target == root->val) {
+            closest = root->val;
+            return;
+        }
         
-        return val;
+        
+        if (abs (target - root->val) < abs(target - closest))
+        {
+            closest = root->val;
+        }
+        
+        if (target > root->val)
+        {
+            findClosest(root->right, target, closest);
+        } else {
+            findClosest(root->left, target, closest);
+        }
     }
 };
 
