@@ -37,29 +37,7 @@ except we can't omit the first parenthesis pair to break the one-to-one mapping 
 between the input and the output.
 */
 
-class Solution {
-public:
-    string tree2str(TreeNode* t) {
-        if (!t) {
-            return "";
-        }
-        string val = to_string(t->val);
-        if (t->left) {
-            val += "(" + tree2str(t->left) + ")";
-        } else if (t->right) {
-            val += "()";
-        }
-        
-        if (t->right) {
-            val += "(" + tree2str(t->right) + ")";
-        }
-        return val;
-    }
-    
-};
 
-
-//faster one seems, can you find why
 class Solution {
 public:
     
