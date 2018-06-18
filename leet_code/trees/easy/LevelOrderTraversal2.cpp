@@ -25,64 +25,39 @@ public:
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
         queue<TreeNode*> q;
         vector<vector<int>> res;
-        vector<int> level;
+       
         
         TreeNode *curr = root;
          
         if (!root) {
-            /* 
-             return here as 
-             we do not want queue
-             to be full of NULLs
-             */
             return res;
         }
         
-        /* 
-         * push the first level
-         * intially
-         */
+        vector<int> level;
         q.push(curr);
-        q.push(NULL);
         
-        /*
-         * How do I know when the current level
-         * ends
-         */
-        while (true) {
-            TreeNode *temp = q.front();
-            q.pop();
-
-            if ( !temp) {
-                /*
-                 * every time a NULL is encountered
-                 * push the level and clear the level
-                 * and push NULL as the delimitor for
-                 * the next LEVEL
-                 */
-                res.push_back(level);
-                level.clear();
-                /* Cover only the root case */
-                if (q.empty()) {
-                    break;
-                }
-                q.push(NULL);
-            } else {
+        while (!q.empty())
+        {
+            int s = q.size();
+            
+            for (int i = 0; i < s; i++)
+            {
+                TreeNode *temp = q.front();
+                q.pop();
                 level.push_back(temp->val);
-                if ( temp->left) {
+                if (temp->left)
+                {
                     q.push(temp->left);
                 }
-                if ( temp->right) {
+                if (temp->right)
+                {
                     q.push(temp->right);
                 }
             }
+            res.push_back(level);
+            level.resize(0);
         }
-        /* 
-           This is the only difference from the other
-           level order problem.
-           This problem needs the output to be
-           printed from bottom up
-        */
+        
         reverse(res.begin(), res.end());
         return res;
         
