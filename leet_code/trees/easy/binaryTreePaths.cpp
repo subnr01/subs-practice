@@ -17,20 +17,41 @@ All root-to-leaf paths are:
 
 
 
-void binaryTreePaths(vector<string>& result, TreeNode* root, string t) {
-    if(!root->left && !root->right) {
-        result.push_back(t);
+class Solution {
+public:
+    vector<string> binaryTreePaths(TreeNode* root) 
+    {
+        string path;
+        vector<string> res;
+        if (!root)
+        {
+            return res;
+        }
+        findPaths(root, path, res);
+        return res;
+      
+    }
+    
+    void findPaths(TreeNode *root, string path, vector<string> &res)
+    {
+        
+        path += to_string(root->val);
+       
+        if (!root->left && !root->right) {
+            res.push_back(path);
+            return;
+        }
+        
+        if (root->left)
+        {
+            findPaths(root->left, path + "->", res);
+        }
+        
+        if (root->right)
+        {
+            findPaths(root->right, path + "->", res);
+        }
+        
         return;
     }
-
-    if(root->left) binaryTreePaths(result, root->left, t + "->" + to_string(root->left->val));
-    if(root->right) binaryTreePaths(result, root->right, t + "->" + to_string(root->right->val));
-}
-
-vector<string> binaryTreePaths(TreeNode* root) {
-    vector<string> result;
-    if(!root) return result;
-    
-    binaryTreePaths(result, root, to_string(root->val));
-    return result;
-}
+};
