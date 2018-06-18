@@ -37,8 +37,10 @@ public:
         
         TreeNode *root = new TreeNode(nums[mid]);
         
-        
+        //start to (mid-1) is the left side of the tree.
         root->left = arraytoBST(nums, start, mid-1);
+          
+        //(mid + 1) to end is the right side of the tree.
         root->right = arraytoBST(nums, mid+1, end);
         
         return root;
