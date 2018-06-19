@@ -15,55 +15,76 @@ return its minimum depth = 2.
 */
 
 
+//BFS
 class Solution {
 public:
-    int minDepth_1(TreeNode* root) {
-        
-        int mindepth = 0;
-        minDepth(root, mindepth, 0);
-        return mindepth;
-    }
-    
-    void minDepth(TreeNode *root, int &mindepth, int depth) {
-        
-        if(!root) {
-            return;
-        }
-        
-        depth+=1;
-        
-        if(!root->left && !root->right) {
-            if (mindepth == 0) {
-                mindepth = depth;
-            } else {
-                mindepth = min(mindepth, depth);
-            }
-            return;
-        }
-        
-        minDepth(root->left, mindepth, depth);
-        minDepth(root->right, mindepth, depth);
-        
-    }
-    
-    int minDepth(TreeNode *root) {
-        if (!root) return 0;
-        queue<TreeNode *> q;
-        q.push(root);
-        q.push(NULL);
-        int depth = 1;
-        while (true)
+    int minDepth(TreeNode* root) {
+        if (!root)
         {
-            TreeNode *node = q.front();
-            q.pop();
-            if (!node) {
-                depth++;
-                q.push(NULL);
-            } else {
-                if (!node->left && !node->right) return depth;
-                if (node->left) q.push(node->left);
-                if (node->right) q.push(node->right);
+            return 0;
+        }
+        
+        queue<TreeNode *> q;
+        int depth = 0;
+        q.push(root);
+        
+        while(!q.empty())
+        {
+            int s = q.size();
+            depth++;
+            for (int i = 0; i < s; i++)
+            {
+                TreeNode *node = q.front();
+                q.pop();
+                
+                if (!node->left && !node->right) {
+                    return depth;
+                }
+                
+                
+                if(node->left) {
+                    q.push(node->left);
+                }
+                
+                if(node->right) {
+                    q.push(node->right);
+                }
             }
         }
+        return depth;
+        
+    }
+};
+
+
+//DFS
+class Solution {
+public:
+    int minDepth(TreeNode* root) {
+        if (!root) {
+            return 0;
+        }
+        int ans = INT_MAX;
+        int depth = 0;
+        findminDepth(root, ans, depth);
+        return ans;
+
+    }
+    
+    void findminDepth(TreeNode *root, int &ans, int depth)
+    {
+        if (!root) {
+            return;
+        }
+        
+        depth++;
+        
+        if (!root->left && !root->right) {
+            ans = min(ans, depth);
+        }
+        
+        findminDepth(root->left, ans, depth);
+        findminDepth(root->right, ans, depth);
+        
     }
 };
