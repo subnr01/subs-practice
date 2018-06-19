@@ -27,6 +27,7 @@ public:
             return false;
         }
         
+        //sum should be subtracted before the check
         sum-=root->val;
         
         if(!root->right && !root->left) {
