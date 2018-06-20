@@ -59,7 +59,8 @@ public:
         {
             resr = rightSide + 1;
         }
-        
+        //Can you reason out why we are not using ls and rs
+        // and using resr and resl
         ans = max(ans, resl + resr);
         return max(resl, resr);
     }
