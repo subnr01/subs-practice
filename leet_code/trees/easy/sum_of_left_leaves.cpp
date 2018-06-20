@@ -14,8 +14,19 @@ There are two left leaves in the binary tree, with values 9 and 15 respectively.
 */
 
 
-int sumOfLeftLeaves(TreeNode* root, bool isleft = false) {
-    if (!root) return 0;
-    if (!root->left && !root->right) return isleft ? root->val : 0;
-    return sumOfLeftLeaves(root->left, true) + sumOfLeftLeaves(root->right, false);
-}
+class Solution {
+public:
+    int sumOfLeftLeaves(TreeNode* root, bool isLeft = false) {
+        
+        if (!root) {
+            return 0;
+        }
+        
+        if (!root->left && !root->right && isLeft) {
+            return root->val;
+        }
+        
+        return sumOfLeftLeaves(root->left, true) + sumOfLeftLeaves(root->right, false);
+        
+    }
+};
