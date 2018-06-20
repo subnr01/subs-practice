@@ -37,3 +37,21 @@ Output:
  1
 
 */
+
+class Solution {
+public:
+    TreeNode* trimBST(TreeNode* root, int L, int R, bool top = true) {
+    if (!root)
+        return root;
+    root->left = trimBST(root->left, L, R, false);
+    root->right = trimBST(root->right, L, R, false);
+    if (root->val >= L && root->val <= R)
+        return root;
+    auto result = root->val < L ? root->right : root->left;
+    if (!top)
+        delete root;
+    return result;
+}
+};
+
+
