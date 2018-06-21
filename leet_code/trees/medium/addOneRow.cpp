@@ -64,7 +64,7 @@ public:
         return addRow(root, v, d, level);
     }
     
-    TreeNode *addRow(TreeNode *root, int v, int d, int level)
+    TreeNode *addRow(TreeNode *root, int val, int d, int level)
     {
         if (!root) 
         {
@@ -87,8 +87,8 @@ public:
             return root;
         }
         
-        root->left = addRow(root->left, v, d, level + 1);
-        root->right = addRow(root->right, v, d, level + 1);
+        root->left = addRow(root->left, val, d, level + 1);
+        root->right = addRow(root->right, val, d, level + 1);
         return root;
         
     }
