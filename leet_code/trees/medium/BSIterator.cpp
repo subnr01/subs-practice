@@ -10,38 +10,44 @@ uses O(h) memory, where h is the height of the tree.
 */
 
 class BSTIterator {
-    stack<TreeNode *> myStack;
+    stack<TreeNode*> st;
 public:
     BSTIterator(TreeNode *root) {
-        pushAll(root);
+        TreeNode *curr = root;
+        while(curr)
+        {
+            st.push(curr);
+            curr = curr->left;
+        }
+        
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {
-        return !myStack.empty();
+        return !st.empty();
+        
     }
 
     /** @return the next smallest number */
     int next() {
-        TreeNode *tmpNode = myStack.top();
-        myStack.pop();
-        pushAll(tmpNode->right);
-        return tmpNode->val;
-    }
-
-private:
-    void pushAll(TreeNode *node) {
-        while(node)
+        TreeNode *node = st.top();
+        st.pop();
+        
+        TreeNode *curr = node->right;
+        while(curr)
         {
-            myStack.push(node);
-            node = node->left;
+            st.push(curr);
+            curr = curr->left; 
         }
+        return node->val;
+        
     }
 };
 
 
 
-
+------------------------------------------------------------------------------------------
+    
 class BSTIterator {
 private:
     TreeNode *curr = NULL;
