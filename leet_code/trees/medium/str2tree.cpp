@@ -30,6 +30,9 @@ public:
 
 private:
     TreeNode* build(string& s, int& i) {
+        if (i == s.size()) {
+            return NULL;
+        }
         int start = i;
            
         //If it is a negative number
@@ -50,6 +53,10 @@ private:
             // get rid of the closing bracket   
             i++;    
         }
+           
+        //we are not comparing against ')' as this
+        // is the start of the new expression
+        // which is the right part of the tree.
         if (s[i] == '(') {
             //Note we are pre-incrementing i;
             node->right = build(s, ++i);
