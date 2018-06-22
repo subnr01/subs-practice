@@ -41,6 +41,9 @@ public:
         }
         
         if (parent != root) {
+          // the below line is very important, 
+          //see parent left is assigned to right of new_root
+          // and not null
           parent->left = new_root->right;
           new_root->right = root->right;
         }
