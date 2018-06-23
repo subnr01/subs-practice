@@ -26,23 +26,24 @@ These sub-trees are also BSTs so we can write :
 
 C(n) = C(0)C(n-1) + C(1)C(n-2) + .....+ C(i-1)C(n-i)..... + C(n-1)C(0)
     
-    
-    
-    
+      
 
 class Solution {
 public:
     int numTrees(int n) {
-       int G[(n+1)] = {0};
-        G[0] = G[1] = 1;
-        for(int i=2; i<=n; ++i) {
-    	for(int j=1; j<=i; ++j) {
-    		G[i] += G[j-1] * G[i-j];
-    	}
-    }
-
-    return G[n];
-   }
+        int g[n + 1] = {0};
+        g[0] = g[1] = 1;
         
-    
+        for (int i = 2; i <= n; i++)
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                //C(0)C(n-1) + C(1)C(n-2)....
+                g[i] += g[j - 1] * g[i - j];
+            }
+        }
+        
+        return g[n];
+        
+    }
 };
