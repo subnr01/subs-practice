@@ -29,9 +29,11 @@ public:
         int lower_bound = INT_MIN;
         for(int i = 0; i < preorder.size(); i++){
             if(stk.empty() || preorder[i] < preorder[i - 1]){
+                //if less than lower_bound, exit.
                 if(preorder[i] <= lower_bound) return false;
                 stk.push(preorder[i]);
             }else{
+                // run until the smallest stk.top() is found
                 while(!stk.empty() && stk.top() < preorder[i]){
                     lower_bound = stk.top();
                     stk.pop();
