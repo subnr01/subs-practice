@@ -17,55 +17,65 @@ The encoded string should be as compact as possible.
 class Codec {
 public:
 
-TreeNode* construct(vector<int>& A, int* i, int l, int r){
-    if(*i>=A.size())
-        return NULL;
-    int key = A[*i];
-    if(key<=l || key>=r)
-        return NULL;
-    *i = *i + 1;
-    TreeNode* root = new TreeNode(key);
-    //l and key are the min and root elements 
-    // of the current subtree
-    root->left = construct(A,i,l,key);
-    //key and r are the root and max elements 
-    // of the current subtree
-    root->right = construct(A,i,key,r);
-    return root;
-}
-// Decodes your encoded data to tree.
-TreeNode* deserialize(string data) {
-    int n = data.size();
-    if(!n)
-        return NULL;
-    istringstream ss(data);
-    int c; string s;
-    vector<int> A;
-    while(getline(ss,s,',')){
-        istringstream t(s);
-        t>>c;
-        A.push_back(c);
-    }
-    c = 0;
-    int *i= &c;
-    return construct(A,i,INT_MIN,INT_MAX);
-}
-
-void preorder(TreeNode* root, string& s){
-    if(!root)
-        return;
-    s = s + to_string(root->val) + ",";
-    preorder(root->left,s);
-    preorder(root->right,s);
-}
-string serialize(TreeNode* root) {
-    string s;
-    if(!root)
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+        string s;
+        preorder(root, s);
         return s;
-    preorder(root,s);
-    return s;
-}
+        
+    }
+    
+    void preorder(TreeNode *root, string &s)
+    {
+        if (!root) {
+            return;
+        }
+        
+        s = s + to_string(root->val) + ",";
+        preorder(root->left, s);
+        preorder(root->right, s);
+    }
+
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        int n = data.size();
+        if (!n) {
+            return NULL;
+        }
+        
+        istringstream ss(data);
+        string s;
+        vector<int> A;
+        while(getline(ss, s, ','))
+        {
+            int c = stoi(s);
+            A.push_back(c);
+        }
+        
+        int index = 0;
+        return construct (A, index, INT_MIN, INT_MAX);
+    }
+    
+    TreeNode *construct (vector<int> A, int &index, int low, int high)
+    {
+        if (index == A.size()) {
+            return NULL;
+        }
+        
+        int key = A[index];
+        if(key<=low || key>=high) {
+            return NULL;
+        }
+        
+        index = index + 1;
+        TreeNode* root = new TreeNode(key);
+        root->left = construct(A,index,low,key);
+        root->right = construct(A,index,key,high);
+        return root;
+    }
 };
+
+=============================================================================================
 
 
 
