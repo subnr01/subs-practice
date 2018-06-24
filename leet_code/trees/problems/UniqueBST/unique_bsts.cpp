@@ -29,34 +29,88 @@ DP Solution
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
-public List<TreeNode> generateTrees(int n) {
-    if(n==0) return new LinkedList<TreeNode>();
-	return generateSubtrees(1, n);
-}
+class Solution {
+public:
+	vector<TreeNode*> doGenTree( int begin, int end )
+	{
+		vector<TreeNode*> ret;
+		if( begin > end )
+		{
+            ret.push_back(nullptr);
+			return ret;
+		}
+		if( begin == end )
+		{
+            cout<< "pushing: "<<begin<<endl;
+			ret.push_back( new TreeNode(begin) );
+		}
+		else
+		{
+			for( int mid = begin; mid <= end; mid++ )
+			{
+				auto leftNodes = doGenTree(begin, mid-1);
+				auto rightNodes = doGenTree(mid+1, end);
 
-private List<TreeNode> generateSubtrees(int s, int e) {
-	List<TreeNode> res = new LinkedList<TreeNode>();
-	if (s > e) {
-		res.add(null); // empty tree
-		return res;
-	}
-
-	for (int i = s; i <= e; ++i) {
-		List<TreeNode> leftSubtrees = generateSubtrees(s, i - 1);
-		List<TreeNode> rightSubtrees = generateSubtrees(i + 1, e);
-
-		for (TreeNode left : leftSubtrees) {
-			for (TreeNode right : rightSubtrees) {
-				TreeNode root = new TreeNode(i);
-				root.left = left;
-				root.right = right;
-				res.add(root);
+				for( const auto ln : leftNodes )
+				{
+					for( const auto rn : rightNodes )
+					{
+                        cout<<mid<<endl;
+						TreeNode* newP = new TreeNode(mid);
+                        if (ln)
+                            cout<<"left: "<<ln->val<<endl;
+                        if (rn)
+                            cout<<"right: "<<rn->val<<endl;
+						newP->left = ln;
+						newP->right = rn;
+						ret.push_back(newP);
+					}
+                    cout<<"done"<<endl;
+				}
 			}
 		}
-	}
-	return res;
-}
-}
 
+		return ret;
+	}
+
+    vector<TreeNode*> generateTrees(int n) {
+    	return doGenTree(1, n);
+    }
+};
+
+Debugging:
+
+pushing: 3
+2
+right: 3
+done
+pushing: 2
+3
+left: 2
+done
+1
+right: 2
+1
+right: 3
+done
+pushing: 1
+pushing: 3
+2
+left: 1
+right: 3
+done
+pushing: 2
+1
+right: 2
+done
+pushing: 1
+2
+left: 1
+done
+3
+left: 1
+done
+3
+left: 2
+done
    
