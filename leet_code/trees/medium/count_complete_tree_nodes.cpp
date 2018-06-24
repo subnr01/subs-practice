@@ -1,54 +1,38 @@
 /*
 Given a complete binary tree, count the number of nodes.
 
+A complete binary tree where it is completely filled at every level except
+the last level where it is left alligned
 */
 
 class Solution {
-
 public:
-
-    int countNodes(TreeNode* root) {
-
-        if(!root) return 0;
-
-        int hl=0, hr=0;
-
-        TreeNode *l=root, *r=root;
-
-        while(l) {hl++;l=l->left;}
-
-        while(r) {hr++;r=r->right;}
-
-        if(hl==hr) return pow(2,hl)-1;
-
-        return 1+countNodes(root->left)+countNodes(root->right);
-
-    }
-
-};
-
-//Using binary search
-int countNodes(TreeNode* root) {
-    if(!root) return 0;
-    TreeNode *temp = root;
-    int height = 0, count = 0, level;
-    while(temp) {
-        temp = temp->left;
-        height ++;
-    }
-    temp = root;
-    level = height - 2;
-    while(level >= 0) {
-        TreeNode *left = temp->left;
-        for(int i = 0;i < level;i ++) {
-            left = left->right;
+    int countNodes(TreeNode* root) 
+    {
+        int nodes = 0;
+        int h = height(root);
+        
+        while (root)
+        {
+            if (height(root->right) == h - 1)
+            {
+                // root + nodes in the left subtree
+                nodes += 1 << h;
+                root = root->right;
+            } else {
+                // root + nodes in the right subtree
+                nodes += 1 << (h - 1);
+                root = root->left;
+            }
+            h--;
         }
-        if(left) {
-            temp = temp->right;
-            count += (1 << level);
-        } else temp = temp->left;
-        level --;
+        return nodes;
+        
     }
-    if(temp) count ++;
-    return (1 << (height - 1)) + count - 1;
-}
+    
+    int height (TreeNode *root)
+    {
+        // see how we return -1 on null here
+        return root == NULL ? -1 : 1 + height(root->left);
+    }
+};
