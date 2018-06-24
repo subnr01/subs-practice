@@ -43,7 +43,7 @@ public:
             return NULL;
         }
         
-        istringstream ss(data);
+        stringstream ss(data);
         string s;
         vector<int> A;
         while(getline(ss, s, ','))
