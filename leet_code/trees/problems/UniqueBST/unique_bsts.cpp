@@ -31,51 +31,57 @@ DP Solution
  */
 class Solution {
 public:
-	vector<TreeNode*> doGenTree( int begin, int end )
-	{
-		vector<TreeNode*> ret;
-		if( begin > end )
-		{
-            ret.push_back(nullptr);
-			return ret;
-		}
-		if( begin == end )
-		{
-            cout<< "pushing: "<<begin<<endl;
-			ret.push_back( new TreeNode(begin) );
-		}
-		else
-		{
-			for( int mid = begin; mid <= end; mid++ )
-			{
-				auto leftNodes = doGenTree(begin, mid-1);
-				auto rightNodes = doGenTree(mid+1, end);
-
-				for( const auto ln : leftNodes )
-				{
-					for( const auto rn : rightNodes )
-					{
-                        cout<<mid<<endl;
-						TreeNode* newP = new TreeNode(mid);
-                        if (ln)
-                            cout<<"left: "<<ln->val<<endl;
-                        if (rn)
-                            cout<<"right: "<<rn->val<<endl;
-						newP->left = ln;
-						newP->right = rn;
-						ret.push_back(newP);
-					}
-                    cout<<"done"<<endl;
-				}
-			}
-		}
-
-		return ret;
-	}
-
     vector<TreeNode*> generateTrees(int n) {
-    	return doGenTree(1, n);
+        vector<TreeNode*> res;
+        if (!n) {
+            return res;
+        }
+        
+        int begin = 1;
+        int end = n;
+        return gen(begin, end);
+        
     }
+    
+    vector<TreeNode*> gen(int begin, int end) 
+    {
+        vector<TreeNode*> ret;
+        if (begin > end)
+        {
+            ret.push_back(nullptr);
+            return ret;
+        }
+        
+        if (begin == end)
+        {
+            TreeNode* root = new TreeNode(begin);
+            ret.push_back(root);
+            return ret;
+        }
+        
+        for (int mid = begin; mid <= end; mid++)
+        {
+            vector<TreeNode*> leftNodes = gen(begin, mid - 1);
+            vector<TreeNode*> rightNodes = gen(mid + 1, end);
+            
+            for (auto ln : leftNodes) 
+            {
+                for (auto rn : rightNodes)
+                {
+                    TreeNode *root = new TreeNode(mid);
+                    root->left = ln;
+                    root->right = rn;
+                    ret.push_back(root);
+                    
+                }
+            }
+        }
+        
+        return ret;
+        
+    }
+        
+    
 };
 
 Debugging:
