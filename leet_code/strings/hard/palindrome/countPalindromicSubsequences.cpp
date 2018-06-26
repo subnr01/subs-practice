@@ -59,7 +59,7 @@ public:
                     int l = i + 1, r = j - 1;
                     while(l <= r && S[l] != S[i]) ++l;
                     while(l <= r && S[r] != S[j]) --r;
-                    if(r < l) {
+                    if(l > r) {
                         dp[i][j] = dp[i + 1][j - 1] * 2 + 2;  
                     } else if(r == l) {
                         dp[i][j] = dp[i + 1][j - 1] * 2 + 1;  
@@ -73,3 +73,5 @@ public:
         return dp[0][len - 1];
     }
 };
+
+
