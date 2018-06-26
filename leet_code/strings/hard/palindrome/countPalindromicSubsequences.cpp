@@ -26,7 +26,7 @@ There are 3104860382 different non-empty palindromic subsequences, which is 1048
 
 
 //Related topics: dynamic programming, string
-
+// Time complexity is O(n2)
 
 class Solution {
     /* basically the hard part of this dynamic programming problem is to 
@@ -50,23 +50,26 @@ public:
         vector<vector<int>> dp(len, vector<int>(len, 0));
         for(int i = 0; i < len; ++i)
             dp[i][i] = 1;
-        for(int i = len - 1; i >= 0; --i)
-            for(int j = i + 1; j < len; ++j) 
+        for(int i = len - 1; i >= 0; --i) {
+            for(int j = i + 1; j < len; ++j) {
                 if(S[i] != S[j]) {
-                    dp[i][j] = (dp[i + 1][j] + dp[i][j - 1]) % BIG;
-                    dp[i][j] = (BIG - dp[i + 1][j - 1] + dp[i][j]) % BIG;
+                    dp[i][j] = (dp[i + 1][j] + dp[i][j - 1] - dp[i + 1][j - 1]);
+                    
                 } else {
-                    dp[i][j] = (2 * dp[i + 1][j - 1]) % BIG;
                     int l = i + 1, r = j - 1;
                     while(l <= r && S[l] != S[i]) ++l;
                     while(l <= r && S[r] != S[j]) --r;
-                    if(r < l) 
-                        dp[i][j] = (dp[i][j] + 2) % BIG;
-                    else if(r == l) 
-                        dp[i][j] = (dp[i][j] + 1) % BIG;
-                    else 
-                        dp[i][j] = (BIG - dp[l + 1][r - 1] + dp[i][j]) % BIG;
+                    if(r < l) {
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 2;  
+                    } else if(r == l) {
+                        dp[i][j] = dp[i + 1][j - 1] * 2 + 1;  
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1] * 2 - dp[l + 1][r - 1];
+                    }
                 }
+                dp[i][j] = dp[i][j] < 0 ? dp[i][j] + 1000000007 : dp[i][j] % 1000000007;
+            }
+        }
         return dp[0][len - 1];
     }
 };
