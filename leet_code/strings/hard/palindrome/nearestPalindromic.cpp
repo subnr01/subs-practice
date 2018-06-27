@@ -55,7 +55,22 @@ public:
             
             candidates.insert(stol(pp));
         }
-        
+        /*
+        for input 12345, set will contain:
+         [0] = 9999
+         [1] = 12221
+         [2] = 12321
+         [3] = 12421
+         [4] = 100001
+         
+       for input 1234,
+         [0] = 999
+         [1] = 1111
+         [2] = 1221
+         [3] = 1331
+         [4] = 10001
+  
+  */
         long val = stol(n);
         long mindiff = LONG_MAX;
         long minval = LONG_MAX;
