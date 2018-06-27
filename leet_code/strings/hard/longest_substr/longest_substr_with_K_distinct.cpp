@@ -10,8 +10,9 @@ T is "ece" which its length is 3.
 
 class Solution {
 public:
-    int lengthOfLongestSubstringKDistinct(string s, int k) {
+    int lengthOfLongestSubstringTwoDistinct(string s) {
         std::vector<int> freq(256, 0);
+        int k = 2;
         int res = 0, cnt = 0;
         for(int i = 0, j = 0; j < s.size(); j++){
             if(freq[s[j]]++ == 0) cnt++;
