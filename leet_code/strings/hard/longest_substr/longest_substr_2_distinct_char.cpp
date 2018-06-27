@@ -16,26 +16,22 @@ Explanation: t is "aabbb" which its length is 5.
 */
 
 //Related topics: hash table, 2 pointers, string
-int lengthOfLongestSubstringTwoDistinct(string s) {
-    if(s.empty()) return 0;
-    
-    int dict[256]; 
-    fill_n(dict,256,0);
-    int start = 0, len = 1, count = 0;
-    for(int i=0; i<s.length(); i++) {
-        dict[s[i]]++;
-        if(dict[s[i]] == 1) { // new char
-            count++;
-            while(count > 2) {
-                dict[s[start]]--;
-                if(dict[s[start]] == 0) count--; 
-                start++;
+class Solution {
+public:
+    int lengthOfLongestSubstringTwoDistinct(string s) {
+        std::vector<int> freq(256, 0);
+        int k = 2;
+        int res = 0, cnt = 0;
+        for(int i = 0, j = 0; j < s.size(); j++){
+            if(freq[s[j]]++ == 0) cnt++;
+            while(cnt > k){
+                if(--freq[s[i++]] == 0) cnt--;
             }
+            res = max(res, j-i+1);
         }
-        if(i-start+1 > len) len = i-start+1;
+        return res;
     }
-    return len;
-}
+};
 
 
 //Another soln ( 100%)
