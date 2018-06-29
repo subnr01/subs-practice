@@ -58,20 +58,50 @@ public:
             hi = max(hi, row[0]);
             pq.push({row.begin(), row.end()});
         }
+        /* 
+        state of pq after this, given the input:
+          [0] = {
+             first = (item = 0)
+             second = (item = 1397644077)
+           }
+          [1] = {
+             first = (item = 4)
+             second = (item = 320696344)
+          }
+          [2] = {
+             first = (item = 5)
+             second = (item = 1397644077)
+          }
+       */
+        
         
         vector<int> ans = {lo, hi};
+        //ans = {0 , 5}
         while (true) {
             auto p = pq.top();
+            /* 
+            p = {0, 1397644077}
+            */
             pq.pop();
-            ++p.first;
+            /*
+            Remember we are storing the pointers,
+            so ++p.first becomes 9, given [0,9,12,20]
+            */
+            
+            /*
+            If there are the same iterators
+            ( begin == end ) after increment, 
+            then the current range in ans 
+            is the solution
+            */
             if (p.first == p.second)
                 break;
-            pq.push(p);
+            pq.push(p); //after pq contains {4,5,9} as its first elements, as 0 is removed and 9 is pushed
             
-            lo = *pq.top().first;
-            hi = max(hi, *p.first);
+            lo = *pq.top().first; //lo = 4
+            hi = max(hi, *p.first); // high = 9
             if (hi - lo < ans[1] - ans[0])
-                ans = {lo, hi};
+                ans = {lo, hi}; //ans is (0,5) since (5-0) is not lesser than (9-5)
         }
         return ans;
     }
