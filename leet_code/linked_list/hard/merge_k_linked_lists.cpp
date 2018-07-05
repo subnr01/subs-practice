@@ -1,18 +1,5 @@
 
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
-class Solution {
-public:
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        
-    }
-};
+
 
 /*
 
@@ -64,35 +51,7 @@ ListNode *mergeKLists(vector<ListNode *> &lists) { //priority_queue
 }
 
 
-/*
-2.make_heap: we can access all the elements (from my answer for that solution)
-(
-*/
 
-static bool heapComp(ListNode* a, ListNode* b) {
-        return a->val > b->val;
-}
-
-ListNode* mergeKLists(vector<ListNode*>& lists) { //make_heap
-    ListNode head(0);
-    ListNode *curNode = &head;
-    vector<ListNode*> v;   
-    for(int i =0; i<lists.size(); i++){
-        if(lists[i]) v.push_back(lists[i]);
-    }
-    make_heap(v.begin(), v.end(), heapComp); //vector -> heap data strcture
-    while(v.size()>0){
-        curNode->next=v.front();
-        pop_heap(v.begin(), v.end(), heapComp); 
-        v.pop_back(); 
-        curNode = curNode->next;
-        if(curNode->next) {
-            v.push_back(curNode->next); 
-            push_heap(v.begin(), v.end(), heapComp);
-        }
-    }
-    return head.next;
-}
 /*************Solution using vector of lists*********/
 class Solution {
 public:
@@ -120,6 +79,8 @@ public:
         return lists.front();
     }
 };
+
+
 /***********Solution using the merge sort approach ******/
 class Solution {
 public:
