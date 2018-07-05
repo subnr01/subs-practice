@@ -8,26 +8,20 @@ Return: 1 --> 2 --> 3 --> 4 --> 5
 */
 
 
-ListNode *removeElements(ListNode *head, int val)
-{
-    ListNode **list = &head;
-
-    while (*list != nullptr)
-    {
-        if ((*list)->val == val)
-        {
-            ListNode *curr = *list;
-            //watch the pointer here whereas the
-            //does not have the pointer.
-            *list = (*list)->next;
-            free(cur);
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        if(!head) return NULL;
+        ListNode * newHead = new ListNode(0);
+        newHead->next = head;
+        ListNode* cur = newHead;
+        while(cur ){
+            while( cur->next && cur->next->val == val ){
+                cur->next = cur->next->next;
+            }
+            cur = cur->next;
         }
-        else
-        {
-            //this is like list = &(head->next);
-            list = &(*list)->next;
-        }
+        
+        return newHead->next;
     }
-
-    return head;
-}
+};
