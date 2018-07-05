@@ -17,36 +17,82 @@ For k = 3, you should return: 3->2->1->4->5
 
 */
 
-
-class Solution {
-public:
-
-
-ListNode* reverseKGroup( struct node *head, int k)
+//Recusursive soln
+class Solution 
 {
-	if ( !head || !k)
-		return;
+public:
+    
+    ListNode* reverse(ListNode* first, ListNode* last)
+    {
+        ListNode* prev = last;
+        
+        while (first != last)
+        {
+            auto tmp = first->next;
+            first->next = prev;
+            prev = first;
+            first = tmp;
+        }
+        
+        return prev;
+    }
+    
+    ListNode* reverseKGroup(ListNode* head, int k) 
+    {
+        auto node = head;
+        for (int i=0; i < k; ++i)
+        {
+            if (!node)
+                return head; 
+            node = node->next;
+        }
 
-	int n = k;
-	ListNode *current = head;
-	ListNode *prev = NULL;
-	ListNode *next;
-
-	while (current != NULL && n > 0)
-	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-		n--;
-	}
-
-	if ( current != NULL)
-	{	
-		head->next = reverseKGroup(current,k)
-	}
-
-	return prev;
-}
+        auto new_head = reverse(head, node);
+        head->next = reverseKGroup( node, k);
+        return new_head;
+    }
 };
 
+
+//iterative (which I do not like so much)
+class Solution {
+public:
+    ListNode *reverseKGroup(ListNode *head, int k) 
+    {
+        if(!head || k <= 1) 
+        {
+            return head;
+        }
+        
+        int num = 0;
+        ListNode dummy(-1);
+        ListNode *cur = &dummy;
+        ListNode *pre = cur;
+        ListNode *nex = NULL;
+        
+        cur->next = head;
+        
+	//Find the total number of nodes
+        while(cur = cur->next) {
+            num++;
+        }
+        
+	//Reverse for every k nodes
+	//until num > k
+        while(num >= k) 
+        {
+            cur = pre->next;
+            nex = cur->next;
+            for(int i = 1; i < k; ++i) 
+            {
+                cur->next = nex->next;
+                nex->next = pre->next;
+                pre->next = nex;
+                nex = cur->next;
+            }
+            pre = cur;
+            num -= k;
+        }
+        return dummy.next;
+    }
+};
