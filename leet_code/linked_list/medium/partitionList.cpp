@@ -18,19 +18,24 @@ Another solution
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        ListNode left(0), right(0);
-        ListNode *l = &left, *r = &right;
-
-        while(head){
-            ListNode* & ref = head->val < x ? l : r;
-            ref->next = head;
-            ref = ref->next;
-            
-            head = head->next;
+        ListNode* dummyLeft = new ListNode(-1);
+        ListNode* dummyRight = new ListNode(-1);
+        ListNode* leftCur = dummyLeft;
+        ListNode* rightCur = dummyRight;
+        while(head != nullptr){
+            if(head->val < x){
+                leftCur->next=head;
+                leftCur=leftCur->next;
+            }
+            else{
+                rightCur->next=head;
+                rightCur=rightCur->next;
+            }
+            head=head->next;
         }
-        l->next = right.next;
-        r->next = NULL;
-        return left.next;
+        leftCur->next = dummyRight->next;
+        rightCur->next = nullptr;             //Very important line
+        return dummyLeft->next;
+        
     }
 };
-
