@@ -29,11 +29,12 @@ private:
     		return root;
     	}
     	ListNode *mid = head, *temp = head;
-    	while( temp != tail && temp->next != tail )    // 寻找中间节点
+    	while( temp->next != tail && temp->next->next != tail )    // 寻找中间节点
     	{
     		mid = mid->next;
     		temp = temp->next->next;
     	}
+        cout<<mid->val<<endl;
     	TreeNode *root = new TreeNode( mid->val );
     	root->left = sortedListToBST( head, mid );
     	root->right = sortedListToBST( mid->next, tail );
