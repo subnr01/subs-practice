@@ -12,13 +12,17 @@ only nodes itself can be changed.
 class Solution {
 public:
     ListNode* swapPairs(ListNode* head) {
-    ListNode **pp = &head, *a, *b;
-    while ((a = *pp) && (b = a->next)) {
-        a->next = b->next;
-        b->next = a;
-        *pp = b;
-        pp = &(a->next);
+        //ptr ponits to the address of listnode
+        ListNode **ptr = &head;
+        ListNode *first, *second;
+        while ((first=*ptr) && (second=first->next))
+        {
+            first->next=second->next;
+            second->next=first;
+            //*ptr points to listnode
+            *ptr=second;
+            ptr=&(first->next);
+        } 
+        return head;
     }
-    return head;
-}
 };
