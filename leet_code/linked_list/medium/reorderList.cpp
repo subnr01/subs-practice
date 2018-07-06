@@ -11,40 +11,37 @@ Given {1,2,3,4}, reorder it to {1,4,2,3}.
 
 
 // O(N) time, O(1) space in total
-void reorderList(ListNode *head) {
-    if (!head || !head->next) return;
-    
-    // find the middle node: O(n)
-    ListNode *p1 = head, *p2 = head->next;
-    while (p2 && p2->next) {
-        p1 = p1->next;
-        p2 = p2->next->next;
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        if (head == NULL) return;
+        ListNode *fast = head, *slow = head;
+        while (fast->next && fast->next->next) {
+            fast = fast->next->next;
+            slow = slow->next;
+        }
+        
+        ListNode *second = reverseList(slow->next);
+        slow->next = NULL;
+        ListNode *first = head;
+        
+        while (first && second) {
+            ListNode *t1 = first->next, *t2 = second->next;
+            first->next = second;
+            second->next = t1;
+            first = t1;
+            second = t2;
+        }
     }
-    
-    // cut from the middle and reverse the second half: O(n)
-    ListNode *head2 = p1->next;
-    p1->next = NULL;
-    
-    p2 = head2->next;
-    head2->next = NULL;
-    while (p2) {
-        p1 = p2->next;
-        p2->next = head2;
-        head2 = p2;
-        p2 = p1;
+private:
+    ListNode *reverseList(ListNode *head) {
+        ListNode *prev = NULL;
+        while (head) {
+            ListNode *next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
+        }
+        return prev;
     }
-    
-    // merge two lists: O(n)
-    for (p1 = head, p2 = head2; p1; ) {
-        auto t = p1->next;
-        p1 = p1->next = p2;
-        p2 = t;
-    }
-    
-    //for (p1 = head, p2 = head2; p2; ) {
-    //    auto t = p1->next;
-    //    p1->next = p2;
-    //    p2 = p2->next;
-    //    p1 = p1->next->next = t;
-    //}
-}
+};
