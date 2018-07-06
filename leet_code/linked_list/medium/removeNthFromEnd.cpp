@@ -31,7 +31,9 @@ public:
             p = p->next;
             pre = pre->next;
         }
+        ListNode *next = pre->next;
         pre->next = pre->next->next;
+        delete next;
         return head;
     }
 };
