@@ -22,12 +22,15 @@ public:
             tail = tail->next;
             len++;
         }
-        tail->next = head; // circle the link
-
-        if(k %= len) 
-        {
-            for(auto i=0; i<len-k; i++) tail = tail->next; // the tail node is the (len-k)-th node (1st node is head)
+        k %= len;
+        if (!k) {
+            return head;
         }
+        tail->next = head; // circle the link
+        
+        for(auto i=0; i<len-k; i++) 
+            tail = tail->next; 
+        
         newH = tail->next; 
         tail->next = NULL;
         return newH;
