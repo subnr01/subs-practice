@@ -14,14 +14,18 @@ public:
     ListNode* swapPairs(ListNode* head) {
         //ptr ponits to the address of listnode
         ListNode **ptr = &head;
-        ListNode *first, *second;
-        while ((first=*ptr) && (second=first->next))
+        ListNode *first;
+        first = head;
+        
+        while (first && first->next)
         {
+            ListNode *second = first->next;
             first->next=second->next;
             second->next=first;
             //*ptr points to listnode
             *ptr=second;
             ptr=&(first->next);
+            first = *ptr;
         } 
         return head;
     }
