@@ -29,8 +29,9 @@ public:
         if (!root) {
             return 0;
         }
-        int rd = findDiameter(root->right, maxD);
+              
         int ld = findDiameter(root->left, maxD);
+        int rd = findDiameter(root->right, maxD);
         
         //WE are not adding 1 here, since this counts both the nodes.
         //not adding 1 here counters by subtracting the root node.
