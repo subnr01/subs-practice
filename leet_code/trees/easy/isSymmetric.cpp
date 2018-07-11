@@ -21,40 +21,23 @@ But the following is not:
 
 class Solution {
 public:
-    bool isSymmetric(TreeNode *root) {
-        return isSymmetric_1(root);
+    bool isSymmetric(TreeNode* root) {
+        if (!root) {
+            return true;
+        }
+        
+        return check(root->left, root->right);
     }
     
-    bool isSymmetric_1(TreeNode *root) {
-        if (!root) return true;
-        return isSymmetricRe(root->left, root->right);
-    }
-
-    bool isSymmetricRe(TreeNode *t1, TreeNode *t2)
+    bool check (TreeNode *nleft, TreeNode *nright)
     {
-        if (!t1 && !t2) return true;
-        if (!t1 || !t2 || t1->val != t2->val) return false;
-        return isSymmetricRe(t1->left, t2->right) &&
-               isSymmetricRe(t1->right, t2->left);
-    }
-
-    bool isSymmetric_2(TreeNode *root) {
-        if (!root) return true;
-        queue<TreeNode *> q;
-        q.push(root->left);
-        q.push(root->right);
-        while (!q.empty())
+        if(!nleft || !nright)
         {
-            TreeNode *t1 = q.front(); q.pop();
-            TreeNode *t2 = q.front(); q.pop();
-            if (!t1 && !t2) continue;
-            if (!t1 || !t2 || t1->val != t2->val)
-                return false;
-            q.push(t1->left);
-            q.push(t2->right);
-            q.push(t1->right);
-            q.push(t2->left);
+            return nleft == nright;
         }
-        return true;
+        
+        return (nleft->val == nright->val) &&
+                check(nleft->left, nright->right) &&
+                check(nleft->right, nright->left);
     }
 };
