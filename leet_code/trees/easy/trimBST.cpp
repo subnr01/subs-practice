@@ -48,8 +48,8 @@ public:
     if (root->val >= L && root->val <= R)
         return root;
     auto result = root->val < L ? root->right : root->left;
-    if (!top)
-        delete root;
+    //if (!top)
+    delete root;
     return result;
 }
 };
