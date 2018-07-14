@@ -49,7 +49,7 @@ public:
     
 };
 
-//Another solution
+//O(n) solution
 class Solution {
 public:
     int largestBSTSubtree(TreeNode* root) {
