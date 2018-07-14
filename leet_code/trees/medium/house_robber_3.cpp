@@ -23,15 +23,19 @@ Maximum amount of money the thief can rob = 4 + 5 = 9.
 
 class Solution {
 public:
-    int rob(TreeNode* root) {
-        return robDFS(root).second;
+    int tryRob(TreeNode* root, int& l, int& r) {
+        if (!root)
+            return 0;
+            
+        int ll = 0, lr = 0, rl = 0, rr = 0;
+        l = tryRob(root->left, ll, lr);
+        r = tryRob(root->right, rl, rr);
+        
+        return max(root->val + ll + lr + rl + rr, l + r);
     }
-    pair<int, int> robDFS(TreeNode* node){
-        if( !node) return make_pair(0,0);
-        auto l = robDFS(node->left);
-        auto r = robDFS(node->right);
-        int f1 = l.second + r.second;        // Do not rob node
-        int f2 = max(f1, l.first + r.first + node->val);  // rob node if necessary
-        return make_pair(f1, f2);
+
+    int rob(TreeNode* root) {
+        int l, r;
+        return tryRob(root, l, r);
     }
 };
