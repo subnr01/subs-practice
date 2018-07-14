@@ -33,15 +33,19 @@ public:
         while (curr) {
             
             if (curr->left || curr->right) {
-                if (last ) {
-                    last->next = curr->left ? curr->left : curr->right;
-                }
-                if (curr->left && curr->right) {
-                    curr->left->next = curr->right;
-                }
                 if (!first) {
                     first = curr->left ? curr->left : curr->right;
                 }
+                
+                if (curr->left && curr->right) {
+                    curr->left->next = curr->right;
+                }
+                
+                if (last) {
+                    last->next = curr->left ? curr->left : curr->right;
+                }
+                
+                
                 last = curr->right? curr->right: curr->left;
             }
             curr = curr->next;
