@@ -24,6 +24,9 @@ Output: return the tree root node representing the following tree:
 class Solution {
 public:
     TreeNode* tree(vector<int>& nums, int start, int end){
+        if (start > end) {
+            return NULL;
+        }
         int max=-1;
         int idx;
         for(int i=start; i<= end; i++){
@@ -33,16 +36,12 @@ public:
             }
         }
         
-        TreeNode* t = new TreeNode(max);
+        TreeNode* root = new TreeNode(max);
+        root->left = tree(nums,start,idx-1);
+        root->right = tree(nums,idx+1,end);
+    
         
-        if(idx != start){
-            t->left = tree(nums,start,idx-1);
-        }
-        if(idx != end){
-            t->right = tree(nums,idx+1,end);
-        }
-        
-        return t;
+        return root;
     }
     
     TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
