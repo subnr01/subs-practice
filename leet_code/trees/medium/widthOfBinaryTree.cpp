@@ -52,3 +52,22 @@ Explanation:The maximum width existing in the fourth level with the length 8 (6,
 
 
 */
+
+class Solution {
+public:
+    int widthOfBinaryTree(TreeNode* root) {
+        vector<int> lefts; // left most nodes at each level;
+        return dfs(root, 1, 0, lefts);
+    }
+private:
+    int dfs(TreeNode* n, int id, int d, vector<int>& lefts) { // d : depth
+        if (!n) return 0;
+        if (d >= lefts.size()) {
+            lefts.push_back(id);  // add left most node
+        }
+        
+        int left = dfs(n->left, id * 2, d + 1, lefts);
+        int right = dfs(n->right, id * 2 + 1, d + 1, lefts);
+        return max(id + 1 - lefts[d], max(left , right));
+    }
+};
