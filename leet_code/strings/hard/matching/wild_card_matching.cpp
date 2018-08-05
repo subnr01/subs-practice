@@ -54,6 +54,35 @@ https://discuss.leetcode.com/topic/21577/my-three-c-solutions-iterative-16ms-dp-
 
 //Related topics: DP, backtracking, Greedy
 
+//98%, popular understand this.
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        const int M = s.size();
+        const int N = p.size();
+        int si = 0, pi = 0;
+        int sCurr = -1, pCurr = -1;
+        while (si < M) {
+            if (pi < N && (s[si] == p[pi] || p[pi] == '?')) {
+                ++si;
+                ++pi;
+            } else if (pi < N && p[pi] == '*') {
+                sCurr = si;
+                pCurr = ++pi;
+            } else if (pCurr != -1) { 
+                si = ++sCurr;
+                pi = pCurr;
+            } else {
+                return false;
+            }
+        }
+        while (pi < N && p[pi] == '*') ++pi;
+
+        return pi == N;
+    }
+};
+
+
 //DP 2D array
 class Solution {
 public:
