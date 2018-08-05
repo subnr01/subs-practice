@@ -17,6 +17,116 @@ You should return the indices: [0,9].
 
 //Related topics: Hash table, 2 pointers, String
 
+//hash solution (very fast)
+class Solution {
+public:
+   const uint64_t R = 1'000'000'007ull;
+    vector<int> findSubstring(string s, vector<string>& words) {
+        int n = words.size();
+        if (!n) return vector<int>();
+
+        int m = words[0].size();
+
+        vector<uint64_t> hash(m * n, 1);
+        vector<uint64_t> chash(26, 0);
+        mt19937 rng;
+
+        generate(chash.begin(), chash.end(), rng);
+
+        uint64_t target_hash = 1;
+        for (auto &w : words) {
+            uint64_t a = 0;
+            uint64_t b = 0;
+            if (w.size() != m) return vector<int>();
+            for (auto &c : w) {
+                a += chash[c-'a'];
+                b += a;
+            }
+            target_hash *= b % R;
+            target_hash %= R;
+        }
+
+        uint64_t a = 0;
+        uint64_t b = 0;
+        vector<int> ret;
+
+        for (int i = 0; i < s.size(); ++i) {
+            if (i >= m) {
+                a -= chash[s[i-m]-'a'];
+                b -= m * chash[s[i - m]-'a'];
+            }
+            a += chash[s[i]-'a'];
+            b += a;
+
+            if (i < m - 1) {
+                continue;
+            }
+            
+			auto total_hash = (b%R) * hash[(i + m*n-m) %(m*n)] % R;
+
+            if (hash[i %(m*n)] * target_hash % R == total_hash) {
+                ret.push_back(i + 1 - m * n);
+            }
+            
+			hash[i %(m*n)] = total_hash;
+        }
+
+        return ret;
+    }
+};
+
+//sliding window (next fastest)
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        int n=s.length(), cnt = words.size();
+        vector<int> ans;
+        if(n<=0||cnt<=0){
+            return ans;
+        }
+        unordered_map<string, int> dict;
+        for(int i=0;i<cnt;i++){
+            dict[words[i]]++;
+        }
+        int wl = words[0].length();
+        
+        for(int i=0;i<wl;i++){
+            unordered_map<string, int> t_dict;
+            int count=0;
+            int lft = i;
+            for(int j=i;j<=n-wl;j+=wl){
+                string str = s.substr(j, wl);
+                // cout<<"str "<<str<<endl;
+                if(dict.count(str)>0){
+                    t_dict[str]++;
+                    count++;                    
+                    while(t_dict[str]>dict[str]){
+                        // cout<<"in while"<<endl;                        
+                        t_dict[s.substr(lft, wl)]--;                        
+                        count--;
+                        lft+=wl;
+                        // cout<<"lft "<<lft<<endl;
+                        // cout<<"count "<<count<<endl;
+                        // cout<<"t_dict[str] "<<t_dict[str]<<endl;
+                    }
+                    // cout<<"//////";
+                    if(count == cnt){
+                        ans.push_back(lft);
+                        t_dict[s.substr(lft, wl)]--;
+                        lft+=wl;
+                        count--;
+                    }
+                }
+                else{
+                    count=0;
+                    t_dict.clear();
+                    lft=j+wl;
+                }
+            }
+        }
+        return ans;
+    }
+};
 
 
 //2 map solution
@@ -153,55 +263,3 @@ public:
   }
 };
 
-//sliding window
-class Solution {
-public:
-    vector<int> findSubstring(string s, vector<string>& words) {
-        int n=s.length(), cnt = words.size();
-        vector<int> ans;
-        if(n<=0||cnt<=0){
-            return ans;
-        }
-        unordered_map<string, int> dict;
-        for(int i=0;i<cnt;i++){
-            dict[words[i]]++;
-        }
-        int wl = words[0].length();
-        
-        for(int i=0;i<wl;i++){
-            unordered_map<string, int> t_dict;
-            int count=0;
-            int lft = i;
-            for(int j=i;j<=n-wl;j+=wl){
-                string str = s.substr(j, wl);
-                // cout<<"str "<<str<<endl;
-                if(dict.count(str)>0){
-                    t_dict[str]++;
-                    count++;                    
-                    while(t_dict[str]>dict[str]){
-                        // cout<<"in while"<<endl;                        
-                        t_dict[s.substr(lft, wl)]--;                        
-                        count--;
-                        lft+=wl;
-                        // cout<<"lft "<<lft<<endl;
-                        // cout<<"count "<<count<<endl;
-                        // cout<<"t_dict[str] "<<t_dict[str]<<endl;
-                    }
-                    // cout<<"//////";
-                    if(count == cnt){
-                        ans.push_back(lft);
-                        t_dict[s.substr(lft, wl)]--;
-                        lft+=wl;
-                        count--;
-                    }
-                }
-                else{
-                    count=0;
-                    t_dict.clear();
-                    lft=j+wl;
-                }
-            }
-        }
-        return ans;
-    }
-};
