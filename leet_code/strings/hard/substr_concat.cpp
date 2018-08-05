@@ -129,64 +129,6 @@ public:
 };
 
 
-//2 map solution
-class Solution {
-public:
-    vector<int> findSubstring(string s, vector<string>& words) 
-    {
-        vector<int> indexes;
-        if (s.size() == 0 || words.size() == 0) {
-            return indexes;
-        }
-    
-        unordered_map<string, int> counts;
-        /*
-        Record the instances of each word
-        */
-        for (string word : words) {
-            counts[word]++;
-        }
-        
-        int n = s.length();
-        int num = words.size();
-        int len = words[0].length();
-        int j = 0;
-        
-        for (int i = 0; i < (n - num * len + 1); i++) 
-        {
-            unordered_map<string, int> seen;
-            for (j = 0; j < num; j++) 
-            {
-                /* 
-                Get word by word
-                */
-                string word = s.substr(i + j * len, len);
-                /* 
-                If the word does not exist, then break
-                */
-                if (counts.find(word) == counts.end()) {
-                    break;
-                }
-                seen[word]++;
-                /*
-                If the word is seen more than the expected instance, then break
-                */
-                if (seen[word] > counts[word]) {
-                    break;
-                }
-            }
-            /*
-            If we successfully covered all the words
-            then add the index
-            */
-            if (j == num) 
-            {
-                indexes.push_back(i);
-            }
-        }
-        return indexes;
-    }
-};
 
 
 //Very fast solution
@@ -261,5 +203,66 @@ public:
 
     return sol;
   }
+};
+
+
+//slowest of all
+//2 map solution
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) 
+    {
+        vector<int> indexes;
+        if (s.size() == 0 || words.size() == 0) {
+            return indexes;
+        }
+    
+        unordered_map<string, int> counts;
+        /*
+        Record the instances of each word
+        */
+        for (string word : words) {
+            counts[word]++;
+        }
+        
+        int n = s.length();
+        int num = words.size();
+        int len = words[0].length();
+        int j = 0;
+        
+        for (int i = 0; i < (n - num * len + 1); i++) 
+        {
+            unordered_map<string, int> seen;
+            for (j = 0; j < num; j++) 
+            {
+                /* 
+                Get word by word
+                */
+                string word = s.substr(i + j * len, len);
+                /* 
+                If the word does not exist, then break
+                */
+                if (counts.find(word) == counts.end()) {
+                    break;
+                }
+                seen[word]++;
+                /*
+                If the word is seen more than the expected instance, then break
+                */
+                if (seen[word] > counts[word]) {
+                    break;
+                }
+            }
+            /*
+            If we successfully covered all the words
+            then add the index
+            */
+            if (j == num) 
+            {
+                indexes.push_back(i);
+            }
+        }
+        return indexes;
+    }
 };
 
