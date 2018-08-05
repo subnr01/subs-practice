@@ -27,7 +27,149 @@ The return answers should be in the same order as the original array.
 
 
 
+//shorter soln
+class Solution {
+public:
+    vector<string> wordsAbbreviation(vector<string>& dict) {
+        int n = dict.size();
+        unordered_map<string, int> count;
+        vector<int> len(n, 1);
+        vector<string> res(n);
+        
+        for (int i = 0; i < dict.size(); ++i) {
+            res[i] = abbr(dict[i], len[i]);
+            count[res[i]]++;
+        }
+        
+        while (1) {
+            int cnt = 0;
+            for (int i = 0; i < n; i++) {
+                if (count[res[i]] > 1) {
+                    len[i]++;
+                    res[i] = abbr(dict[i], len[i]);
+                    count[res[i]]++;
+                    cnt++;
+                }
+            }
+            if (!cnt) break;
+        }
+        
+        return res;
+    }
+private:
+    string abbr(string s, int i) {
+        if (i + 2 >= s.size()) return s;
+        else {
+            return s.substr(0, i) + to_string(s.size() - i - 1) + s.back();
+        }
+    }
+};
 
+//prefix soln
+class Solution {
+public:
+    vector<string> wordsAbbreviation(vector<string>& dict) {
+        /* Detailed implementation Time O(wordLen * N^2)  space O(N)*/
+        vector<string> output;
+        int n = dict.size();
+        vector<int> prefixLen(n, 1);
+        vector<int> conflicts;
+        
+        // 1. initialize the abbrs with prefix length of 1
+        for (int i = 0; i < n; ++i) {
+            output.push_back(getKey(dict[i], prefixLen[i]));
+        }
+        
+        // 2. resolve conflicts
+        for (int i = 0; i < n; ++i) {
+            
+            // resolve conflicts with i and the words after it
+            while (true) {    
+                for (int j = i + 1; j < n; ++j) {
+                    if (output[i] == output[j]) {  // conflict detected
+                        conflicts.push_back(j);
+                    }
+                }
+                
+                if (conflicts.empty()) break;
+                conflicts.push_back(i); // Add the element itself to grow with other words
+                for (int p : conflicts) {
+                    ++prefixLen[p];
+                    output[p] = getKey(dict[p], prefixLen[p]);
+                }
+                
+                conflicts.clear();
+            }
+        }
+        
+        return output;
+        
+    }
+    
+    // Use the first k chars as prefix
+    string getKey(string str, int k) {
+        if (k >= str.size() - 2) return str;
+        return str.substr(0, k) + to_string(str.size() - k - 1) + str.back();
+    }
+};
+
+/***************************************************************************************************/
+//VERY FAST SOLN
+// a.size( ) == b.size( )
+// first and last character
+// the remaining characters
+// After sorting, we only need compare a certain word to its previous and next word for longest common prefix, in order to decide its abbreviation.
+// n is the size of dict, and m is the average length of word in dict. Sorting complexity is O(mnlogn), and the procedure after sorting is O(mn).
+class Solution {
+public:
+    vector<string> wordsAbbreviation(vector<string>& dict) {
+        int n = dict.size();
+        vector<string> ans = dict;
+        // sort the dict
+        sort(dict.begin(), dict.end(), mycompare);
+        unordered_map<string, string> mp;
+        // prefix is the longest common prefix between dict[i] and dict[i-1]
+        int prefix = 0; 
+        for (int i = 0; i < n; ++i) {
+            int j = 0;
+            // j is the longest prefix length between dict[i] and dict[i+1]
+           // if dict[i] is last word, or the length is different, or the last character is different, j = 0;
+            if (i < n-1 && dict[i].size() == dict[i+1].size() && dict[i].back() == dict[i+1].back()) {
+                while (j < dict[i].size() && dict[i][j] == dict[i+1][j]) //找到第一个不同的
+                    j++;
+            }
+            if (j > prefix) prefix = j; // prefix是上一个的残留，如果为0，就是不一样长的， 如果不为零，说明这两个一样长，需要至少prefix个中间
+            // build abbreviation if it is shorter than word, and put it in a map
+            if (dict[i].size() > prefix+3) { //头尾 多一个
+                string s = dict[i].substr(0, prefix+1)+to_string(dict[i].size()-prefix-2)+dict[i].back();
+                mp[dict[i]] = s;
+            }
+            // update prefix to be longest prefix with previous word
+            prefix = j;
+        }
+        for (int i = 0; i < n; ++i) {
+            if (mp.count(ans[i])) ans[i] = mp[ans[i]];
+        }
+        return ans;
+    }
+private:
+    static bool mycompare(string& a, string& b) {
+        if (a.size() == b.size()) {
+            if (a.back() < b.back()) 
+                return true;
+            else if (a.back() > b.back()) 
+                return false;
+            for (int i = 0; i < a.size()-1; ++i) {
+                if (a[i] < b[i]) 
+                    return true;
+                else if (a[i] > b[i])
+                    return false;
+            }
+        }
+        return a.size() < b.size(); //（mnlog（N））
+    }
+};
+/***************************************************************************************************/
 class Solution {
 public:
   vector<string> wordsAbbreviation(vector<string>& dict) {
