@@ -153,3 +153,55 @@ public:
   }
 };
 
+//sliding window
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        int n=s.length(), cnt = words.size();
+        vector<int> ans;
+        if(n<=0||cnt<=0){
+            return ans;
+        }
+        unordered_map<string, int> dict;
+        for(int i=0;i<cnt;i++){
+            dict[words[i]]++;
+        }
+        int wl = words[0].length();
+        
+        for(int i=0;i<wl;i++){
+            unordered_map<string, int> t_dict;
+            int count=0;
+            int lft = i;
+            for(int j=i;j<=n-wl;j+=wl){
+                string str = s.substr(j, wl);
+                // cout<<"str "<<str<<endl;
+                if(dict.count(str)>0){
+                    t_dict[str]++;
+                    count++;                    
+                    while(t_dict[str]>dict[str]){
+                        // cout<<"in while"<<endl;                        
+                        t_dict[s.substr(lft, wl)]--;                        
+                        count--;
+                        lft+=wl;
+                        // cout<<"lft "<<lft<<endl;
+                        // cout<<"count "<<count<<endl;
+                        // cout<<"t_dict[str] "<<t_dict[str]<<endl;
+                    }
+                    // cout<<"//////";
+                    if(count == cnt){
+                        ans.push_back(lft);
+                        t_dict[s.substr(lft, wl)]--;
+                        lft+=wl;
+                        count--;
+                    }
+                }
+                else{
+                    count=0;
+                    t_dict.clear();
+                    lft=j+wl;
+                }
+            }
+        }
+        return ans;
+    }
+};
