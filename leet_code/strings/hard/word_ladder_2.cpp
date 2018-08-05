@@ -1,5 +1,6 @@
 /*
-Given two words (beginWord and endWord), and a dictionary's word list, find all shortest transformation sequence(s) from beginWord to endWord, such that:
+Given two words (beginWord and endWord), and a dictionary's word list, find all shortest
+transformation sequence(s) from beginWord to endWord, such that:
 
 Only one letter can be changed at a time
 Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
@@ -40,7 +41,7 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 
 
 
-//SOln 1 slightly faster  (70%)
+//SOln 1 slightly faster  (70%), looks to be more a standard soln
 class Solution {
 private:
     vector<vector<string>> ans;
@@ -112,7 +113,7 @@ public:
 
 
 
-//Standard bfs (41%)
+//Standard bfs (41%) a bit slow.
 vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
         vector<vector<string>> ans;
         unordered_set<string> dict(wordList.begin(), wordList.end());
