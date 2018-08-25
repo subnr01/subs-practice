@@ -38,33 +38,40 @@ public:
 //longer soln
 class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) 
-{
-    ListNode *p1 = headA;
-    ListNode *p2 = headB;
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if(!headA || !headB) return NULL;
+        int nA=0,nB=0;
+        ListNode *p=headA;
+        while(p) {
+            nA++;
+            p=p->next;
+        }
+        p=headB;
+        while(p) {
+            nB++;
+            p=p->next;
+        }
+        ListNode* q;
+        int diff;
+        if(nA>=nB) {
+            p=headA;
+            q=headB;
+            diff=nA-nB;
+        }
+        else {
+            p=headB;
+            q=headA;
+            diff=nB-nA;
+        }
+        while(diff--) {
+            p=p->next;
+        }
+        while(p && q) {
+            if(p==q) return p;
+            p=p->next;
+            q=q->next;
+        }
+        return NULL;
         
-    if (p1 == NULL || p2 == NULL) return NULL;
-
-    while (p1 != NULL && p2 != NULL && p1 != p2) {
-        p1 = p1->next;
-        p2 = p2->next;
-
-        //
-        // Supposing they do not intersect and
-        // both become null, then we do not want
-        // their pointers reset.
-        if (p1 == p2) return p1;
-
-        //
-        // If one of them reaches the end earlier then reuse it 
-        // by moving it to the beginning of other list.
-        // Once both of them go through reassigning, 
-        // they will be equidistant from the collision point.
-        //
-        if (p1 == NULL) p1 = headB;
-        if (p2 == NULL) p2 = headA;
     }
-        
-    return p1;
-}
 };
