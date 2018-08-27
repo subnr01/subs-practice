@@ -18,38 +18,45 @@ For k = 3, you should return: 3->2->1->4->5
 */
 
 //Recusursive soln
-class Solution 
-{
+class Solution {
 public:
-    
-    ListNode* reverse(ListNode* first, ListNode* last)
-    {
-        ListNode* prev = last;
-        
-        while (first != last)
-        {
-            auto tmp = first->next;
-            first->next = prev;
-            prev = first;
-            first = tmp;
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if (!head || k <= 1) {
+            return head;
         }
         
-        return prev;
-    }
-    
-    ListNode* reverseKGroup(ListNode* head, int k) 
-    {
-        auto node = head;
-        for (int i=0; i < k; ++i)
-        {
-            if (!node)
-                return head; 
-            node = node->next;
+        ListNode dummy(-1);
+        ListNode *pre = &dummy;
+        pre->next = head;
+        ListNode *curr = head;
+        ListNode *nxt = NULL;
+        
+        int n = 0;
+        
+	// find the total number of nodes
+        while (curr) {
+            n++;
+            curr = curr->next;
         }
-
-        auto new_head = reverse(head, node);
-        head->next = reverseKGroup( node, k);
-        return new_head;
+        
+        while (n >= k)
+        {
+            curr = pre->next;
+            nxt = curr->next;
+		
+	    // go (k - 1) nodes
+            for (int i = 1; i < k; i++)
+            {
+                curr->next = nxt->next;
+                nxt->next = pre->next;
+                pre->next = nxt;
+                nxt = curr->next;
+            }
+            n -= k;
+            pre = curr;
+        }
+        
+        return dummy.next;
     }
 };
 
