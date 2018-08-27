@@ -22,30 +22,32 @@ Answer:
 class Solution {
 public:
     Node* insert(Node* head, int insertVal) {
-        auto res = new Node(insertVal, nullptr);
+        Node *res = new Node (insertVal, NULL);
         
-        if (head == nullptr) {    
+        if (!head) {
             res->next = res;
             return res;
         }
         
-        auto cur = head;
-        auto next = head->next;
+        Node *curr = head;
+        Node *nxt = head->next;
         
-        while(next != head) {
-            if (cur->val > next->val &&
-                (insertVal >= cur->val || insertVal <= next->val))
+        while(nxt != head)
+        {
+            if ((curr->val > nxt->val) &&
+                (insertVal >= curr->val || insertVal <= nxt->val)) {
                 break;
+            }
             
-            if (insertVal >= cur->val && insertVal <= next->val)
+            if (insertVal >= curr->val && insertVal <= nxt->val) {
                 break;
-            
-            cur = next;
-            next = next->next;
+            }
+            curr = nxt;
+            nxt = curr->next;
         }
         
-        cur->next = res;
-        res->next = next;
+        res->next = curr->next;
+        curr->next = res;
         
         return head;
     }
