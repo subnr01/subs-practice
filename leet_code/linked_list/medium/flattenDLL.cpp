@@ -24,7 +24,11 @@ Output:
 class Solution {
 public:
    Node* recflat(Node* head){
-        Node* node = head, *temp = NULL, *prevnode = head, *childtail = NULL;
+        Node *node = head;
+        Node *temp = NULL;
+        Node *prevnode = head; 
+        Node *childtail = NULL;
+        
         while(node){
             prevnode = node;
             if(node->child){
@@ -34,9 +38,16 @@ public:
                 node->child->prev = node;
                 node->child = NULL;
                 childtail->next = temp;
-                if(temp) {temp->prev = childtail; node = temp;}
-                else {prevnode = childtail; node = NULL;}
-            }else node = node->next;
+                if(temp) {
+                 temp->prev = childtail; 
+                 node = temp;
+                } else {
+                 prevnode = childtail; 
+                 node = NULL;
+                }
+            }else {
+             node = node->next;
+            }
         }
         return prevnode;
     }
@@ -46,4 +57,51 @@ public:
         return head;
     }
 };
+
+
+//Another Solution
+
+class Solution {
+public:
+    Node* flatten(Node* head) {
+        //head==null
+        if(!head) return head;
+        
+        //p=head
+        Node *p = head;
+        
+        //go through list by p
+          //if p child null, continue
+          //else find the end of the child chain, insert child chain
+        while(p){
+            if(!p->child){
+                p = p->next;
+                continue;
+            }
+            Node *temp = p->child;
+            while(temp->next)
+                temp = temp->next;
+            
+            temp->next = p->next;
+            if(p->next) {
+                 p->next->prev = temp;
+            }
+            
+            p->next = p->child;
+            p->child->prev = p;
+            p->child = NULL;
+        }
+        return head;
+    }
+};
+
+
+
+
+
+
+
+
+
+
 
