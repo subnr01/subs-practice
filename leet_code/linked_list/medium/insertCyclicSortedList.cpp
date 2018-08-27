@@ -51,30 +51,3 @@ public:
     }
 };
 
-//Another solution
-class Solution {
-public:
-    Node* insert(Node* head, int insertVal) {
-        Node *node = new Node(insertVal, nullptr);
-        if (!head) {
-            node->next=node;
-            return node;
-        }
-        Node *curr=head;
-        // find maximum val
-        while (curr->val<=curr->next->val) {
-            curr=curr->next;
-            if (curr->next==head) break;
-        }
-        // find insert point
-        if (insertVal<curr->val) {
-            while (insertVal>curr->next->val) {
-                curr=curr->next;
-            }
-        }
-        // insert
-        node->next = curr->next;
-        curr->next = node;
-        return head;
-    }
-};
