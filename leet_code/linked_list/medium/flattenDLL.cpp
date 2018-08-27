@@ -21,39 +21,50 @@ Output:
 
 */
 
-//Another solution
+// solution
 class Solution {
 public:
-    Node* flatten(Node* head) {
-        Node *p = head, *nxt;
+    Node* flatten(Node* head) 
+    {
+     
+        /*
+        1. Check for p
+        2. if p has a child, the get the next node in the current list.
+        3. Call the function recursively and point the return value to p->next
+        4. Point the prev of the return value to p and p->child to NULL.
+        5. Find the last node in the returned list.
+        6. if the next node in the current list is not null, then set the next and prev pointers of the new list and the next              node
+        7. return head
+        */
         
-        while(p){
-            if(p->child){
-                nxt = p -> next;
+        Node *p;
+        Node *nxt;
+        
+        p = head;
+        
+        while (p) 
+        {
+            if (p->child)
+            {
+                nxt = p->next;
                 p->next = flatten(p->child);
-                p->child = NULL;
                 p->next->prev = p;
-                while(p->next){
-                    p = p->next;    
+                p->child = NULL;
+                while(p->next)
+                {
+                    p = p->next;
                 }
-                p->next = nxt;
-                if(nxt) {
-                 nxt->prev = p;
+                if (nxt) {
+                    p->next = nxt;
+                    nxt->prev = p; 
                 }
-
-            } else{
-                p = p->next;
-            }
+            } 
+            p = p->next;
         }
         
         return head;
+        
     }
 };
-
-
-
-
-
-
 
 
