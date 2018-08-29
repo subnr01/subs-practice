@@ -3,91 +3,49 @@
 */
 
 class Solution {
-    struct point
-    {
-    public:
-        point(int _x, int _y):x(_x),y(_y){}
-        int x;
-        int y;
-    };
 public:
-    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
-        int hight = matrix.size();
-    int width = matrix[0].size();
-
-    queue<point> q;
-    for (int r = 0; r < hight; ++r)
+    vector<vector<int> > updateMatrix(vector<vector<int> >& matrix)
     {
-        for (int c = 0; c < width; ++c)
+        int rows = matrix.size();
+        
+        if (rows == 0) {
+            return matrix;
+        }
+  
+        int cols = matrix[0].size();
+        vector<vector<int> > dist(rows, vector<int>(cols, INT_MAX));
+        queue<pair<int, int> > q;
+        
+        for (int i = 0; i < rows; i++) 
         {
-            if (matrix[r][c] == 1)
+            for (int j = 0; j < cols; j++)
             {
-                if (r - 1 >= 0 && matrix[r - 1][c] == 0)
-                {
-                    matrix[r][c] = -1;
-                    q.push({c, r});
-                    continue;
-                }
-                if (r + 1 < hight && matrix[r + 1][c] == 0)
-                {
-                    matrix[r][c] = -1;
-                    q.push({c, r});
-                    continue;
-                }
-                if (c - 1 >= 0 && matrix[r][c - 1] == 0)
-                {
-                    matrix[r][c] = -1;
-                    q.push({c, r});
-                    continue;
-                }
-                if (c + 1 < width && matrix[r][c + 1] == 0)
-                {
-                    matrix[r][c] = -1;
-                    q.push({c, r});
-                    continue;
+                if (matrix[i][j] == 0) {
+                    dist[i][j] = 0;
+                    q.push({ i, j }); 
                 }
             }
         }
-    }
-    int distance = 1;
-    while (!q.empty())
-    {
-        queue<point> qq;
-        distance++;
-        while (!q.empty())
+        int dir[4][2] = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+   
+        while (!q.empty()) 
         {
-            auto p = q.front();
+            pair<int, int> curr = q.front();
             q.pop();
-            if (p.y - 1 >= 0 && matrix[p.y - 1][p.x] == 1)
-            {
-                matrix[p.y - 1][p.x] = distance;
-                qq.push({p.x, p.y - 1});
-            }
-            if (p.y + 1 < hight && matrix[p.y + 1][p.x] == 1)
-            {
-                matrix[p.y + 1][p.x] = distance;
-                qq.push({ p.x, p.y + 1});
-            }
-            if (p.x - 1 >= 0 && matrix[p.y][p.x - 1] == 1)
-            {
-                matrix[p.y][p.x - 1] = distance;
-                qq.push({ p.x - 1, p.y});
-            }
-            if (p.x + 1 < width && matrix[p.y][p.x + 1] == 1)
-            {
-                matrix[p.y][p.x + 1] = distance;
-                qq.push({p.x + 1, p.y});
+            for (int i = 0; i < 4; i++) {
+                
+                int new_r = curr.first + dir[i][0], 
+                int new_c = curr.second + dir[i][1];
+                
+                if (new_r >= 0 && new_c >= 0 && new_r < rows && new_c < cols) {
+                    if (dist[new_r][new_c] > dist[curr.first][curr.second] + 1) {
+                        dist[new_r][new_c] = dist[curr.first][curr.second] + 1;
+                        q.push({ new_r, new_c });
+                    }
+                }
             }
         }
-        q = qq;
-    }
-    for(int r = 0; r < hight;++r)
-    {
-        for(int c = 0; c < width;++c)
-            if(matrix[r][c] == -1)
-                matrix[r][c] = 1;
-    }
-    return matrix;
+        return dist;
     }
 };
 
