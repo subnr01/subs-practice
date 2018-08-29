@@ -38,7 +38,7 @@ Explanation: The endWord "cog" is not in wordList, therefore no possible transfo
 
 //Related topics: Array, string, backtracking, Breadfirstsearch, array
 
-
+//Check other solutions too
 
 
 //SOln 1 slightly faster  (70%), looks to be more a standard soln
