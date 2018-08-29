@@ -75,46 +75,74 @@ int numSimilarGroups(vector<string>& A) {
 };
 
 
-//Union find soln 670 ms
+//Union find soln 112 ms
 class Solution {
 public:
-    int numSimilarGroups(vector<string>& A) {
-        unordered_map<string,string> mapping;
+     int numSimilarGroups(vector<string>& A) {
+      if(A.empty()) return 0;
+      if(A[0].size()<20) return help2(A);
+         else return help1(A);
+    }
+	bool check(string& str1, string& str2) {
+		int len = str1.size(), cnt = 0;
+		for (int i = 0; i < len; ++i) {
+			if (str1[i] != str2[i]) {
+				cnt++;
+				if (cnt > 2)
+					return false;
+			}
+		}
+		return true;
+	}
+	int find(int x,vector<int>& p) {
+		if (x != p[x]) p[x] = find(p[x],p);
+		return p[x];
+	}
+    int help1(vector<string>& A) {
         int n = A.size();
-        for (int i = 0; i < n; i++) {
-            mapping[A[i]] = A[i];
-            for (int j = 0; j < i; j++) {
-                if (isSimilar(A[i], A[j]) && mapping[A[j]] != A[i]) {
-                    string x = getRoot(A[j], mapping);
-                    mapping[x] = A[i];
+        vector<int> fa(n, 0);
+        for (int i = 0; i < n; ++i) {
+            fa[i] = i;
+        }
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                if (check(A[i],A[j])) {
+					fa[find(i,fa)]=find(j,fa);
                 }
             }
         }
-        
-        int result = 0;
-        for (auto it = mapping.begin(); it != mapping.end(); it++) {
-            if (it->first == it->second) result++;
-        }
-        return result;
+        int ans=0;
+     for(int i=0;i<fa.size();i++){
+         if(fa[i]==i)
+             ans++;
+     }
+        return ans;
     }
-    
-private:
-    bool isSimilar(string &a, string &b) {
-        int n = a.length(), counter = 0;
-        for (int i = 0; i < n; i++) {
-            if (a[i] != b[i]) counter++;
-        }
-        return counter == 2;
-    }
-    
-    string getRoot(string s, unordered_map<string,string> &mapping) {
-        string temp = mapping[s];
-        if (temp != s) return getRoot(temp, mapping);
-        else return temp;
-    }
+    int help2(vector<string>& A) {
+		unordered_set<string> sA(A.begin(), A.end());
+		queue<string> q;
+		int n = 0;
+		while (!sA.empty()) {
+			q.push(*(sA.begin()));
+			sA.erase(sA.begin());
+			n++;
+			while (!q.empty()) {
+				string s = q.front();
+				q.pop();
+				for (int i = 0; i < s.size(); i++)
+					for (int j = i + 1; j < s.size(); j++) {
+						if (s[i] != s[j]) {
+							swap(s[i], s[j]);
+							if (sA.count(s)) {
+								q.push(s);
+								sA.erase(s);
+							}
+							swap(s[i], s[j]);
+							if (sA.empty()) return n;
+						}
+					}
+			}
+		}
+		return n;
+	}
 };
-
-
-
-
-
