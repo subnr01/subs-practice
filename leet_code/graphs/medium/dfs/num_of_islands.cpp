@@ -67,3 +67,38 @@ public:
         merge(test, i, j-1);
     }
 };
+
+
+//BFS (slower)
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int res = 0;
+        set<pair<int, int>> visited;
+        queue<pair<int, int>> q;
+        vector<pair<int, int>> actions = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+        for(int i = 0; i < grid.size(); i++){
+            for(int j = 0; j < grid[i].size(); j++){
+                if(grid[i][j] == '1' && visited.count({i, j}) == 0){
+                    res++;
+                    visited.insert({i, j});
+                    q.push({i, j});
+                    while(!q.empty()){
+                        pair<int, int> p = q.front(); q.pop();
+                        for(int k = 0; k < actions.size(); k++){
+                            int r_new = p.first + actions[k].first;
+                            int c_new = p.second + actions[k].second;
+                            if(0 <= r_new && r_new < grid.size() && 0 <= c_new && c_new < grid[0].size()){
+                                if(grid[r_new][c_new] == '1' && visited.count({r_new, c_new}) == 0){
+                                    visited.insert({r_new, c_new});
+                                    q.push({r_new, c_new});
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return res;
+    }
+};
