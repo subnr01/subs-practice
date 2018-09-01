@@ -92,4 +92,65 @@ private:
 };
 
 
+//dfs
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(const vector<vector<string>>& accounts) {
+        
+        // Key = email, Value = list of indexes that has that email
+        unordered_map<string, vector<int>> email2index;
+        for(int i = 0; i < accounts.size(); ++i)
+        {
+            for(int j = 1; j < accounts[i].size(); ++j)
+            {
+                string email = accounts[i][j];
+                email2index[email].emplace_back(i);
+            }
+        }
+        
+        vector<vector<string>> results;
+        vector<int> visited(accounts.size(), false);
+        
+        for(int i = 0; i < accounts.size(); ++i)
+        {
+            if(visited[i])
+            {
+                continue;
+            }
+            
+            visited[i] = true;
+            
+            set<string> emails;
+            stack<int> toVisit({i});
+            
+            while(!toVisit.empty())
+            {
+                auto curr = toVisit.top();
+                toVisit.pop();
+                emails.insert(accounts[curr].begin() +1, accounts[curr].end());
+                for(int k = 1; k < accounts[curr].size(); ++k)
+                {
+                    string email = accounts[curr][k];
+                    for(auto &&index : email2index[email])
+                    {
+                        if(visited[index])
+                        {
+                            continue;
+                        }
+                        
+                        visited[index] = true;
+                        toVisit.push(index);
+                    }
+                }
+            }
+            
+            results.emplace_back(vector<string> {accounts[i][0]});
+            auto &b = results.back();
+            b.insert(b.end(), emails.begin(), emails.end());
+        }
+        
+        return results;
+    }
+};
+
 
