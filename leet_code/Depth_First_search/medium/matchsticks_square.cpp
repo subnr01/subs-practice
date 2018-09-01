@@ -20,3 +20,55 @@ Explanation: You cannot find a way to form a square with all the matchsticks.
 
 
 */
+
+
+
+class Solution {
+private:
+	bool findSum(const vector<int>& nums, int begin, int sum,
+			vector<bool>& used) {
+		if (sum == 0) {
+			return true;
+		}
+		if (begin >= nums.size()) {
+			return false;
+		}
+
+		for (int i = begin; i < nums.size(); i++) {
+			if (used[i]) {
+				continue;
+			}
+
+			if (nums[i] <= sum) {
+				used[i] = true;
+				if (findSum(nums, i + 1, sum - nums[i], used)) {
+					return true;
+				}
+				used[i] = false;
+			}
+		}
+
+		return false;
+	}
+
+public:
+	bool makesquare(vector<int>& nums) {
+		if (nums.size() < 4) {
+			return false;
+		}
+
+		int sum = 0;
+		for (int num : nums) {
+			sum += num;
+		}
+		if (sum % 4 != 0) {
+			return false;
+		}
+
+		sort(nums.begin(), nums.end(), greater<int>());
+		vector<bool> used(nums.size(), false);
+		int target = sum / 4;
+		return findSum(nums, 0, target, used) && findSum(nums, 0, target, used)
+				&& findSum(nums, 0, target, used);
+	}
+};
