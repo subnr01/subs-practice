@@ -45,3 +45,42 @@ Explanation: The conditional expressions group right-to-left. Using parenthesis,
 
 
 //Related topics: DFS, Stack
+class Solution {
+public:    
+    string parseTernary(string expression) {
+        stack<char> s;
+        for (int i = expression.size() - 1; i >= 0; --i) {
+            char c = expression[i];
+            if (!s.empty() && s.top() == '?') {
+                s.pop();
+                char first = s.top(); s.pop();
+                s.pop();
+                char second = s.top(); s.pop();
+                s.push(c == 'T' ? first : second);
+            } else {
+                s.push(c);
+            }
+        }
+        return string(1, s.top());
+    }
+};
+
+//Soln2
+class Solution {
+public:
+    string parseTernary(string e) {
+        int i = 0;
+        return parse(e, i);
+    }
+private:
+    string parse(string& e, int& i) {
+        int i0 = i;
+        if (i + 1 < e.size() && e[i + 1] == '?') { // recursion case - only if e[i + 1] == '?'
+            i += 2;
+            string a = parse(e, i); // parse both to advance the iterator
+            string b = parse(e, ++i);
+            return e[i0] == 'T' ? a : b;
+        }
+        return e.substr(i++, 1); // parse digit or boolean result - just eat a bite
+    }
+};
