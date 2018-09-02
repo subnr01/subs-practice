@@ -15,3 +15,32 @@ Example 2:
 Given the list [1,[4,[6]]], return 17. (one 1 at depth 3, one 4 at depth 2, and one 6 at depth 1; 1*3 + 4*2 + 6*1 = 17)
 
 */
+class Solution {
+public:
+    int depthSumInverse(vector<NestedInteger>& nestedList) {
+        vector<int> result;
+        for(auto ni : nestedList) {
+            dfs(ni, 0, result);
+        }
+        //post processing 
+        int sum = 0;
+        for(int i = result.size()-1,level = 1; i >=0; i--, level++) {
+            sum += result[i]*level;
+        }
+        
+        return sum;
+    }
+    
+private:
+    void dfs(NestedInteger &ni, int depth, vector<int> & result) {
+        if(result.size() < depth+1) result.resize(depth+1);
+        if(ni.isInteger()) {
+            result[depth] += ni.getInteger();
+        } else {
+            for(auto n_ni : ni.getList()) {
+                dfs(n_ni, depth+1, result);
+            }
+        }
+        
+    }
+};
