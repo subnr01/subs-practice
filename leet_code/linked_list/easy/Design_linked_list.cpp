@@ -69,13 +69,16 @@ public:
         
     }
     
-    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
     void addAtIndex(int index, int val) {
+        //index == size is ok, as it means 
+        // that we are adding to the last node.
        if (index > size) {
             return;
         }
         
         Node *curr = head;
+        // we must reach the node which 
+        // will be the predecessor.
         while(index) {
             curr = curr->next;
             index--;
@@ -89,16 +92,22 @@ public:
     
     /** Delete the index-th node in the linked list, if the index is valid. */
     void deleteAtIndex(int index) {
+        // the number of actual nodes
+        // in the linked list is always (sz - 1).
+        // so here and getindex we should be returning 
+        // error.
         if (index >= size) {
             return;
         }
         
         Node *curr = head;
         
+        // reach the predecessor
         while(index) {
             curr = curr->next;
             index--;
         }
+        // link the predecessor to the next node
         Node *temp = curr->next;
         curr->next = temp->next;
         delete temp;
