@@ -72,3 +72,41 @@ public:
         return 0; 
     }
 };
+
+//Another soln
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        int n = beginWord.size(), ret = 1;
+        unordered_set<string> wordSet(wordList.begin(), wordList.end()), 
+                              beginSet{beginWord}, endSet{endWord}, nextSet;
+        if(wordSet.erase(endWord) == 0){
+            return 0;
+        }
+        while(!beginSet.empty() && !endSet.empty()){
+            ++ret;
+            if(beginSet.size() > endSet.size()){
+                swap(beginSet, endSet);
+            }
+            for(string word: beginSet){
+                for(int i = 0; i < n; ++i){
+                    for(char j = 'a'; j <= 'z'; ++j){
+                        char ch = word[i];
+                        word[i] = j;
+                        if(endSet.count(word) != 0){
+                            return ret;
+                        }
+                        if(wordSet.count(word) != 0){
+                            wordSet.erase(word);
+                            nextSet.insert(word);
+                        }
+                        word[i] = ch;
+                    }
+                }
+            }
+            beginSet = nextSet;
+            nextSet.clear();   
+        }
+        return 0;     
+    }
+};
