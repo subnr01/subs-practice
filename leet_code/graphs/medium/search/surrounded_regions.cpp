@@ -21,43 +21,48 @@ X O X X
 
 class Solution {
 public:
-	void solve(vector<vector<char>>& board) {
-        int i,j;
-        int row=board.size();
-        if(!row)
-        	return;
-        int col=board[0].size();
-
-		for(i=0;i<row;i++){
-			check(board,i,0,row,col);
-			if(col>1)
-				check(board,i,col-1,row,col);
-		}
-		for(j=1;j+1<col;j++){
-			check(board,0,j,row,col);
-			if(row>1)
-				check(board,row-1,j,row,col);
-		}
-		for(i=0;i<row;i++)
-			for(j=0;j<col;j++)
-				if(board[i][j]=='O')
-					board[i][j]='X';
-		for(i=0;i<row;i++)
-			for(j=0;j<col;j++)
-				if(board[i][j]=='1')
-					board[i][j]='O';
+    void solve(vector<vector<char>>& board) {
+        if (board.size() == 0) {
+            return;
+        }
+        
+        connectBorder0s(board);
+        
+        for(int i=0; i < board.size(); i++){
+            for(int j=0; j < board[0].size(); j++)
+                if(board[i][j] != '1')
+                    board[i][j] = 'X';
+                else
+                    board[i][j] = 'O';
+        }
     }
-	void check(vector<vector<char> >&vec,int i,int j,int row,int col){
-		if(vec[i][j]=='O'){
-			vec[i][j]='1';
-			if(i>1)
-				check(vec,i-1,j,row,col);
-			if(j>1)
-				check(vec,i,j-1,row,col);
-			if(i+1<row)
-				check(vec,i+1,j,row,col);
-			if(j+1<col)
-				check(vec,i,j+1,row,col);
-		}
-	}
+    
+    void connectBorder0s(vector<vector<char>>& board){
+        int rows = board.size();
+        int cols = board[0].size();
+        
+        for(int j=0; j < cols; j++){
+            bfs(board, 0, j);
+            bfs(board, rows-1, j);
+        }
+        
+        for(int i=0; i < rows; i++){
+            bfs(board, i, 0);
+            bfs(board, i, cols-1);
+        }
+    }
+    
+    void bfs(vector<vector<char>>& board, int i, int j){
+        if(i < board.size() && 
+           j < board[0].size() && 
+           i >= 0 && j >= 0 && 
+           board[i][j] == 'O'){
+            
+            board[i][j] = '1';
+            bfs(board, i+1, j);
+            bfs(board, i-1, j);
+            bfs(board, i, j+1);
+            bfs(board, i, j-1);
+        }
+    }
 };
