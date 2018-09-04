@@ -10,28 +10,26 @@ m.next(5) = (10 + 3 + 5) / 3
 */
 
 
-public class MovingAverage {
-    private int [] window;
-    private int n, insert;
-    private long sum;
-    
+class MovingAverage {
+public:
+    int sum = 0;
+    queue <int> q;
+    int size = 0;
     /** Initialize your data structure here. */
-    public MovingAverage(int size) {
-        window = new int[size];
-        insert = 0;
-        sum = 0;
+    MovingAverage(int size) {
+        this->size = size;
     }
     
-    public double next(int val) {
-        if (n < window.length)  n++;
-        sum -= window[insert];
+    double next(int val) {
+        q.push(val);
         sum += val;
-        window[insert] = val;
-        insert = (insert + 1) % window.length;
-        
-        return (double)sum / n;
+        if(q.size() > size){
+            sum -= q.front();
+            q.pop();
+        }
+        return (double)sum/q.size();
     }
-}
+};
 
 
 //Using queue
