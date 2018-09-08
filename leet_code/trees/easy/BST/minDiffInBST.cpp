@@ -22,3 +22,36 @@ node 2
 
 
 */
+
+
+/*
+This problem is same as the other node, except for the case that here we have
+negative values while the other one considered only non-negative values
+*/
+
+class Solution {
+public:
+   void inorderTraverse(TreeNode* root, int& val, int& min_dif) 
+   {
+       if (root->left != NULL) {
+           inorderTraverse(root->left, val, min_dif);
+       }
+       
+       if (val >= 0) {
+           min_dif = min(min_dif, abs(root->val - val));
+       }
+       
+       val = root->val;
+       
+       if (root->right != NULL) {
+           inorderTraverse(root->right, val, min_dif);
+       }
+   }
+   
+   int minDiffInBST(TreeNode* root) 
+   {
+       auto min_dif = INT_MAX, val = -1;
+       inorderTraverse(root, val, min_dif);
+       return min_dif;
+   }
+};
