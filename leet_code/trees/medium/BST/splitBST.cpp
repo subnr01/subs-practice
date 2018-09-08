@@ -56,7 +56,7 @@ public:
         if(root->val > V){
             res[1] = root;
             auto res1 = splitBST(root->left, V);
-            
+            root->left = res1[1];
             res[0]=res1[0];
         }else{
             res[0] = root;
