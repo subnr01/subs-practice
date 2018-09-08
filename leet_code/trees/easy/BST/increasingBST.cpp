@@ -34,4 +34,41 @@ Output: [1,null,2,null,3,null,4,null,5,null,6,null,7,null,8,null,9]
                 \
                  9  
  */
-                
+
+/*
+A simple solution where we adopt the reverse inorder strategy.
+We will have a prev pointer that will point to the prev node in
+the reverse inorder flow.
+We will traverse the tree from the right and set the root->right 
+to the prev pointer. This actually has no effect on the right children,
+as root->right is already pointing to the right children.
+
+However when we move into the left subtree, we will get to the rightmost
+child and point its right to the root, from then on the process continues
+with the right pointer of the parent being unchanged, but the recursive
+call going downwards and resetting the right pointers to point to 
+their parents.
+
+*/
+
+class Solution {
+public:
+    TreeNode* increasingBST(TreeNode* root) {
+        TreeNode *newRoot = NULL;
+        revInorder(root, newRoot);
+        return newRoot;
+    }
+    
+    void revInorder(TreeNode *root, TreeNode *&curr)
+    {
+        if (!root) {
+            return;
+        }
+        
+        revInorder(root->right, curr);
+        root->right = curr;
+        curr = root;
+        revInorder(root->left, curr);
+        root->left = NULL;
+    }
+};
