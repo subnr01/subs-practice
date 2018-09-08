@@ -22,7 +22,17 @@ Output: false
 /*
 Solution
 
+Need to understand this
+// |x - nums[i]| <= t  ==> -t <= x - nums[i] <= t;
+// x - nums[i] >= -t ==> x >= nums[i]-t 
+// x - nums[i] <= t ==> |x - nums[i]| <= t    
 
+So we try to find the lower_bound which is the first element equal or greater than.
+If lower_bound exists and the difference between lower_bound and this element is
+t, then we are good.
+
+BTW, we maintain a sliding window of (k - 1) and erase the (i - k - 1) element from the set
+in every iteration.
 
 */
 
