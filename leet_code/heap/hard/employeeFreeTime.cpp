@@ -52,46 +52,51 @@ public:
 
 ///proririty queue not needed for this question, it is an overkill
 // anways 
+class CompareDist
+{
+public:
+    bool operator()(Interval n1, Interval n2) {
+        return n1.start > n2.start;
+    }
+};
+
+
+
 class Solution {
 public:
     vector<Interval> employeeFreeTime(vector<vector<Interval>>& schedule) {
+        vector<Interval> ret;
         
-        vector<Interval>res={};
-        priority_queue<pair<int,int>, vector<pair<int,int>> , greater<pair<int,int>>>__intervals={};
-        int _size = schedule.size();
+        if(schedule.size() == 0)
+            return ret;
         
-        if(_size == 0)
-            return res;
-            
-        //Create a min_heap
-        for(int i=0; i<_size; i++){
-            //cout << schedule[i].start << endl;
-            for(int j=0;j<schedule[i].size();j++)
-                __intervals.push(make_pair(schedule[i][j].start,schedule[i][j].end));
+        priority_queue<Interval,vector<Interval>,CompareDist> pq;
+
+        for(auto& v : schedule) {
+            for(auto& i : v)
+                pq.push(i);
         }
         
+        ret.push_back(pq.top());
+        pq.pop();
         
-        int f_start = __intervals.top().first;
-        int f_end = __intervals.top().second;
-        __intervals.pop();
-            
-        while(!__intervals.empty()){
-            int temp_start = __intervals.top().first;
-            int temp_end = __intervals.top().second;
-            
-            if(temp_start > f_end){
-                //new standard to create a new object in the vector of type T.
-                res.push_back({f_end,temp_start});
-                f_start = temp_start;
-                f_end = temp_end;
+        while(pq.empty() == false){
+            if(pq.top().start >= ret.back().start && pq.top().start <= ret.back().end){
+                ret.back().end = max(ret.back().end, pq.top().end);
             }
-            else if(temp_start <= f_end){
-                f_end = f_end > temp_end ? f_end : temp_end;
+            else{
+                ret.push_back(pq.top());
             }
-            __intervals.pop();
+            pq.pop();
         }
         
+        for(int i=1; i<ret.size(); ++i){
+            ret[i-1].start = ret[i-1].end;
+            ret[i-1].end = ret[i].start;
+        }
         
-        return res;
+        ret.pop_back();
+        return ret;
+        
     }
 };
