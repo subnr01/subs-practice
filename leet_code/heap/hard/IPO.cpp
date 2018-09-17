@@ -66,7 +66,9 @@ If we sort the Capital in increasing order, we can insert "doable" project into
 the pq until we meet an "undoable" project.
 
 We need only one priority queue (multiset) to maintain the "doable" projects. Here the 
-key observation is: we can only pop k times. So we do not need to maintain a large priority queue. Every time we find the size of PQ is larger than k (k is shrinking!!!), we just erase the project with least profit from the PQ.
+key observation is: we can only pop k times. So we do not need to maintain a large priority queue. 
+Every time we find the size of PQ is larger than k (k is shrinking!!!), we just erase the project with 
+least profit from the PQ.
 
 Note that the worst case time complexity is still O(NlogN), because we need to sort : )
 */
