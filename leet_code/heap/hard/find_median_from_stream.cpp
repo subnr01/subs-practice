@@ -26,29 +26,6 @@ findMedian() -> 2
 
 //Related topics: heap, design
 
-
-//The second soln seems to be more effecient
-class MedianFinder {
-    priority_queue<long> small, large;
-public:
-
-    void addNum(int num) {
-        small.push(num);
-        large.push(-small.top());
-        small.pop();
-        if (small.size() < large.size()) {
-            small.push(-large.top());
-            large.pop();
-        }
-    }
-
-    double findMedian() {
-        return small.size() > large.size()
-               ? small.top()
-               : (small.top() - large.top()) / 2.0;
-    }
-};
-
 //Time complexity: O(5 * log(n)) + O(1) \approx O(log(n))O(5∗log(n))+O(1)≈O(log(n)).
 
 At worst, there are three heap insertions and two heap deletions from the top. Each of these takes 
@@ -58,7 +35,7 @@ Space complexity: O(n)O(n) linear space to hold input in containers.
 
 
 
-Leet code solution
+//Leet code solution
 
 class MedianFinder {
     priority_queue<int> lo;                              // max heap
@@ -82,7 +59,9 @@ public:
     // Returns the median of current data stream
     double findMedian()
     {
-        return lo.size() > hi.size() ? (double) lo.top() : (lo.top() + hi.top()) * 0.5;
+        return lo.size() > hi.size() ? 
+               (double) lo.top() : 
+               (lo.top() + hi.top()) * 0.5;
     }
 };
 
