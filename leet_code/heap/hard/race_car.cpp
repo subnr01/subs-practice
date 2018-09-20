@@ -34,18 +34,56 @@ Your position goes from 0->1->3->7->7->6.
 
 //Check other solns, there seems no heap soln
 class Solution {
-public:
-        int dp[10001];
-    int racecar(int t) {
-        if (dp[t] > 0) return dp[t];
-        int n = floor(log2(t)) + 1, res;
-        if (1 << n == t + 1) dp[t] = n;
-        else {
-            dp[t] = racecar((1 << n) - 1 - t) + n + 1;
-            for (int m = 0; m < n - 1; ++m)
-                dp[t] = min(dp[t], racecar(t - (1 << (n - 1)) + (1 << m)) + n + m + 1);
+public:    
+    int racecar(int target) {
+        vector<int> dp(target+1,INT_MAX);
+        dp[0] = 0;
+        
+        for(int i = 1;i <= target;i++){
+            int m = 1,j = 1;
+            for(;j < i;j = (1 << m) - 1){
+                int q = 0;
+                for(int p = 0;p < j;p = (1 << q)-1){
+                    dp[i] = min(dp[i],m+1+q+1+dp[i-(j-p)]);
+                    q++;
+                }
+                m++;
+            }
+            dp[i] = min(dp[i],m + (i == j ? 0 : 1 + dp[j-i]));
         }
-        return dp[t];
+        
+        return dp[target];
     }
 };
 
+//Check the below link for detailed explanations
+https://leetcode.com/problems/race-car/discuss/124326/Summary-of-the-BFS-and-DP-solutions-with-intuitive-explanation
+
+
+//BFS solution
+#define P first
+#define S second
+using PII=pair<int,int>;
+using QPII=queue<PII>;
+class Solution {
+    struct hash { size_t operator()(const PII& x) const { return x.P*100000+x.S; } };
+public:
+    int racecar(int T, QPII q=QPII({make_pair(0,1)})) {
+        unordered_set<PII, hash> v({q.front()});
+        for (int d=0,N=(int)q.size(); ;++d,N=(int)q.size()) while (N--){ // process all N nodes at each depth d
+            auto x=q.front(); q.pop();
+            if (x.P==T) return d;
+            auto A=make_pair(x.P + x.S,x.S * 2);
+            if (!v.count(A) && abs(A.P - T) < T){ // prune A by position
+                q.push(A);
+                v.insert(A);
+            }
+            auto R=make_pair(x.P,(x.S > 0) ? -1 : 1);
+            if (!v.count(R)){
+                q.push(R);
+                v.insert(R);
+            }
+        }
+        return -1;
+    }
+};
