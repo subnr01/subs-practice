@@ -114,87 +114,54 @@ private:
     
 };
 
+
+//Solution 2 (64 ms)
 class Solution {
 public:
-    vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
-        vector<int> results;
-        UnionFind uf(m * n);
-        
-        for(auto &&pos : positions)
+   vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) 
+   {
+        vector<int> res;
+        roots = vector<int>(m * n, -1);
+        vector<pair<int, int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        int islands = 0;
+        for (auto pos : positions) 
         {
-            int r = pos.first;
-            int c = pos.second;
-            
-            vector<int> overlap;
-            if((r -1) >= 0 && uf.isValid((r-1) * n + c))
+            int x = pos.first;
+            int y = pos.second;
+            int idx_p = x * n + y;
+            roots[idx_p] = idx_p;
+            ++islands;
+            for (auto dir : dirs) 
             {
-                overlap.emplace_back((r-1)*n + c);
-            }
-            
-            if((r+1) < m && uf.isValid((r+1) * n + c))
-            {
-                overlap.emplace_back((r+1) * n + c);
-            }
-            
-            if((c-1) >= 0 && uf.isValid(r * n + (c-1)))
-            {
-                overlap.emplace_back(r * n + (c-1));
-            }
-            
-            if((c+1) < n && uf.isValid(r * n + (c+1)))
-            {
-                overlap.emplace_back(r * n + (c+1));
-            }
-            
-            int index = r * n + c;
-            uf.setParent(index);
-            
-            for(auto &&i : overlap)
-            {
-                uf.unionWithRank(i, index);
-            }
-            
-            results. emplace_back(uf.getCount());
-        }
-        
-        return results;
-    }
-};
-
-
-
-
-//Solution 1 (64 ms)
-vector<int> numIslands2(int m, int n, vector<pair<int, int>>& positions) {
-    vector<int> res;
-    roots = vector<int>(m * n, -1);
-    vector<pair<int, int>> dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
-    int island = 0;
-    for (auto pos : positions) {
-        int x = pos.first, y = pos.second, idx_p = x * n + y;
-        roots[idx_p] = idx_p;
-        ++island;
-        for (auto dir : dirs) {
-            int row = x + dir.first, col = y + dir.second, idx_new = row * n + col;
-            if (row >= 0 && row < m && col >= 0 && col < n && roots[idx_new] != -1) {
-                int rootNew = findRoot(idx_new), rootPos = findRoot(idx_p);
-                if (rootPos != rootNew) {
-                    roots[rootPos] = rootNew;
-                    --island;
+                int row = x + dir.first; 
+                int col = y + dir.second;
+                int idx_new = row * n + col;
+                if (row >= 0 && row < m && col >= 0 && col < n && roots[idx_new] != -1) {
+                    int rootNew = findRoot(idx_new);
+                    int rootPos = findRoot(idx_p);
+                    if (rootPos != rootNew) 
+                    {
+                        roots[rootPos] = rootNew;
+                        --islands;
+                    }
                 }
             }
+            res.push_back(islands);
         }
-        res.push_back(island);
+        return res;
     }
-    return res;
-}
-
+    
+    int findRoot(int idx) 
+    {
+        while(idx != roots[idx]) 
+        {
+            roots[idx] = roots[roots[idx]]; 
+            idx = roots[idx];
+        }
+        return idx;
+    }
+    
 private:
-vector<int> roots;
-int findRoot(int idx) {
-    while(idx != roots[idx]) {
-        roots[idx] = roots[roots[idx]]; 
-        idx = roots[idx];
-    }
-    return idx;
-}
+    vector<int> roots;
+    
+};
