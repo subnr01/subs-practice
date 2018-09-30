@@ -154,3 +154,39 @@ public:
 };
 
 
+//bfs
+class Solution {
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        int N = accounts.size();
+        unordered_map<string, vector<int>> graph;
+        for (int i = 0; i < N; i++) {
+            for (int j = 1; j < accounts[i].size(); j++) {
+                graph[accounts[i][j]].push_back(i);
+            }
+        }
+        vector<vector<string>> res;
+        vector<int> visited(N);
+        for (int i = 0; i < N; i++) {
+            if (visited[i]) continue;
+            queue<int> q({i});
+            visited[i] = 1;
+            set<string> st;
+            while (!q.empty()) {
+                int curr = q.front(); q.pop();
+                for (int j = 1; j < accounts[curr].size(); j++) {
+                    st.insert(accounts[curr][j]);
+                    for (int user : graph[accounts[curr][j]]) {
+                        if (visited[user]) continue;
+                        visited[user] = 1;
+                        q.push(user);
+                    }
+                }
+            }
+            vector<string> account({accounts[i][0]});
+            account.insert(account.end(), st.begin(), st.end());
+            res.push_back(account);
+        }
+        return res;
+    }
+};
