@@ -32,6 +32,12 @@ Explanation: The given directed graph will be like this:
      4 <- 3
      
      
+Another very good example:-
+Input:
+[[2,1],[3,1],[4,2],[1,4]]
+
+Output:
+[2,1]
 */
 
 
