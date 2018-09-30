@@ -25,6 +25,65 @@ We could return these lists in any order, for example the answer [['Mary', 'mary
 
 */
 
+
+//OPtimised union find solution
+class Solution {
+    struct UnionFind {
+        int UN;
+        vector<int>P;
+        UnionFind(int N) : UN(N) {
+            for (int i = 0; i < N; i++)P.push_back(i);
+        }
+        int Find(int x) {
+            if (x == P[x]) return x;
+            P[x] = Find(P[x]);
+            return P[x];
+        }
+        void Union(int x, int y) {
+            int Ux = Find(x), Uy = Find(y);
+            if (Ux == Uy) return;
+            UN--;
+            P[Uy] = Ux;
+        }
+    };
+public:
+    vector<vector<string>> accountsMerge(vector<vector<string>>& Ac) {
+        // UnionFind
+        int AcN = Ac.size();
+        UnionFind UF(AcN);
+        unordered_map<string, int> mail2account; // EmailString to First Id in Ac
+      
+
+        for (int i = 0; i<Ac.size(); i++) {
+            for (int j = 1; j<Ac[i].size(); j++) {
+                if (!mail2account.count(Ac[i][j])) {
+                    mail2account[Ac[i][j]] = i;
+                } else {
+                    //UF.Union(k->second, i);
+                    UF.Union(mail2account[Ac[i][j]], i);
+                }
+            }
+        }
+
+        // Ans
+        vector<vector<string>> Ans;
+        vector<int> U2AnsI(AcN, -1); // HashMap: Union Id to Ans Id
+        for (auto &mail : mail2account) {
+            int U = UF.Find(mail.second);
+            if (U2AnsI[U] == -1) {
+                Ans.push_back({ Ac[mail.second][0] });
+                U2AnsI[U] = Ans.size() - 1;
+            }
+            Ans[U2AnsI[U]].push_back(mail.first);
+        }
+        for (auto &ans : Ans) {
+            sort(ans.begin(), ans.end());
+        }
+        return Ans;
+    }
+};
+
+
 //Union Find 
 class Solution {
 public:
