@@ -21,65 +21,8 @@ words1 = ["great"] can never be similar to words2 = ["doubleplus","good"].
 
 */
 
+//Union find solution
 
-
-
-
-
-
-//slower union find (why is this slower)
-class Solution {
-public:
-    struct node
-    {
-        int rank;
-        node* parent;
-    };
-    unordered_map<string, node*> m;
-    node* make_set(const string& s)
-    {
-        if (m.find(s) != m.end()) return m[s];
-        node* p = new node;
-        p->rank = 1;
-        p->parent = p;
-        m[s] = p;
-        return p;
-    }
-    node* find(node* n)
-    {
-        if (n->parent != n)
-            n->parent = find(n->parent);
-        return n->parent;
-    }
-    void uni(node* x, node* y)
-    {
-        x = find(x);
-        y = find(y);
-        if (x == y) return;
-        if (x->rank < y->rank) swap(x, y);
-        y->parent = x;
-        x->rank = max(x->rank, y->rank + 1);
-    }
-    bool areSentencesSimilarTwo(vector<string>& words1, vector<string>& words2, vector<pair<string, string>> pairs) {
-        if (words1.size() != words2.size()) return false;
-        for (auto pair : pairs)
-        {
-            node* f = make_set(pair.first);
-            node* s = make_set(pair.second);
-            uni(f, s);
-        }
-        for (int i = 0; i < words1.size(); i++)
-        {
-            if (words1[i] == words2[i]) continue;
-            node* w1 = find(make_set(words1[i]));
-            node* w2 = find(make_set(words2[i]));
-            if (w1 != w2) return false;
-        }
-        return true;
-    }
-};
-
-//slightly faster
 class UF{
     vector<int> ar,sz;
 public:
@@ -115,12 +58,20 @@ public:
 };
 class Solution {
 public:
-    bool areSentencesSimilarTwo(vector<string>& words1, vector<string>& words2, vector<pair<string, string>> pairs) {
-        if (words1.size() != words2.size()) return false;
+    bool areSentencesSimilarTwo(vector<string>& words1, 
+                                vector<string>& words2, 
+                                vector<pair<string, string>> pairs) 
+    {
+    
+        if (words1.size() != words2.size()) 
+            return false;
+        
         unordered_map<string, int> index;
         int count = 0;
         UF dsu(2 * pairs.size());
-        for (auto &pairpair: pairs) {
+        
+        for (auto &pairpair: pairs) 
+        {
             if (index.find(pairpair.first) == index.end()) 
                 index[pairpair.first] = count++;
             if (index.find(pairpair.second) == index.end()) 
@@ -130,8 +81,13 @@ public:
         }
 
         for (int i = 0; i < words1.size(); i++) {
-            if (words1[i] == words2[i]) continue;
-            if (index.find(words1[i]) == index.end() or index.find(words2[i]) == index.end() ) {
+            if (words1[i] == words2[i]) 
+            {
+                continue;
+            }
+            
+            if (index.find(words1[i]) == index.end() or index.find(words2[i]) == index.end() ) 
+            {
                 return false;
             }
             if ( !dsu.find( index[words1[i]], index[words2[i]] ) ) {
@@ -141,5 +97,42 @@ public:
         return true;
     }
 };
+
+
+//DFS Soln
+
+class Solution {
+public:
+    bool areSentencesSimilarTwo(vector<string>& words1, vector<string>& words2, vector<pair<string, string>> pairs) {
+        if (words1.size() != words2.size()) return false;
+        unordered_map<string, unordered_set<string>> p;
+        for (auto &vp : pairs) {
+            p[vp.first].emplace(vp.second);
+            p[vp.second].emplace(vp.first);
+        }
+        for (int i = 0; i < words1.size(); i++) {
+            unordered_set<string> visited;
+            if (isSimilar(words1[i], words2[i], p, visited)) continue;
+            else return false;
+        }
+        return true;
+    }
+    
+    bool isSimilar(string& s1, string& s2, unordered_map<string, unordered_set<string>>& p, unordered_set<string>& visited) {
+        if (s1 == s2) return true;
+        
+        visited.emplace(s1);
+        for (auto s : p[s1]) {
+            if (!visited.count(s) && isSimilar(s, s2, p, visited))
+                return true;
+        }
+        
+        return false;
+    }
+};
+
+
+
+
 
 
