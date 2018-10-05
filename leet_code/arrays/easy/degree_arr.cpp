@@ -23,4 +23,32 @@ Output: 6
 */
 
 
-NOT A GOOD QUESTION
+int findShortestSubArray(vector<int>& nums) 
+    {
+        int len = nums.size();
+        unordered_map<int, vector<int>> m;
+        
+        for (int i = 0; i < len; i++)
+        {
+            m[nums[i]].push_back(i);
+        }
+        
+        int degree = 0;
+        for (auto elem: m)
+        {
+            int sz = elem.second.size();
+            degree = max(degree, sz);
+        }
+        
+        int shortest = INT_MAX;
+        
+        for (auto elem: m)
+        {
+            if (elem.second.size() == degree) {
+                int len = elem.second.back() - elem.second[0] + 1;
+                shortest = min(shortest, len);
+            }
+        }
+        
+        return shortest;
+    }
