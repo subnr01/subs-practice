@@ -12,53 +12,66 @@ Follow up: What if you are given k 1d vectors? How well can your code be extende
 class ZigzagIterator {
 public:
     ZigzagIterator(vector<int>& v1, vector<int>& v2) {
-        if (v1.size() != 0)
-            Q.push(make_pair(v1.begin(), v1.end()));
-        if (v2.size() != 0)
-            Q.push(make_pair(v2.begin(), v2.end()));
+        v.push_back(v1);
+        v.push_back(v2);
+        i=0;
+        j=0;
     }
 
-    int next() {
-        vector<int>::iterator it = Q.front().first;
-        vector<int>::iterator endIt = Q.front().second;
-        Q.pop();
-        if (it + 1 != endIt)
-            Q.push(make_pair(it+1, endIt));
-        return *it;
+    int next() {        
+        return i<=j ? v[0][i++]:v[1][j++];                    
     }
 
     bool hasNext() {
-        return !Q.empty();
+        if(i >= v[0].size()) i = INT_MAX;
+        if(j >= v[1].size()) j = INT_MAX;
+        return !(i >= v[0].size() && j >=v[1].size());
     }
 private:
-    queue<pair<vector<int>::iterator, vector<int>::iterator>> Q;
+    vector<vector<int>> v;
+    int i;
+    int j;
 };
 
 
-//Another solution
+
+
+
+
+//SOlution using queue
 class ZigzagIterator {
+private:
+    queue<int> myQ;
+    
 public:
     ZigzagIterator(vector<int>& v1, vector<int>& v2) {
-        bs[0] = v1.begin(), bs[1] = v2.begin();
-        es[0] = v1.end(), es[1] = v2.end();
-        p = 0;
-    }
-  
-    int next() {
-        int elem;
-        if (bs[0] == es[0]) elem = *bs[1]++;
-        else if (bs[1] == es[1]) elem = *bs[0]++;
-        else {
-            elem = *bs[p]++;
-            p = (p + 1) % 2;
+        
+        int i, j = 0;
+        
+        while (i < v1.size() && j < v2.size()) {
+            myQ.push(v1[i++]);
+            myQ.push(v2[j++]);
         }
-        return elem;
+        
+        while (i < v1.size()) {
+            myQ.push(v1[i++]);
+        }
+        
+        while (j < v2.size()) {
+            myQ.push(v2[j++]);
+        }
+        
+    }
+
+    int next() {
+        if (hasNext()) {
+            int val = myQ.front();
+            myQ.pop();
+            return val;
+        }
     }
 
     bool hasNext() {
-        return bs[0] != es[0] || bs[1] != es[1];
+        return myQ.size();
     }
-private:
-    int p; 
-    vector<int>::iterator bs[2], es[2]; 
 };
