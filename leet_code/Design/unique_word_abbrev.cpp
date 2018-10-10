@@ -32,20 +32,27 @@ There are only 2 conditions we return true for isUnique("word")
 
 class ValidWordAbbr {
 public:
-	ValidWordAbbr(vector<string> &dictionary) {
-		for (string& d : dictionary) {
-			int n = d.length();
-			string abbr = d[0] + to_string(n) + d[n - 1];
-			mp[abbr].insert(d);
-		}
-	}
-
-	bool isUnique(string word) {
-		int n = word.length();
-		string abbr = word[0] + to_string(n) + word[n - 1];
-		return mp[abbr].count(word) == mp[abbr].size(); 
-	}
+    ValidWordAbbr(vector<string> dictionary) {
+        for (string s : dictionary) {
+            string abb = Abbr(s);
+            if (mp.count(abb) && mp[abb] != s) {
+                mp[abb] = "";
+            }
+            else {
+                mp[abb] = s;
+            }
+        }
+    }
+    
+    bool isUnique(string word) {
+        string abb = Abbr(word);
+        return !mp.count(abb) || mp[abb] == word;
+    }
+    
+    string Abbr(string s) {
+        if (s.length() <= 2) return s;
+        return s[0] + to_string(s.length() - 2) + s.back();
+    }
 private:
-	unordered_map<string, unordered_set<string>> mp;
+    unordered_map<string, string> mp;
 };
-
