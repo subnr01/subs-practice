@@ -37,36 +37,62 @@ http://stackoverflow.com/questions/17562089/how-to-count-number-of-requests-in-l
 
 
 
-public class HitCounter {
-    private int[] times;
-    private int[] hits;
+2 Solutions available
+One using queue and the other using vector.
+    
+    
+    
+//Using queue
+class HitCounter {
+public:
     /** Initialize your data structure here. */
-    public HitCounter() {
-        times = new int[300];
-        hits = new int[300];
+    HitCounter() {
     }
     
     /** Record a hit.
         @param timestamp - The current timestamp (in seconds granularity). */
-    public void hit(int timestamp) {
-        int index = timestamp % 300;
-        if (times[index] != timestamp) {
-            times[index] = timestamp;
-            hits[index] = 1;
-        } else {
-            hits[index]++;
-        }
+    void hit(int timestamp) {
+        q.push(timestamp);
+    }
+    /** Return the number of hits in the past 5 minutes.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    int getHits(int timestamp) {
+        while(!q.empty() && timestamp - q.front() >= 300) q.pop();
+        return q.size();
+    }
+private:
+    queue<int> q;
+};
+
+
+//Using vector
+class HitCounter {
+    vector<pair<int, int> > hits;
+public:
+    /** Initialize your data structure here. */
+    HitCounter() : hits(300) {        
+    }
+    
+    /** Record a hit.
+        @param timestamp - The current timestamp (in seconds granularity). */
+    void hit(int timestamp) {
+        int i = timestamp % 300;
+        if (hits[i].first != timestamp) 
+            hits[i] = make_pair(timestamp, 1);
+        else
+            hits[i].second++;
     }
     
     /** Return the number of hits in the past 5 minutes.
         @param timestamp - The current timestamp (in seconds granularity). */
-    public int getHits(int timestamp) {
-        int total = 0;
+    int getHits(int timestamp) {
+        int t = 0;
         for (int i = 0; i < 300; i++) {
-            if (timestamp - times[i] < 300) {
-                total += hits[i];
-            }
+            if (timestamp - hits[i].first < 300)
+                t += hits[i].second;
         }
-        return total;
+        return t;
     }
-}
+};
+
+
