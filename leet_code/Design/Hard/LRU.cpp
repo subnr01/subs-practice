@@ -29,55 +29,42 @@ https://discuss.leetcode.com/topic/6812/c-11-code-74ms-hash-table-list
 
 https://discuss.leetcode.com/topic/25792/clean-short-standard-c-solution-not-writing-c-in-c-like-all-other-lengthy-ones
 
-class LRUCache{
+class LRUCache {
 public:
-    LRUCache(int capacity):cap(capacity) {
-        
+    LRUCache(int capacity) {
+        cap = capacity;
     }
     
     int get(int key) {
-        if(map.find(key) == map.end()) {
+        if(m.count(key))
+        {
+            auto it = m[key];
+            l.splice(l.begin(),l,it);
+            return it->second;
+        }else
             return -1;
-        }
-        else {
-            //lst.splice(lst.begin(),lst,map[key]);
-            touch(map[key]);
-            return lst.begin()->second;
-        }
     }
     
     void put(int key, int value) {
-        if(map.find(key) != map.end()) {
-            //Put the iterator to the beginning
-            touch(map[key]);
-            lst.begin()->second = value;
-        }
-        else {
-            if(map.size() == cap) {
-                //Need to remove the last one 
-                // and replace with this one.
-                int dkey = lst.back().first;
-                map.erase(dkey);
-                lst.pop_back();
+        if(m.count(key))
+        {
+            auto it = m[key];
+            it->second = value;
+            l.splice(l.begin(),l,it);
+        }else
+        {
+            if(l.size()==cap)
+            {
+                auto it = l.back();
+                m.erase(it.first);
+                l.pop_back();
             }
-            lst.push_front({key,value});
-            map[key] = lst.begin();
+            l.emplace_front(key,value);
+            m[key] = l.begin();
         }
     }
-private:
-    typedef std::list<std::pair<int,int>> PList; // PAIR IS THE (KEY,VALUE) PAIR
-    
+    private:
     int cap;
-    PList lst;
-    std::unordered_map<int,PList::iterator> map;
-    
-    // UPDATE THE LIST AND THE MAP (AFTER UPDATE, IT WILL BE THE LIST HEAD)
-    void touch(PList::iterator it) {
-        /* Put the iterator to the beginning */
-        int key = it->first;
-        int value = it->second;
-        lst.erase(it);
-        lst.push_front({key,value});
-        map[key] = lst.begin();
-    }
+    list<pair<int, int>> l;
+    unordered_map<int,list<pair<int, int>>::iterator > m;
 };
