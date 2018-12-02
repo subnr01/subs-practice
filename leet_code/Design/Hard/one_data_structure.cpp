@@ -101,3 +101,63 @@ private:
     list<Bucket> buckets;
     unordered_map<string, list<Bucket>::iterator> bucketOfKey;
 };
+
+
+
+//Solution using multimap
+
+class AllOne {
+public:
+    /** Initialize your data structure here. */
+    AllOne() {
+        
+    }
+    
+    /** Inserts a new key <Key> with value 1. Or increments an existing key by 1. */
+    void inc(string key) {
+        if (look_map_.count(key)) {
+            int temp = look_map_[key]->first;
+            cache_map_.erase(look_map_[key]);
+            auto it = cache_map_.insert(make_pair(temp+1, key));
+            look_map_[key] = it;
+        }
+        else {
+            auto it = cache_map_.insert(make_pair(1, key));
+            look_map_[key] = it;
+        }
+    }
+    
+    /** Decrements an existing key by 1. If Key's value is 1, remove it from the data structure. */
+    void dec(string key) {
+        if (look_map_.count(key)) {
+            if (look_map_[key]->first==1) {
+                cache_map_.erase(look_map_[key]);
+                look_map_.erase(key);
+            }
+            else {
+                int temp = look_map_[key]->first;
+                cache_map_.erase(look_map_[key]);
+                auto it = cache_map_.insert(make_pair(temp-1, key));
+                look_map_[key] = it;
+            }
+        }
+    }
+    
+    /** Returns one of the keys with maximal value. */
+    string getMaxKey() {
+        if (cache_map_.empty()) return "";
+        else return prev(cache_map_.end())->second;
+    }
+    
+    /** Returns one of the keys with Minimal value. */
+    string getMinKey() {
+        if (cache_map_.empty()) return "";
+        else return cache_map_.begin()->second;
+    }
+    
+private:
+    multimap<int, string> cache_map_;  // <value, key>
+    unordered_map<string, multimap<int, string>::iterator> look_map_;  // <key, iterator>
+};
+
+
