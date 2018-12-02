@@ -31,6 +31,118 @@ Output:
 
 */
 
+//Standard Solution
+// Read the explanation, especially performance analysis.
+struct File {
+    bool isFile;
+    string content;
+    unordered_map<string, File*> child;
+    
+    File() {
+        isFile = false;
+    }
+};
+
+struct fs {
+    File *root;
+    
+    fs(){
+        root = new File();
+    }
+    
+    void mkdir(string str){
+        auto cur = root;
+        int n = str.size(), i = 1;
+        while(i < n)
+        {
+            int j = i;
+            while(j < n && str[j] != '/') j++;
+            string sub = str.substr(i, j - i);
+            if(cur->child.count(sub) == 0) {
+                cur->child[sub] = new File();
+            }
+            cur = cur->child[sub];
+            i = j + 1;
+        }
+    }
+    
+    string read (string str){
+        auto cur = root;
+        int n = str.size(), i = 1;
+        while(i < n){
+            int j = i;
+            while(j < n && str[j] != '/') j++;
+            string sub = str.substr(i, j - i);
+            cur = cur->child[sub];
+            i = j + 1;
+        }
+        
+        return cur->content;
+    }
+    
+    void write(string str, string c){
+        auto cur = root;
+        int n = str.size(), i = 1;
+        while(i < n){
+            int j = i;
+            while(j < n && str[j] != '/') j++;
+            string sub = str.substr(i, j - i);
+            if(cur->child.count(sub) == 0) cur->child[sub] = new File();
+            cur = cur->child[sub];
+            i = j + 1;
+        }
+        
+        cur->isFile = true;
+        cur->content += c;
+    }
+    
+    vector<string> ls(string str){
+        auto cur = root;
+        int n = str.size(), i = 1;
+        string sub;
+        while(i < n){
+            int j = i;
+            while(j < n && str[j] != '/') j++;
+            sub = str.substr(i, j - i);
+            if(cur->child.count(sub) == 0) return {};
+            cur = cur->child[sub];
+            i = j + 1;
+        }
+        
+        if(cur->isFile) return {sub};
+        
+        vector<string> ans;
+        for(auto p : cur->child) ans.push_back(p.first);
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+class FileSystem {
+public:
+    fs _fs;
+    FileSystem() {
+        
+    }
+    
+    vector<string> ls(string path) {
+        return _fs.ls(path);
+    }
+    
+    void mkdir(string path) {
+        _fs.mkdir(path);
+    }
+    
+    void addContentToFile(string filePath, string content) {
+        _fs.write(filePath, content);
+    }
+    
+    string readContentFromFile(string filePath) {
+        return _fs.read(filePath);
+    }
+};
+
+
 //Trie solution seems to be popular
 
 //Solution using Trie
@@ -118,109 +230,3 @@ public:
 
 
 
-//Solution B
-struct node{
-    bool isFile;
-    string content;
-    unordered_map<string, node*> child;
-    
-    node(){
-        isFile = false;
-    }
-};
-
-struct fs{
-    node*root;
-    
-    fs(){
-        root = new node();
-    }
-    
-    void mkdir(string str){
-        auto cur = root;
-        int n = str.size(), i = 1;
-        while(i < n){
-            int j = i;
-            while(j < n && str[j] != '/') j++;
-            string sub = str.substr(i, j - i);
-            if(cur->child.count(sub) == 0) cur->child[sub] = new node();
-            cur = cur->child[sub];
-            i = j + 1;
-        }
-    }
-    
-    string read(string str){
-        auto cur = root;
-        int n = str.size(), i = 1;
-        while(i < n){
-            int j = i;
-            while(j < n && str[j] != '/') j++;
-            string sub = str.substr(i, j - i);
-            cur = cur->child[sub];
-            i = j + 1;
-        }
-        
-        return cur->content;
-    }
-    
-    void write(string str, string c){
-        auto cur = root;
-        int n = str.size(), i = 1;
-        while(i < n){
-            int j = i;
-            while(j < n && str[j] != '/') j++;
-            string sub = str.substr(i, j - i);
-            if(cur->child.count(sub) == 0) cur->child[sub] = new node();
-            cur = cur->child[sub];
-            i = j + 1;
-        }
-        
-        cur->isFile = true;
-        cur->content += c;
-    }
-    
-    vector<string> ls(string str){
-        auto cur = root;
-        int n = str.size(), i = 1;
-        string sub;
-        while(i < n){
-            int j = i;
-            while(j < n && str[j] != '/') j++;
-            sub = str.substr(i, j - i);
-            if(cur->child.count(sub) == 0) return {};
-            cur = cur->child[sub];
-            i = j + 1;
-        }
-        
-        if(cur->isFile) return {sub};
-        
-        vector<string> ans;
-        for(auto p : cur->child) ans.push_back(p.first);
-        sort(ans.begin(), ans.end());
-        return ans;
-    }
-};
-
-class FileSystem {
-public:
-    fs _fs;
-    FileSystem() {
-        
-    }
-    
-    vector<string> ls(string path) {
-        return _fs.ls(path);
-    }
-    
-    void mkdir(string path) {
-        _fs.mkdir(path);
-    }
-    
-    void addContentToFile(string filePath, string content) {
-        _fs.write(filePath, content);
-    }
-    
-    string readContentFromFile(string filePath) {
-        return _fs.read(filePath);
-    }
-};
