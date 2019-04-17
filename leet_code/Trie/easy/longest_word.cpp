@@ -43,40 +43,44 @@ public:
 //Trie +DFS (look at SOln for complexity)
 class Solution {
 public:
-        class Node {
-    public:
-        bool isWord;
-        Node* son[26];
-    };
-    
-    string res="";
     string longestWord(vector<string>& words) {
-        Node* root=new Node();
-        root->isWord=true;
-        for(int i=0;i<words.size();i++) {
-            Node* r=root;
-            for(int j=0;j<words[i].size();j++) {
-                if(r->son[words[i][j]-'a']==NULL) r->son[words[i][j]-'a']=new Node();
-                r=r->son[words[i][j]-'a'];
-            }
-            r->isWord=true;
+        TrieNode *root = new TrieNode;
+        for (const auto& word : words) {
+            insert(root, word);
         }
-        DFS(root, "");
-        return res;
+        int mx = 0;
+        string str, ans;
+        dfs(root, 0, str, mx, ans);
+        return ans;
     }
-    
-    void DFS(Node* r, string path) {
-        if(r==NULL||r->isWord==false) {
-            path.pop_back();
-            if(path.size()>res.size()) res=path;
-            else if(path.size()==res.size()&&res>path) res=path;
-            return;
+    struct TrieNode {
+        TrieNode() {
+            memset(ch, 0, sizeof(ch));
+            is_end = false;
         }
-        for(int i=0;i<26;i++) {
-            path.append(1, 'a'+i);
-            DFS(r->son[i], path);
-            path.pop_back();
+        TrieNode *ch[26];
+        bool is_end;
+    };
+    void insert(TrieNode *root, const string& word) {
+        TrieNode *cur = root;
+        for (auto c : word) {
+            int j = c - 'a';
+            if (!cur->ch[j]) cur->ch[j] = new TrieNode;
+            cur = cur->ch[j];
+        }
+        cur->is_end = true;
+    }
+    void dfs(TrieNode *root, int depth, string& str, int& mx, string& ans) {
+        if (!root) return;
+        if (depth > mx) {
+            mx = depth;
+            ans = str;
+        }
+        for (int i = 0; i < 26; ++i) {
+            if (!root->ch[i] or !root->ch[i]->is_end) continue;
+            str.push_back('a' + i);
+            dfs(root->ch[i], depth + 1, str, mx, ans);
+            str.pop_back();
         }
     }
-
 };
