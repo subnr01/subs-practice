@@ -1,19 +1,28 @@
-
-
 class Solution {
 public:
-    vector<bool> camelMatch(vector<string>& queries, string pattern) {
+    vector<bool> camelMatch(vector<string>& queries, string pattern) 
+    {
         vector<bool> res;
-        for (string &query : queries) res.push_back(isMatch(query, pattern));
+        
+        for (auto query : queries)
+        {
+           res.push_back(doesMatch(query, pattern));
+        }
         return res;
-
     }
-
-    bool isMatch(string query, string pattern) {
+    
+    bool doesMatch (string query, string pattern)
+    {
         int i = 0;
-        for (char & c : query)
-            if (i < pattern.length() && c == pattern[i]) i++;
-            else if (c < 'a') return false;
-        return i == pattern.length();
+        for (auto c : query)
+        {
+            if (i < pattern.size() && c == pattern[i]) {
+                i++;
+            } 
+            else if (c < 'a') {
+                return false;
+            }
+        }
+        return i == pattern.size();
     }
 };
