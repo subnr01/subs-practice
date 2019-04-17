@@ -22,33 +22,40 @@ persisted across multiple test cases. Please see here for more details.
 
 //USing hash table
 class MagicDictionary {
+    unordered_map<int,unordered_set<string>> m;
+    
+    bool oneDistance(string s1, string s2){
+        int diff = 0;
+        for(int i=0; i<s1.size(); i++){
+            if(s1[i]!=s2[i]) diff++;
+            if(diff>1) return false;
+        }
+        
+        return diff==1;
+    }
 public:
     /** Initialize your data structure here. */
     MagicDictionary() {
-        
     }
     
     /** Build a dictionary through a list of words */
     void buildDict(vector<string> dict) {
-        for (string &s:dict) words.insert(s);
+        m.clear();
+        for(string& s: dict)
+            m[s.size()].insert(s);
     }
     
     /** Returns if there is any word in the trie that equals to the given word after modifying exactly one character */
     bool search(string word) {
-          for (int i = 0; i < word.size(); i++) {
-            char c = word[i];
-            for (int j = 0; j < 26; j++) {
-                if (c == j+'a') continue;
-                word[i] = j+'a';
-                if (words.count(word)) return true;
-            }
-            word[i] = c;
+        if(m.find(word.size())==m.end())
+            return false;
+        for(auto& s: m[word.size()]){
+            if(oneDistance(s, word)) return true;
         }
         return false;
     }
-private:
-    unordered_set<string> words;
 };
+
 
 
 //Can you do this with trie????
