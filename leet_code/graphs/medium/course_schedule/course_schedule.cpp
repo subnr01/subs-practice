@@ -38,32 +38,43 @@ vector<bool> onpath to record the visited nodes of the current DFS visit
 class Solution {
 public:
     bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
-        vector<unordered_set<int>> graph = make_graph(numCourses, prerequisites);
-        vector<bool> onpath(numCourses, false), visited(numCourses, false);
-        for (int i = 0; i < numCourses; i++)
-            if (!visited[i] && dfs_cycle(graph, i, onpath, visited))
+        graph g = buildGraph(numCourses, prerequisites);
+        vector<int> visited(numCourses, false);
+        for (int i = 0; i < numCourses; i++) {
+            if (!visited[i] && !acyclic(g, visited, i)) {
                 return false;
+            }
+        }
         return true;
     }
 private:
-    vector<unordered_set<int>> make_graph(int numCourses, vector<pair<int, int>>& prerequisites) {
-        vector<unordered_set<int>> graph(numCourses);
-        for (auto pre : prerequisites)
-            graph[pre.second].insert(pre.first);
-        return graph;
-    } 
-    bool dfs_cycle(vector<unordered_set<int>>& graph, int node, vector<bool>& onpath, vector<bool>& visited) {
-        if (visited[node]) return false;
-        onpath[node] = visited[node] = true; 
-        for (int neigh : graph[node])
-            if (onpath[neigh] || dfs_cycle(graph, neigh, onpath, visited))
-                return true;
-        
-        onpath[node] = false;
-        return false;
+    typedef vector<vector<int>> graph;
+    
+    graph buildGraph(int numCourses, vector<pair<int, int>>& prerequisites) {
+        graph g(numCourses);
+        for (auto p : prerequisites) {
+            g[p.second].push_back(p.first);
+        }
+        return g;
+    }
+    
+    bool acyclic(graph& g, vector<int>& visited, int node) {
+        if (visited[node]==2) {
+            return false;
+        }
+        if (visited[node]) {
+            return true;
+        }
+        visited[node] =2;
+        for (int v : g[node]) {
+            if (!acyclic(g, visited, v)) {
+                return false;
+            }
+        }
+        visited[node] = 1;
+        return true;
     }
 };
-
 
 //fastest BFS
 class Solution {
