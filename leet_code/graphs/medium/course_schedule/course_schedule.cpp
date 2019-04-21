@@ -37,11 +37,16 @@ vector<bool> onpath to record the visited nodes of the current DFS visit
 */
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
-        graph g = buildGraph(numCourses, prerequisites);
+    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) 
+    {
+        graph g(numCourses);
+        for (auto p : prerequisites) {
+            g[p.second].push_back(p.first);
+        }
+        
         vector<int> visited(numCourses, false);
         for (int i = 0; i < numCourses; i++) {
-            if (!visited[i] && !acyclic(g, visited, i)) {
+            if (!acyclic(g, visited, i)) {
                 return false;
             }
         }
@@ -50,31 +55,25 @@ public:
 private:
     typedef vector<vector<int>> graph;
     
-    graph buildGraph(int numCourses, vector<pair<int, int>>& prerequisites) {
-        graph g(numCourses);
-        for (auto p : prerequisites) {
-            g[p.second].push_back(p.first);
-        }
-        return g;
-    }
     
     bool acyclic(graph& g, vector<int>& visited, int node) {
-        if (visited[node]==2) {
-            return false;
+        if (visited[node] > 0 ) {
+            return visited[node] == 2;
         }
-        if (visited[node]) {
-            return true;
-        }
-        visited[node] =2;
+   
+        visited[node] = 1;
         for (int v : g[node]) {
             if (!acyclic(g, visited, v)) {
                 return false;
             }
         }
-        visited[node] = 1;
+        visited[node] = 2;
         return true;
     }
 };
+
+
+
 
 //fastest BFS
 class Solution {
@@ -103,41 +102,6 @@ public:
     }
 };
 
-
-
-
-Solution (BFS) ( uses topological sort);
-class Solution {
-public:
-    bool canFinish(int numCourses, vector<pair<int, int>>& prerequisites) {
-        vector<unordered_set<int>> graph = make_graph(numCourses, prerequisites);
-        vector<int> degrees = compute_indegree(graph);
-        for (int i = 0; i < numCourses; i++) {
-            int j = 0;
-            for (; j < numCourses; j++)
-                if (!degrees[j]) break;
-            if (j == numCourses) return false;
-            degrees[j] = -1;
-            for (int neigh : graph[j])
-                degrees[neigh]--;
-        }
-        return true;
-    }
-private:
-    vector<unordered_set<int>> make_graph(int numCourses, vector<pair<int, int>>& prerequisites) {
-        vector<unordered_set<int>> graph(numCourses);
-        for (auto pre : prerequisites)
-            graph[pre.second].insert(pre.first);
-        return graph;
-    }
-    vector<int> compute_indegree(vector<unordered_set<int>>& graph) {
-        vector<int> degrees(graph.size(), 0);
-        for (auto neighbors : graph)
-            for (int neigh : neighbors)
-                degrees[neigh]++;
-        return degrees;
-    }
-};
 
 
 
